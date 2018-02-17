@@ -1,2 +1,3 @@
-update to babel-preset-env
-read babel, rollup, react article
+get linting set up
+add enzyme
+write first test
