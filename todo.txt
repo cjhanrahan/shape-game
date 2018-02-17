@@ -1,2 +1,2 @@
-get rollup working
-add linting
+update to babel-preset-env
+read babel, rollup, react article
