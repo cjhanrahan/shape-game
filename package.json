@@ -1,0 +1,14 @@
+{
+  "name": "volume-game",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Conor John Hanrahan",
+  "license": "ISC",
+  "devDependencies": {
+    "rollup": "^0.56.1"
+  }
+}
