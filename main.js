@@ -1,3 +1,3 @@
-import app from './src/app'
+import { startApp } from './src/app'
 
-console.log(app)
+startApp()

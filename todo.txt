@@ -1,3 +1,5 @@
-get linting set up
-add enzyme
-write first test
+make cylinder
+allow rotation of camera
+make cylinder movable
+make cylinder pyramid
+start writing tests
