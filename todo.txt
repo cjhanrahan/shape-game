@@ -1,5 +1,2 @@
-make cylinder
-allow rotation of camera
-make cylinder movable
-make cylinder pyramid
-start writing tests
+get karma setup
+write shape test
