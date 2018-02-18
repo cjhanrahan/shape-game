@@ -1,7 +1,13 @@
-.shape {
-    position: relative;
+#app-container {
+    height: 100vh;
+    width: 100vh;
 }
-.shape canvas {
+.shape-container {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+.shape {
     height: 100%;
     width: 100%;
 }
