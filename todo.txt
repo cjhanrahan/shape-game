@@ -1,11 +1,7 @@
-rollup-plugin-common-js
-rollup-plugin-babel
-rollup-plugin-replace
+default and react issue
 
-read through example package.json
-read through rollup plugins
-read through example config
-read through current rollupconfig
+export default error
+defaultExport
 stop requiring rollup config
 read through karma plugins
 look up phantomjs error

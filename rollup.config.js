@@ -10,7 +10,7 @@ module.exports = {
         file: 'bundle.js',
         format: 'iife',
         name: 'volume_game',
-        sourcemap: true,
+        sourcemap: 'inline',
     },
     plugins: [
         nodeResolve({

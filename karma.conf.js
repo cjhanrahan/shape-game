@@ -1,6 +1,10 @@
 const resolve = require('rollup-plugin-node-resolve')
 const commonjs = require('rollup-plugin-commonjs')
 const babel = require('rollup-plugin-babel')
+const replace = require('rollup-plugin-replace')
+const json = require('rollup-plugin-json')
+const builtins = require('rollup-plugin-node-builtins')
+const globals = require('rollup-plugin-node-globals')
 // Karma configuration
 // Generated on Sun Feb 18 2018 14:03:02 GMT-0800 (STD)
 
@@ -16,13 +20,13 @@ module.exports = function (config) {
 
         // frameworks to use
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-        frameworks: ['mocha', 'chai'],
+        frameworks: ['mocha'],
 
 
         // list of files / patterns to load in the browser
         files: [
-            './**/*.jsx',
-            './**/*.js',
+            './src/**/*.jsx',
+            './test/**/*.jsx',
         ],
 
 
@@ -33,18 +37,28 @@ module.exports = function (config) {
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
             './src/**/*.jsx': ['rollup'],
-            './test/**/*.js': ['rollup'],
+            './test/**/*.jsx': ['rollup'],
         },
 
         rollupPreprocessor: {
             plugins: [
+                builtins(),
                 resolve({
-                    extensions: ['js', 'jsx'],
+                    extensions: ['.js', '.jsx', '.json'],
+                    jsnext: true,
+                    preferBuiltins: true,
                 }),
-                commonjs(),
+                globals(),
                 babel({
                     exclude: 'node_modules/**',
                 }),
+                commonjs({
+                    include: 'node_modules/**',
+                }),
+                replace({
+                    'process.env.NODE_ENV': JSON.stringify('replace'),
+                }),
+                json(),
             ],
             output: {
                 format: 'iife',
@@ -79,7 +93,7 @@ module.exports = function (config) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: [],
+        browsers: ['PhantomJS'],
 
 
         // Continuous Integration mode
