@@ -1,16 +1,17 @@
+const resolve = require('rollup-plugin-node-resolve')
+const commonjs = require('rollup-plugin-commonjs')
+const babel = require('rollup-plugin-babel')
 // Karma configuration
 // Generated on Sun Feb 18 2018 14:03:02 GMT-0800 (STD)
 
 // const rollupConfig = {}
-const rollupConfig = require('./rollup.config.js')
 
-delete rollupConfig.input
 
 module.exports = function (config) {
     config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-        basePath: '',
+        basePath: '.',
 
 
         // frameworks to use
@@ -20,7 +21,8 @@ module.exports = function (config) {
 
         // list of files / patterns to load in the browser
         files: [
-            { pattern: 'test/**/*.jsx', watched: false },
+            './**/*.jsx',
+            './**/*.js',
         ],
 
 
@@ -30,9 +32,26 @@ module.exports = function (config) {
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
-            'test/**/*.jsx': rollupConfig,
+            './src/**/*.jsx': ['rollup'],
+            './test/**/*.js': ['rollup'],
         },
 
+        rollupPreprocessor: {
+            plugins: [
+                resolve({
+                    extensions: ['js', 'jsx'],
+                }),
+                commonjs(),
+                babel({
+                    exclude: 'node_modules/**',
+                }),
+            ],
+            output: {
+                format: 'iife',
+                name: 'volume_game',
+                sourcemap: true,
+            }
+        },
 
         // test results reporter to use
         // possible values: 'dots', 'progress'
@@ -49,7 +68,8 @@ module.exports = function (config) {
 
 
         // level of logging
-        // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
+        // possible values: config.LOG_DISABLE || config.LOG_ERROR ||
+        // config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
         logLevel: config.LOG_INFO,
 
 
@@ -59,15 +79,15 @@ module.exports = function (config) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        // browsers: ['Chrome', 'Firefox'],
+        browsers: [],
 
 
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits
-        singleRun: false,
+        // singleRun: falsPhantomJS,
 
         // Concurrency level
         // how many browser should be started simultaneous
-        concurrency: Infinity,
+        concurrency: 3,
     })
 }

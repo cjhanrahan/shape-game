@@ -9,15 +9,16 @@ module.exports = {
     output: {
         file: 'bundle.js',
         format: 'iife',
+        name: 'volume_game',
         sourcemap: true,
     },
     plugins: [
-        babel({
-            exclude: 'node_modules/**',
-        }),
         nodeResolve({
             jsnext: true,
             extensions: ['.js', '.jsx'],
+        }),
+        babel({
+            exclude: 'node_modules/**',
         }),
         commonjs({
             include: 'node_modules/**',

@@ -7,7 +7,8 @@ import Shape from '../../src/components/Shape'
 describe('Shape', () => {
     it('sets up a renderer with the canvas you provide it', () => {
         const canvas = document.createElement('canvas')
-        const wrapper = mount(<Shape canvas={canvas} />)
+        wrapper = {}
+        // const wrapper = mount(<Shape canvas={canvas} />)
         const { renderer } = wrapper.instance()
         expect(renderer).too.be.an.instanceof(WebGLRenderer)
     })

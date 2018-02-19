@@ -1,2 +1,13 @@
+rollup-plugin-common-js
+rollup-plugin-babel
+rollup-plugin-replace
+
+read through example package.json
+read through rollup plugins
+read through example config
+read through current rollupconfig
+stop requiring rollup config
+read through karma plugins
+look up phantomjs error
 get karma setup
 write shape test
