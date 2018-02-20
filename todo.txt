@@ -1,7 +1,6 @@
-default and react issue
-
-export default error
-defaultExport
+try to use externals/globals to fix domhandler issue
+try without a browser
+try react polyfill for phantom js
 stop requiring rollup config
 read through karma plugins
 look up phantomjs error

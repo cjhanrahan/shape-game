@@ -42,24 +42,25 @@ module.exports = function (config) {
 
         rollupPreprocessor: {
             plugins: [
-                builtins(),
                 resolve({
                     extensions: ['.js', '.jsx', '.json'],
                     jsnext: true,
                     preferBuiltins: true,
                 }),
-                globals(),
                 babel({
                     exclude: 'node_modules/**',
                 }),
                 commonjs({
                     include: 'node_modules/**',
                 }),
+                builtins(),
+                globals(),
                 replace({
                     'process.env.NODE_ENV': JSON.stringify('replace'),
                 }),
                 json(),
             ],
+            external: [],
             output: {
                 format: 'iife',
                 name: 'volume_game',
@@ -93,7 +94,7 @@ module.exports = function (config) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['PhantomJS'],
+        browsers: [],
 
 
         // Continuous Integration mode
