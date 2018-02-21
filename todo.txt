@@ -1,4 +1,1 @@
-try using webpack instead of rollup
-remove rollup from project
-get karma setup
-write shape test
+

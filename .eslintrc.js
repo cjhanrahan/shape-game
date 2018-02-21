@@ -7,6 +7,8 @@ module.exports = {
         'react/jsx-indent': ['error', 4],
         'react/jsx-indent-props': ['error', 4],
         'func-names': 0,
+        'function-paren-newline': 0,
+        'no-unused-expressions': 0,
     },
     env: {
         browser: true,
