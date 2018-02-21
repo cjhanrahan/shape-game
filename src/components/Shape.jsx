@@ -6,6 +6,10 @@ export default class Shape extends React.Component {
     componentDidMount() {
         this.renderer = new WebGLRenderer({ canvas: this.props.canvas })
     }
+
+    render() {
+        return <div />
+    }
 }
 
 Shape.propTypes = {

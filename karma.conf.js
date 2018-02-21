@@ -1,15 +1,8 @@
-const resolve = require('rollup-plugin-node-resolve')
-const commonjs = require('rollup-plugin-commonjs')
-const babel = require('rollup-plugin-babel')
-const replace = require('rollup-plugin-replace')
-const json = require('rollup-plugin-json')
-const builtins = require('rollup-plugin-node-builtins')
-const globals = require('rollup-plugin-node-globals')
 // Karma configuration
 // Generated on Sun Feb 18 2018 14:03:02 GMT-0800 (STD)
 
 // const rollupConfig = {}
-
+const path = require('path')
 
 module.exports = function (config) {
     config.set({
@@ -25,8 +18,7 @@ module.exports = function (config) {
 
         // list of files / patterns to load in the browser
         files: [
-            './src/**/*.jsx',
-            './test/**/*.jsx',
+            './test/testMain.js',
         ],
 
 
@@ -36,36 +28,26 @@ module.exports = function (config) {
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
-            './src/**/*.jsx': ['rollup'],
-            './test/**/*.jsx': ['rollup'],
+            'test/testMain.js': ['webpack'],
         },
 
-        rollupPreprocessor: {
-            plugins: [
-                resolve({
-                    extensions: ['.js', '.jsx', '.json'],
-                    jsnext: true,
-                    preferBuiltins: true,
-                }),
-                babel({
-                    exclude: 'node_modules/**',
-                }),
-                commonjs({
-                    include: 'node_modules/**',
-                }),
-                builtins(),
-                globals(),
-                replace({
-                    'process.env.NODE_ENV': JSON.stringify('replace'),
-                }),
-                json(),
-            ],
-            external: [],
+        webpack: {
             output: {
-                format: 'iife',
-                name: 'volume_game',
-                sourcemap: true,
-            }
+                filename: 'bundle.js',
+                path: path.resolve(__dirname, 'dist'),
+            },
+            module: {
+                loaders: [
+                    {
+                        test: /\.jsx?$/,
+                        loader: 'babel-loader',
+                        exclude: /node_modules/,
+                    },
+                ],
+            },
+            resolve: {
+                extensions: ['*', '.js', '.jsx'],
+            },
         },
 
         // test results reporter to use
