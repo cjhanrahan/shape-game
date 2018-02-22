@@ -27,7 +27,8 @@ describe('Shape', () => {
                 canvas={canvas}
                 geometry={geometry}
                 material={material}
-            />)
+            />
+        )
         instance = wrapper.instance()
     })
 
@@ -40,10 +41,11 @@ describe('Shape', () => {
         expect(instance.scene).to.be.an.instanceof(Scene)
     })
 
-    it('adds a mesh with the given geometry and mesh', () => {
-        const hasMesh = instance.scene.children.some(
-            child => (child instanceof Mesh)
-        )
-        expect(hasMesh).to.be.true
+    it('adds a mesh with the given geometry/material to the scene', () => {
+        expect(instance.mesh.geometry).to.equal(geometry)
+        expect(instance.mesh.material).to.equal(material)
+        expect(instance.mesh).to.be.an.instanceof(Mesh)
     })
+
+    it('adds the canvas to the dom')
 })

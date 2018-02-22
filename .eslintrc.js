@@ -9,6 +9,7 @@ module.exports = {
         'func-names': 0,
         'function-paren-newline': 0,
         'no-unused-expressions': 0,
+        'comma-dangle': 0,
     },
     env: {
         browser: true,

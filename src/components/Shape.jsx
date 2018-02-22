@@ -13,16 +13,22 @@ export default class Shape extends React.Component {
         const { geometry, material } = this.props
         this.renderer = new WebGLRenderer({ canvas: this.props.canvas })
         this.scene = new Scene()
-        this.scene.add(new Mesh(geometry, material))
+        this.mesh = new Mesh(geometry, material)
+        this.scene.add(this.mesh)
     }
 
     render() {
-        return <div />
+        return (
+            <div
+                className="shape-container"
+                ref={(containerNode) => { containerNode.appendChild(this.props.canvas) }}
+            />
+        )
     }
 }
 
 Shape.propTypes = {
     canvas: instanceOf(HTMLCanvasElement).isRequired,
-    geometry: instanceOf(Geometry).isRequired, 
+    geometry: instanceOf(Geometry).isRequired,
     material: instanceOf(Material).isRequired,
 }
