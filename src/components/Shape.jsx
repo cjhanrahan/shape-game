@@ -4,17 +4,24 @@ import {
     Geometry,
     Material,
     Mesh,
+    PerspectiveCamera,
     Scene,
     WebGLRenderer,
 } from 'three'
 
 export default class Shape extends React.Component {
     componentDidMount() {
-        const { geometry, material } = this.props
-        this.renderer = new WebGLRenderer({ canvas: this.props.canvas })
+        const { canvas, geometry, material } = this.props
+        this.renderer = new WebGLRenderer({ canvas })
         this.scene = new Scene()
         this.mesh = new Mesh(geometry, material)
         this.scene.add(this.mesh)
+        this.camera = new PerspectiveCamera(
+            75,
+            canvas.offsetWidth / canvas.offsetHeight,
+            0.1,
+            1000,
+        )
     }
 
     render() {
