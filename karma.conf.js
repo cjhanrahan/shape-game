@@ -1,8 +1,7 @@
 // Karma configuration
 // Generated on Sun Feb 18 2018 14:03:02 GMT-0800 (STD)
 
-// const rollupConfig = {}
-const path = require('path')
+const webpack = require('webpack')
 
 module.exports = function (config) {
     config.set({
@@ -18,7 +17,11 @@ module.exports = function (config) {
 
         // list of files / patterns to load in the browser
         files: [
-            './test/testMain.js',
+            // './test/testMain.js',
+            {
+                pattern: './test/**/*Test.jsx',
+                watched: true,
+            }
         ],
 
 
@@ -28,14 +31,10 @@ module.exports = function (config) {
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
-            'test/testMain.js': ['webpack', 'sourcemap'],
+            './test/**/*Test.jsx': ['webpack', 'sourcemap'],
         },
 
         webpack: {
-            // output: {
-            //     filename: 'bundle.js',
-            //     path: path.resolve(__dirname, 'dist'),
-            // },
             devtool: 'inline-source-map',
             module: {
                 loaders: [
@@ -49,6 +48,11 @@ module.exports = function (config) {
             resolve: {
                 extensions: ['*', '.js', '.jsx'],
             },
+            plugins: [
+                new webpack.SourceMapDevToolPlugin({
+                    test: /\.jsx?/
+                })
+            ]
         },
 
         // test results reporter to use

@@ -1,5 +1,4 @@
 import React from 'react'
-import { mount } from 'enzyme'
 import Chai from 'chai'
 import {
     ConeGeometry,
@@ -8,6 +7,7 @@ import {
     Scene,
     WebGLRenderer,
 } from 'three'
+import { mount } from '../utils/enzyme'
 import Shape from '../../src/components/Shape'
 
 const { expect } = Chai
