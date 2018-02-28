@@ -8,6 +8,7 @@ import {
     WebGLRenderer,
 } from 'three'
 import { mount } from '../utils/enzyme'
+import { setOffsetDimensions } from '../utils/dom'
 import Shape from '../../src/components/Shape'
 
 const { expect } = Chai
@@ -21,8 +22,8 @@ describe('Shape', () => {
 
     beforeEach(() => {
         canvas = document.createElement('canvas')
-        canvas.style.width = 400
-        canvas.style.height = 600
+        document.body.appendChild(canvas)
+        setOffsetDimensions(canvas, 400, 600)
         geometry = new ConeGeometry(3, 5)
         material = new MeshBasicMaterial({ color: 0xabab33 })
         wrapper = mount(
