@@ -1,3 +1,4 @@
+check renderer size is set
 get karma debug in same tab
 fix browser starting
 serve CSS from webpack

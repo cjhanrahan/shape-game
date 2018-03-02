@@ -1,5 +1,6 @@
 import React from 'react'
 import Chai from 'chai'
+import { spy } from 'sinon'
 import {
     ConeGeometry,
     Mesh,
@@ -26,6 +27,7 @@ describe('Shape', () => {
         setOffsetDimensions(canvas, 400, 600)
         geometry = new ConeGeometry(3, 5)
         material = new MeshBasicMaterial({ color: 0xabab33 })
+        // spy(WebGLRenderer.prototype, 'setSize')
         wrapper = mount(
             <Shape
                 canvas={canvas}
@@ -41,6 +43,10 @@ describe('Shape', () => {
         expect(instance.renderer.domElement).to.equal(canvas)
     })
 
+    // it('the renderer has the size of the canvas', () => {
+    //     expect(instance.renderer.setSize.called).to.be.true
+    // })
+    
     it('makes a scene', () => {
         expect(instance.scene).to.be.an.instanceof(Scene)
     })
@@ -58,4 +64,5 @@ describe('Shape', () => {
     it('adds the canvas to the dom', () => {
         expect(wrapper.getDOMNode().contains(canvas))
     })
+
 })

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "rollup -c",
+    "build": "webpack",
     "test": "eslint . --fix && karma start --single-run",
     "start": "npm run test && npm run build"
   },
