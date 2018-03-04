@@ -1,6 +1,5 @@
 import React from 'react'
 import Chai from 'chai'
-import { spy } from 'sinon'
 import {
     ConeGeometry,
     Mesh,
@@ -8,11 +7,14 @@ import {
     Scene,
     WebGLRenderer,
 } from 'three'
+import { createSandbox } from 'sinon'
 import { mount } from '../utils/enzyme'
 import { setOffsetDimensions } from '../utils/dom'
 import Shape from '../../src/components/Shape'
 
 const { expect } = Chai
+const sandbox = createSandbox()
+
 
 describe('Shape', () => {
     let canvas
@@ -20,6 +22,7 @@ describe('Shape', () => {
     let geometry
     let material
     let wrapper
+    let defaultProps
 
     beforeEach(() => {
         canvas = document.createElement('canvas')
@@ -27,7 +30,10 @@ describe('Shape', () => {
         setOffsetDimensions(canvas, 400, 600)
         geometry = new ConeGeometry(3, 5)
         material = new MeshBasicMaterial({ color: 0xabab33 })
-        // spy(WebGLRenderer.prototype, 'setSize')
+        sandbox.spy(window, 'requestAnimationFrame')
+        sandbox.spy(Shape.prototype, 'startAnimation')
+        sandbox.spy(Shape.prototype, 'onAnimationTick')
+        defaultProps = { canvas, geometry, material }
         wrapper = mount(
             <Shape
                 canvas={canvas}
@@ -38,15 +44,29 @@ describe('Shape', () => {
         instance = wrapper.instance()
     })
 
+    afterEach(() => {
+        instance.stopAnimation()
+        sandbox.restore()
+    })
+
     it('sets up a renderer with the canvas you provide it', () => {
         expect(instance.renderer).to.be.an.instanceof(WebGLRenderer)
         expect(instance.renderer.domElement).to.equal(canvas)
     })
 
-    // it('the renderer has the size of the canvas', () => {
-    //     expect(instance.renderer.setSize.called).to.be.true
-    // })
-    
+    it('implements startAnimationOnMount', () => {
+        expect(instance.startAnimation.called).to.be.false
+        const newWrapper = mount(<Shape {...defaultProps} startAnimationOnMount />)
+        const newInstance = newWrapper.instance()
+        expect(newInstance.startAnimation.called).to.be.true
+        newInstance.stopAnimation()
+    })
+
+    it('the renderer has the size of the canvas', () => {
+        expect(canvas.width).to.equal(400)
+        expect(canvas.height).to.equal(600)
+    })
+
     it('makes a scene', () => {
         expect(instance.scene).to.be.an.instanceof(Scene)
     })
@@ -65,4 +85,28 @@ describe('Shape', () => {
         expect(wrapper.getDOMNode().contains(canvas))
     })
 
+    it('creates a bound animate function', () => {
+        const { boundStartAnimation } = instance
+        sandbox.spy(instance.renderer, 'render')
+        boundStartAnimation()
+        expect(instance.startAnimation.calledOn(instance)).to.be.true
+        expect(
+            requestAnimationFrame.calledWith(instance.boundStartAnimation)
+        ).to.be.true
+        expect(instance.onAnimationTick.called).to.be.true
+        expect(
+            instance.renderer.render.calledWith(instance.scene, instance.camera)
+        ).to.be.true
+    })
+
+
+    it('has a stopAnimation function that stops calling requestAnimationFrame', (done) => {
+        instance.startAnimation()
+        instance.stopAnimation()
+        requestAnimationFrame.resetHistory()
+        setTimeout(() => {
+            expect(requestAnimationFrame.called).to.be.false
+            done()
+        }, 50)
+    })
 })
