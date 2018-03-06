@@ -8,12 +8,14 @@ import {
     WebGLRenderer,
 } from 'three'
 import { createSandbox } from 'sinon'
+import setupTest from '../utils/mocha'
 import { mount } from '../utils/enzyme'
 import { setOffsetDimensions } from '../utils/dom'
 import Shape from '../../src/components/Shape'
 
 const { expect } = Chai
 const sandbox = createSandbox()
+setupTest()
 
 
 describe('Shape', () => {
@@ -54,14 +56,6 @@ describe('Shape', () => {
         expect(instance.renderer.domElement).to.equal(canvas)
     })
 
-    it('implements startAnimationOnMount', () => {
-        expect(instance.startAnimation.called).to.be.false
-        const newWrapper = mount(<Shape {...defaultProps} startAnimationOnMount />)
-        const newInstance = newWrapper.instance()
-        expect(newInstance.startAnimation.called).to.be.true
-        newInstance.stopAnimation()
-    })
-
     it('the renderer has the size of the canvas', () => {
         expect(canvas.width).to.equal(400)
         expect(canvas.height).to.equal(600)
@@ -82,7 +76,7 @@ describe('Shape', () => {
     })
 
     it('adds the canvas to the dom', () => {
-        expect(wrapper.getDOMNode().contains(canvas))
+        expect(wrapper.getDOMNode().contains(canvas)).to.be.true
     })
 
     it('creates a bound animate function', () => {

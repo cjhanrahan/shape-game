@@ -15,7 +15,6 @@ export default class Shape extends React.Component {
             canvas,
             geometry,
             material,
-            startAnimationOnMount
         } = this.props
         this.renderer = new WebGLRenderer({ canvas })
         this.renderer.setSize(canvas.offsetWidth, canvas.offsetHeight)
@@ -29,9 +28,6 @@ export default class Shape extends React.Component {
             1000,
         )
         this.boundStartAnimation = this.startAnimation.bind(this)
-        if (startAnimationOnMount) {
-            this.startAnimation()
-        }
     }
 
     onAnimationTick() {
@@ -62,5 +58,4 @@ Shape.propTypes = {
     canvas: instanceOf(HTMLCanvasElement).isRequired,
     geometry: instanceOf(Geometry).isRequired,
     material: instanceOf(Material).isRequired,
-    startAnimationOnMount: bool.isRequired,
 }
