@@ -1,6 +1,7 @@
 // Karma configuration
 // Generated on Sun Feb 18 2018 14:03:02 GMT-0800 (STD)
 
+/* eslint-disable import/no-extraneous-dependencies */
 const webpack = require('webpack')
 
 module.exports = function (config) {

@@ -1,5 +1,5 @@
 import React from 'react'
-import Chai from 'chai'
+import { expect } from 'chai'
 import {
     ConeGeometry,
     Mesh,
@@ -13,7 +13,6 @@ import { mount } from '../utils/enzyme'
 import { setOffsetDimensions } from '../utils/dom'
 import Shape from '../../src/components/Shape'
 
-const { expect } = Chai
 const sandbox = createSandbox()
 setupTest()
 
@@ -24,7 +23,6 @@ describe('Shape', () => {
     let geometry
     let material
     let wrapper
-    let defaultProps
 
     beforeEach(() => {
         canvas = document.createElement('canvas')
@@ -35,7 +33,6 @@ describe('Shape', () => {
         sandbox.spy(window, 'requestAnimationFrame')
         sandbox.spy(Shape.prototype, 'startAnimation')
         sandbox.spy(Shape.prototype, 'onAnimationTick')
-        defaultProps = { canvas, geometry, material }
         wrapper = mount(
             <Shape
                 canvas={canvas}

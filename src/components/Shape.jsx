@@ -1,12 +1,14 @@
 import React from 'react'
-import { bool, instanceOf } from 'prop-types'
+import {
+    getRenderer,
+} from '../render/Shape'
+import { instanceOf } from 'prop-types'
 import {
     Geometry,
     Material,
     Mesh,
     PerspectiveCamera,
     Scene,
-    WebGLRenderer,
 } from 'three'
 
 export default class Shape extends React.Component {
@@ -16,8 +18,7 @@ export default class Shape extends React.Component {
             geometry,
             material,
         } = this.props
-        this.renderer = new WebGLRenderer({ canvas })
-        this.renderer.setSize(canvas.offsetWidth, canvas.offsetHeight)
+        this.renderer = getRenderer(canvas)
         this.scene = new Scene()
         this.mesh = new Mesh(geometry, material)
         this.scene.add(this.mesh)
