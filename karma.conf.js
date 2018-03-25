@@ -38,12 +38,12 @@ module.exports = function (config) {
         webpack: {
             devtool: 'inline-source-map',
             module: {
-                loaders: [
+                rules: [
                     {
                         test: /\.jsx?$/,
                         loader: 'babel-loader',
                         exclude: /node_modules/,
-                    },
+                    }
                 ],
             },
             resolve: {

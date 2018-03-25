@@ -7,12 +7,12 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
     },
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.jsx?$/,
                 loader: 'babel-loader',
                 exclude: /node_modules/,
-            },
+            }
         ],
     },
     resolve: {

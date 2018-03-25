@@ -2,7 +2,7 @@ import React from 'react'
 import {
     getRenderer,
 } from '../render/Shape'
-import { instanceOf } from 'prop-types'
+import { instanceOf } from ' prop-types'
 import {
     Geometry,
     Material,
