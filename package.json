@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack",
-    "test": "eslint . --fix && karma start --single-run",
-    "start": "npm run test && npm run build"
+    "lint": "eslint . --fix",
+    "start": "npm run test && npm run build",
+    "test": "eslint . --fix && karma start --single-run"
   },
   "author": "Conor John Hanrahan",
   "license": "ISC",
@@ -36,7 +37,7 @@
     "karma-mocha-reporter": "^2.2.5",
     "karma-phantomjs-launcher": "^1.0.4",
     "karma-sourcemap-loader": "^0.3.7",
-    "karma-webpack": "^2.0.9",
+    "karma-webpack": "^3.0.0",
     "mocha": "^5.0.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
@@ -48,9 +49,9 @@
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "eslint-config-airbnb": "^16.1.0",
-    "prop-types": "^15.6.0",
+    "prop-types": "^15.6.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "three": "^0.90.0"
+    "three": "^0.91.0"
   }
 }

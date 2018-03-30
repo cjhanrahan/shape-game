@@ -8,7 +8,7 @@ module.exports = function (config) {
     config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-        basePath: '.',
+        basePath: '',
 
 
         // frameworks to use
@@ -20,7 +20,7 @@ module.exports = function (config) {
         files: [
             // './test/testMain.js',
             {
-                pattern: './test/**/*Test.jsx',
+                pattern: './test/**/*.@(js|jsx)',
                 watched: true,
             }
         ],
@@ -32,11 +32,12 @@ module.exports = function (config) {
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
-            './test/**/*Test.jsx': ['webpack', 'sourcemap'],
+            './test/**/*.@(js|jsx)': ['webpack', 'sourcemap'],
         },
 
         webpack: {
-            devtool: 'inline-source-map',
+            mode: 'development',
+            devtool: 'eval-source-map',
             module: {
                 rules: [
                     {
@@ -49,6 +50,11 @@ module.exports = function (config) {
             resolve: {
                 extensions: ['*', '.js', '.jsx'],
             },
+            // plugins: [
+            //     new webpack.SourceMapDevToolPlugin({
+            //         test: /\.jsx?($|\?)/
+            //     })
+            // ]
             plugins: [
                 new webpack.SourceMapDevToolPlugin({
                     test: /\.jsx?/

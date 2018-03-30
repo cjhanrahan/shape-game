@@ -1,12 +1,7 @@
+fill in options for devtool plugin
+get breakpoints in jsx and js tests
 get tests passing
-get webpack-serve to work
-get breakpoints working to fix failing test
-fix all tests
-fix all linting errors
-make getRenderer test better
-make shapes more functional
-it has a startAnimatino function
-switch pyramid to cube
+make shape more functional
 get karma debug in same tab
 fix browser starting
 serve CSS from webpack

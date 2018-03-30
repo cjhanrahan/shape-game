@@ -13,3 +13,5 @@ export function getScene(mesh) {
     const scene = new Scene()
     scene.add(mesh)
 }
+
+// export function getCamear(can

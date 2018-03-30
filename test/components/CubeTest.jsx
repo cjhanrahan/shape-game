@@ -6,7 +6,7 @@ import Cube from '../../src/components/Cube'
 import { shallow } from '../utils/enzyme'
 
 
-describe('Cube', () => {
+describe.only('Cube', () => {
     let wrapper
 
     beforeEach(() => {

@@ -8,6 +8,7 @@ import {
 } from 'three'
 import { setOffsetDimensions } from '../utils/dom'
 import {
+    // getCamera,
     getRenderer,
     getScene,
 } from '../../src/render/Shape'
@@ -43,4 +44,13 @@ describe('Shape render functions', () => {
             expect(scene.children).to.include(mesh)
         })
     })
+
+    // describe('getCamera', () => {
+    //     it('returns a camera with the aspect ratio of the canvas', () => {
+    //         const canvas = document.createElement('canvas')
+    //         setOffsetDimensions(canvas, 200, 100)
+    //         const camera = getCamera(canvas)
+    //         expect(camera.aspect).to.equal(2)
+    //     })
+    // })
 })
