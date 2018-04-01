@@ -1,13 +1,14 @@
-import { stub, assert } from 'sinon'
+// import 'mocha-sinon'
+require('mocha-sinon')
 
 export default function setupTest() {
-    beforeEach(() => {
-        stub(console, 'error')
+    beforeEach(function () {
+        this.sinon.stub(console, 'error')
     })
 
-    afterEach(() => {
+    afterEach(function () {
         // eslint-disable-next-line no-console
-        assert.notCalled(console.error)
+        this.sinon.assert.notCalled(console.error)
         // eslint-disable-next-line no-console
         console.error.restore()
     })

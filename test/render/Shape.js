@@ -6,6 +6,7 @@ import {
     Scene,
     WebGLRenderer,
 } from 'three'
+import 'mocha-sinon'
 import { setOffsetDimensions } from '../utils/dom'
 import {
     // getCamera,
@@ -13,29 +14,29 @@ import {
     getScene,
 } from '../../src/render/Shape'
 
-describe('Shape render functions', () => {
-    describe('getRenderer', () => {
+describe('Shape render functions', function () {
+    describe('getRenderer', function () {
         let renderer
         let canvas
 
-        beforeEach(() => {
+        beforeEach(function () {
             canvas = document.createElement('canvas')
             setOffsetDimensions(canvas, 400, 600)
             renderer = getRenderer(canvas)
         })
 
-        it('adjusts the size of the canvas', () => {
+        it('adjusts the size of the canvas', function () {
             expect(canvas.width).to.equal(400)
-            expect(canvas.height).to.equal(400)
+            expect(canvas.height).to.equal(600)
         })
 
-        it('returns a renderer', () => {
+        it('returns a renderer', function () {
             expect(renderer).to.be.an.instanceof(WebGLRenderer)
         })
     })
 
-    describe('getScene', () => {
-        it('returns a scene with the given mesh', () => {
+    describe('getScene', function () {
+        it('returns a scene with the given mesh', function () {
             const geo = new BoxBufferGeometry(1, 3, 5)
             const material = new MeshBasicMaterial({ color: 0x00ff00 })
             const mesh = new Mesh(geo, material)
@@ -45,8 +46,8 @@ describe('Shape render functions', () => {
         })
     })
 
-    // describe('getCamera', () => {
-    //     it('returns a camera with the aspect ratio of the canvas', () => {
+    // describe('getCamera', function () {
+    //     it('returns a camera with the aspect ratio of the canvas', function () {
     //         const canvas = document.createElement('canvas')
     //         setOffsetDimensions(canvas, 200, 100)
     //         const camera = getCamera(canvas)

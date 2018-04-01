@@ -1,15 +1,16 @@
 import React from 'react'
 import { BoxGeometry } from 'three'
 import { expect } from 'chai'
+import 'mocha-sinon'
 import Shape from '../../src/components/Shape'
 import Cube from '../../src/components/Cube'
 import { shallow } from '../utils/enzyme'
 
 
-describe.only('Cube', () => {
+describe('Cube', function () {
     let wrapper
 
-    beforeEach(() => {
+    beforeEach(function () {
         wrapper = shallow(
             <Cube
                 sideLength={500}
@@ -18,7 +19,7 @@ describe.only('Cube', () => {
         )
     })
 
-    it('it\'s geometry is a Box with the given side length', () => {
+    it('it\'s geometry is a Box with the given side length', function () {
         const geometry = wrapper.find(Shape).prop('geometry')
         expect(geometry).to.be.an.instanceof(BoxGeometry)
         const { width, height } = geometry.parameters
@@ -26,7 +27,7 @@ describe.only('Cube', () => {
         expect(height).to.equal(500)
     })
 
-    it('has a start animation function', () => {
+    it('has a start animation function', function () {
         // instance.startAnimation()
     })
 })

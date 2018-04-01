@@ -5,13 +5,14 @@ import {
 
 export function getRenderer(canvas) {
     const renderer = new WebGLRenderer({ canvas })
-    renderer.setSize(canvas.offSetWidth, canvas.offsetHeight)
+    renderer.setSize(canvas.offsetWidth, canvas.offsetHeight)
     return renderer
 }
 
 export function getScene(mesh) {
     const scene = new Scene()
     scene.add(mesh)
+    return scene
 }
 
 // export function getCamear(can

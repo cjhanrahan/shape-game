@@ -1,6 +1,3 @@
-fill in options for devtool plugin
-get breakpoints in jsx and js tests
-get tests passing
 make shape more functional
 get karma debug in same tab
 fix browser starting
