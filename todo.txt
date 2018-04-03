@@ -1,4 +1,4 @@
-make shape more functional
-get karma debug in same tab
+check npm run build
+come up with next test
 fix browser starting
 serve CSS from webpack

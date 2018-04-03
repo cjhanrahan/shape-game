@@ -9,7 +9,7 @@ import {
 import 'mocha-sinon'
 import { setOffsetDimensions } from '../utils/dom'
 import {
-    // getCamera,
+    getCamera,
     getRenderer,
     getScene,
 } from '../../src/render/Shape'
@@ -46,12 +46,12 @@ describe('Shape render functions', function () {
         })
     })
 
-    // describe('getCamera', function () {
-    //     it('returns a camera with the aspect ratio of the canvas', function () {
-    //         const canvas = document.createElement('canvas')
-    //         setOffsetDimensions(canvas, 200, 100)
-    //         const camera = getCamera(canvas)
-    //         expect(camera.aspect).to.equal(2)
-    //     })
-    // })
+    describe('getCamera', function () {
+        it('returns a camera with the aspect ratio of the canvas', function () {
+            const canvas = document.createElement('canvas')
+            setOffsetDimensions(canvas, 200, 100)
+            const camera = getCamera(canvas)
+            expect(camera.aspect).to.equal(2)
+        })
+    })
 })

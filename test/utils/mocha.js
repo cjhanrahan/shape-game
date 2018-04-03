@@ -1,5 +1,4 @@
-// import 'mocha-sinon'
-require('mocha-sinon')
+import 'mocha-sinon'
 
 export default function setupTest() {
     beforeEach(function () {

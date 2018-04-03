@@ -1,5 +1,6 @@
 import {
     Scene,
+    PerspectiveCamera,
     WebGLRenderer,
 } from 'three'
 
@@ -15,4 +16,12 @@ export function getScene(mesh) {
     return scene
 }
 
-// export function getCamear(can
+export function getCamera(canvas) {
+    const camera = new PerspectiveCamera(
+        75,
+        canvas.offsetWidth / canvas.offsetHeight,
+        0.1,
+        1000,
+    )
+    return camera
+}

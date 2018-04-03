@@ -4,9 +4,12 @@ import {
     Geometry,
     Material,
     Mesh,
-    PerspectiveCamera,
 } from 'three'
-import { getScene, getRenderer } from '../render/Shape'
+import {
+    getCamera,
+    getScene,
+    getRenderer,
+} from '../render/Shape'
 
 export default class Shape extends React.Component {
     componentDidMount() {
@@ -18,12 +21,7 @@ export default class Shape extends React.Component {
         this.renderer = getRenderer(canvas)
         this.mesh = new Mesh(geometry, material)
         this.scene = getScene(this.mesh)
-        this.camera = new PerspectiveCamera(
-            75,
-            canvas.offsetWidth / canvas.offsetHeight,
-            0.1,
-            1000,
-        )
+        this.camera = getCamera(canvas)
         this.boundStartAnimation = this.startAnimation.bind(this)
     }
 
