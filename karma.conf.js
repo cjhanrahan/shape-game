@@ -38,13 +38,19 @@ module.exports = function (config) {
         webpack: {
             mode: 'development',
             devtool: 'eval-source-map',
+            target: 'node',
             module: {
                 rules: [
                     {
                         test: /\.jsx?$/,
                         loader: 'babel-loader',
                         exclude: /node_modules/,
-                    }
+                    },
+                    {
+                        test: /\.html$/,
+                        loader: 'raw-loader',
+                        exclude: /node_modules/,
+                    },
                 ],
             },
             resolve: {

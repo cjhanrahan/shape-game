@@ -1,4 +1,4 @@
 import 'babel-polyfill'
-import { startApp } from './src/app'
+import { startApp } from './src/app/appUtils'
 
 startApp()
