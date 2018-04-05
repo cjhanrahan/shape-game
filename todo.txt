@@ -1,4 +1,6 @@
-add store
+move app.jsx and test it
+set the loading state
+do something with the loading state
 add different geometry tests
 fix browser starting
 serve CSS from webpack

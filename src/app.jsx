@@ -6,6 +6,7 @@ export function renderApp(domNode) {
     ReactDOM.render(<Pyramid />, domNode)
 }
 
+
 export function startApp() {
     window.onload = () => {
         renderApp(document.getElementById('app-container'))
