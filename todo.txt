@@ -1,4 +1,4 @@
-check npm run build
-come up with next test
+add store
+add different geometry tests
 fix browser starting
 serve CSS from webpack

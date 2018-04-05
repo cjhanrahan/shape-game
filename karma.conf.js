@@ -88,8 +88,15 @@ module.exports = function (config) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: [],
+        browsers: ['ChromePickDir'],
 
+
+        customLaunchers: {
+            ChromePickDir: {
+                base: 'Chrome',
+                chromeDataDir: 'C:/Users/conor/Documents/Temp',
+            },
+        },
 
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits
