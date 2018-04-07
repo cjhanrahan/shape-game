@@ -10,6 +10,7 @@ module.exports = function (config) {
     // base path that will be used to resolve all patterns (eg. files, exclude)
         basePath: '',
 
+        retryLimit: 0,
 
         // frameworks to use
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
@@ -65,7 +66,7 @@ module.exports = function (config) {
                 new webpack.SourceMapDevToolPlugin({
                     test: /\.jsx?/
                 })
-            ]
+            ],
         },
 
         // test results reporter to use

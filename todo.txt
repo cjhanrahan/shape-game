@@ -1,4 +1,4 @@
-get it to build when import jsdom (noparse)
+get document fragments set up
 move app.jsx and test it
 set the loading state
 do something with the loading state
