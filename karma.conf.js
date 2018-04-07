@@ -38,7 +38,7 @@ module.exports = function (config) {
         webpack: {
             mode: 'development',
             devtool: 'eval-source-map',
-            target: 'node',
+            // target: 'node',
             module: {
                 rules: [
                     {
@@ -100,7 +100,7 @@ module.exports = function (config) {
         customLaunchers: {
             ChromePickDir: {
                 base: 'Chrome',
-                chromeDataDir: 'C:/Users/conor/Documents/Temp',
+                chromeDataDir: 'C:/Users/conor/AppData/Local/Google/Chrome/User Data',
             },
         },
 

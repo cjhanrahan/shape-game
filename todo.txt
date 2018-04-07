@@ -1,3 +1,10 @@
+install windows 10 update
+input/output error
+delete node_modules
+read chrome launcher arguments docs
+read karma-chrome-launcher
+see if builds with jsdom
+get it to build when import jsdom (noparse)
 move app.jsx and test it
 set the loading state
 do something with the loading state
