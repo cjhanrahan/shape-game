@@ -57,6 +57,7 @@
     "react-dom": "^16.2.0",
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
+    "redux-mock-store": "^1.5.1",
     "redux-thunk": "^2.2.0",
     "three": "^0.91.0"
   }

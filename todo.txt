@@ -1,6 +1,5 @@
-get document fragments set up
-move app.jsx and test it
-set the loading state
+get mock store in redux helper
+set the loading stat
 do something with the loading state
 add different geometry tests
 fix browser starting
