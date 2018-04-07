@@ -1,6 +1,5 @@
-get mock store in redux helper
-set the loading stat
+build app container
 do something with the loading state
+cleanup folder structure
 add different geometry tests
-fix browser starting
 serve CSS from webpack

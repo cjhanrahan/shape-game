@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { createRef } from 'react'
 import PropTypes from 'prop-types'
 import {
     CylinderGeometry,
@@ -14,10 +14,12 @@ export default class Pyramid extends React.Component {
         super(props)
         this.canvas = this.props.canvas
         this.canvas.classList.add('shape')
+        this.containerRef = createRef()
         this.boundAnimate = this.animate.bind(this)
     }
 
     componentDidMount() {
+        this.containerRef.current.appendChild(this.canvas)
         this.scene = new Scene()
         this.camera = new PerspectiveCamera(
             75,
@@ -49,7 +51,7 @@ export default class Pyramid extends React.Component {
         return (
             <div
                 className="shape-container pyramid"
-                ref={(containerNode) => { containerNode.appendChild(this.canvas) }}
+                ref={this.containerRef}
             />
         )
     }
