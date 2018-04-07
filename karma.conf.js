@@ -21,7 +21,7 @@ module.exports = function (config) {
         files: [
             // './test/testMain.js',
             {
-                pattern: './test/**/*.@(js|jsx)',
+                pattern: './test/!(utils)/*.@(js|jsx)',
                 watched: true,
             }
         ],
@@ -51,6 +51,14 @@ module.exports = function (config) {
                         test: /\.html$/,
                         loader: 'raw-loader',
                         exclude: /node_modules/,
+                    },
+                    {
+                        test: /\.scss$/,
+                        use: [
+                            { loader: 'style-loader' },
+                            { loader: 'css-loader' },
+                            { loader: 'sass-loader' },
+                        ],
                     },
                 ],
             },

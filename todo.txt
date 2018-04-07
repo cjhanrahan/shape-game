@@ -1,5 +1,5 @@
-build app container
-do something with the loading state
 cleanup folder structure
+add webpack dev server
+make loading state more useful
 add different geometry tests
 serve CSS from webpack
