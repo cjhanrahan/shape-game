@@ -12,6 +12,7 @@ module.exports = {
         'comma-dangle': 0,
         'import/prefer-default-export': 0,
         'prefer-arrow-callback': 0,
+        'newline-per-chained-call': 0,
     },
     env: {
         browser: true,

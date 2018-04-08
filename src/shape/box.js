@@ -1,3 +1,5 @@
+import { BoxBufferGeometry } from 'three'
+
 export const dimensions = [
     { name: 'width' },
     { name: 'height', relativeMin: 0.5, relativeMax: 2 },
@@ -14,4 +16,9 @@ export function getAbsoluteDimensions(volume, relativeDimensions) {
         height: absoluteHeight,
         depth: absoluteDepth,
     }
+}
+
+export function getThreeGeometry(absoluteDimensions) {
+    const { width, height, depth } = absoluteDimensions
+    return new BoxBufferGeometry(width, height, depth)
 }

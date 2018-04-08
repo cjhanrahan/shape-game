@@ -4,6 +4,9 @@ import { Provider } from 'react-redux'
 import AppContainer from '../app/AppContainer'
 import realStore from '../store'
 import { updateAppStatus } from '../../src/app/appActions'
+import * as box from '../shape/box'
+
+export const shapes = { box }
 
 export function renderApp(domNode, store) {
     ReactDOM.render((

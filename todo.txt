@@ -1,4 +1,3 @@
-box getAbsoluteDimensions
 get it working for boxes only
 add webpack dev server
 make loading state more useful
@@ -24,3 +23,5 @@ relative size of dimensions
     volume
     mins/maxes for dimensions relative size
     given volume, what
+
+pick shape, pick size,
