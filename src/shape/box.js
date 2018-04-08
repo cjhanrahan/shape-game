@@ -5,7 +5,13 @@ export const dimensions = [
 ]
 
 export function getAbsoluteDimensions(volume, relativeDimensions) {
-    // const {otylokp
-    //     \height, depth } = relativeDimensions
-
+    const absoluteWidthCubed = volume / (relativeDimensions.height * relativeDimensions.depth)
+    const absoluteWidth = absoluteWidthCubed ** (1 / 3)
+    const absoluteHeight = relativeDimensions.height * absoluteWidth
+    const absoluteDepth = relativeDimensions.depth * absoluteWidth
+    return {
+        width: absoluteWidth,
+        height: absoluteHeight,
+        depth: absoluteDepth,
+    }
 }
