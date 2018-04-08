@@ -9,7 +9,7 @@ import {
     getCamera,
     getScene,
     getRenderer,
-} from '../render/Shape'
+} from '../shape/ShapeUtils'
 
 export default class Shape extends React.Component {
     componentDidMount() {

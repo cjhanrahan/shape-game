@@ -1,7 +1,7 @@
 import React from 'react'
 import { instanceOf, number } from 'prop-types'
 import { BoxGeometry, MeshBasicMaterial } from 'three'
-import Shape from './Shape'
+import Shape from './ShapeComponent'
 
 const Cube = ({ sideLength, canvas }) => {
     const geometry = new BoxGeometry(sideLength, sideLength, sideLength)

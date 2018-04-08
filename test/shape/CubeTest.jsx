@@ -2,8 +2,8 @@ import React from 'react'
 import { BoxGeometry } from 'three'
 import { expect } from 'chai'
 import 'mocha-sinon'
-import Shape from '../../src/components/Shape'
-import Cube from '../../src/components/Cube'
+import Shape from '../../src/shape/ShapeComponent'
+import Cube from '../../src/shape/Cube'
 import { shallow } from '../utils/enzyme'
 
 

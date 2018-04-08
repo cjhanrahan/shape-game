@@ -1,6 +1,6 @@
 import React from 'react'
 import { string } from 'prop-types'
-import Pyramid from '../components/Pyramid'
+import Pyramid from '../shape/Pyramid'
 import './app.scss'
 
 const App = ({ status }) => (

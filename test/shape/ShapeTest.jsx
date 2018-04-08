@@ -11,7 +11,7 @@ import 'mocha-sinon'
 import setupTest from '../utils/mocha'
 import { mount } from '../utils/enzyme'
 import { setOffsetDimensions } from '../utils/dom'
-import Shape from '../../src/components/Shape'
+import Shape from '../../src/shape/ShapeComponent'
 
 
 describe('Shape', function () {

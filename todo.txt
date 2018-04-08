@@ -1,5 +1,26 @@
-cleanup folder structure
+box getAbsoluteDimensions
+get it working for boxes only
 add webpack dev server
 make loading state more useful
 add different geometry tests
 serve CSS from webpack
+
+each round:
+    pick two shapes
+    pick two sizes (at least 5% distance)
+    pick dimension ratios
+    get geometry
+
+shape definition:
+    first dimension is 1
+    all other dimensions have ranges
+
+shape class:
+    range of relative sizes of dimensions
+    absolute volume + specified relative size = absolute dimensions
+    absolute dimensions => three geometry
+
+relative size of dimensions
+    volume
+    mins/maxes for dimensions relative size
+    given volume, what

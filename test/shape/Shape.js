@@ -12,7 +12,7 @@ import {
     getCamera,
     getRenderer,
     getScene,
-} from '../../src/render/Shape'
+} from '../../src/shape/ShapeUtils'
 
 describe('Shape render functions', function () {
     describe('getRenderer', function () {
