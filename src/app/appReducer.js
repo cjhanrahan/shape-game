@@ -4,12 +4,12 @@ export const defaultState = {
 
 export const appReducer = (state = defaultState, action) => {
     switch (action.type) {
-    case 'UPDATE_APP_STATUS':
-        return {
-            ...state,
-            status: action.payload,
-        }
-    default:
-        return state
+        case 'UPDATE_APP_STATUS':
+            return {
+                ...state,
+                status: action.payload,
+            }
+        default:
+            return state
     }
 }

@@ -1,3 +1,5 @@
+create updateShape action
+get two shapes in store
 get it working for boxes only
 add webpack dev server
 make loading state more useful

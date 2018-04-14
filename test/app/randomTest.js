@@ -1,16 +1,16 @@
 import { expect } from 'chai'
-import { getRandomShapeDefinition, getRandomVolume } from '../../src/app/random'
+import { getRandomShapeName, getRandomVolume } from '../../src/app/random'
 
-describe('getRandomShapeDefinition', function () {
+describe('getRandomShapeName', function () {
     it('picks a random shape from the shapes object', function () {
         const shapes = new Map([
-            ['shape1', { name: 'shape1' }],
-            ['shape2', { name: 'shape2' }],
-            ['shape3', { name: 'shape3' }],
+            ['shape1', {}],
+            ['shape2', {}],
+            ['shape3', {}],
         ])
         const randomFunc = this.sinon.stub()
         randomFunc.withArgs({ min: 0, max: 2, integer: true }).returns(2)
-        expect(getRandomShapeDefinition(shapes, randomFunc)).to.equal(shapes.get('shape3'))
+        expect(getRandomShapeName(shapes, randomFunc)).to.equal('shape3')
     })
 })
 

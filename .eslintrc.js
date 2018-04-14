@@ -3,7 +3,7 @@ module.exports = {
     extends: "airbnb",
     rules: {
         semi: ['error', 'never'],
-        indent: ['error', 4],
+        indent: ['error', 4, { SwitchCase: 1 }],
         'react/jsx-indent': ['error', 4],
         'react/jsx-indent-props': ['error', 4],
         'func-names': 0,
@@ -13,6 +13,7 @@ module.exports = {
         'import/prefer-default-export': 0,
         'prefer-arrow-callback': 0,
         'newline-per-chained-call': 0,
+        'no-underscore-dangle': 0,
     },
     env: {
         browser: true,

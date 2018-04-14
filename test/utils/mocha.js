@@ -10,5 +10,7 @@ export default function setupTest() {
         this.sinon.assert.notCalled(console.error)
         // eslint-disable-next-line no-console
         console.error.restore()
+        // eslint-disable-next-line no-undef
+        __rewire_reset_all__()
     })
 }
