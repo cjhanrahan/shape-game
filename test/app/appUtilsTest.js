@@ -60,6 +60,11 @@ describe('appUtils', function () {
                 shape: 'pyramid',
                 volume: 31.9,
             }))
+            expect(secondAction).to.eql(updateShapeConfiguration({
+                side: 'right',
+                shape: 'triangularPrism',
+                volume: 2.11,
+            }))
         })
     })
 })

@@ -18,3 +18,14 @@ export function getRandomVolume(
 ) {
     return randomFunc({ min, max })
 }
+
+export function getRandomRelativeDimensions(dimensions, randomFunc = randomNumber) {
+    const iterator = (acc, dimension) => {
+        const { name, relativeMin, relativeMax } = dimension
+        return {
+            ...acc,
+            [name]: randomFunc({ min: relativeMin, max: relativeMax }),
+        }
+    }
+    return dimensions.slice(1).reduce(iterator, {})
+}

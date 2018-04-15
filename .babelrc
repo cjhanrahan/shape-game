@@ -3,5 +3,5 @@
         ["es2015", { "modules": false }],
         "stage-3",
         "react"
-    ],
+    ]
 }

@@ -1,5 +1,5 @@
-get object diff in karma
-finish appUtilsTest
+ramda lens
+getRelativeDemsions test
 get two shapes in store
 get it working for boxes only
 add webpack dev server
