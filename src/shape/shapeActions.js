@@ -1,6 +1,6 @@
-export function updateShapeConfiguration({ side, shape, volume }) {
+export function updateShapeConfiguration({ side, shape, volume, relativeDimensions }) {
     return {
         type: 'UPDATE_SHAPE_CONFIGURATION',
-        payload: { side, shape, volume },
+        payload: { side, shape, volume, relativeDimensions },
     }
 }
