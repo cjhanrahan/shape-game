@@ -4,7 +4,4 @@
         "stage-3",
         "react"
     ],
-    "plugins": [
-        "rewire"
-    ]
 }

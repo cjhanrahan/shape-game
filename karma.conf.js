@@ -80,7 +80,7 @@ module.exports = function (config) {
         // test results reporter to use
         // possible values: 'dots', 'progress'
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-        reporters: ['progress'],
+        reporters: ['progress', 'mocha'],
 
 
         // web server port
@@ -94,7 +94,7 @@ module.exports = function (config) {
         // level of logging
         // possible values: config.LOG_DISABLE || config.LOG_ERROR ||
         // config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-        logLevel: config.LOG_ERROR,
+        logLevel: config.LOG_DISABLE,
 
 
         // enable / disable watching file and executing tests whenever any file changes
@@ -120,5 +120,13 @@ module.exports = function (config) {
         // Concurrency level
         // how many browser should be started simultaneous
         concurrency: 3,
+
+        browserConsoleLogOptions: {
+            terminal: false,
+        },
+
+        mochaReporter: {
+            showDiff: true,
+        },
     })
 }

@@ -2,11 +2,9 @@ import { expect } from 'chai'
 import ReactDOM from 'react-dom'
 import { getFakeWindow } from '../utils/dom'
 import { getMockStore } from '../utils/redux'
-import { stubImport } from '../utils/sinon'
 import { startApp, generateRandomShapes } from '../../src/app/appUtils'
 import { updateAppStatus } from '../../src/app/appActions'
 import { updateShapeConfiguration } from '../../src/shape/shapeActions'
-import * as random from '../../src/app/random'
 
 describe('appUtils', function () {
     describe('startApp', function () {
@@ -40,18 +38,24 @@ describe('appUtils', function () {
         })
     })
 
-    describe.only('generateRandomShapes', function () {
+    describe('generateRandomShapes', function () {
         it('triggers updateShapeConfiguration for each side with random values', function () {
             const store = getMockStore({})
-            stubImport(this.sinon, random, 'getRandomShapeName')
+            const fakeRandomShape = this.sinon.stub()
+            fakeRandomShape
                 .onFirstCall().returns('pyramid')
                 .onSecondCall().returns('triangularPrism')
-            stubImport(this.sinon, random, 'getRandomVolume')
+            const fakeRandomVolume = this.sinon.stub()
+            fakeRandomVolume
                 .onFirstCall().returns(31.9)
                 .onSecondCall().returns(2.11)
-            generateRandomShapes(store)
+            generateRandomShapes(
+                store,
+                fakeRandomShape,
+                fakeRandomVolume,
+            )
             const [firstAction, secondAction] = store.getActions()
-            expect(firstAction).to.equal(updateShapeConfiguration({
+            expect(firstAction).to.eql(updateShapeConfiguration({
                 side: 'left',
                 shape: 'pyramid',
                 volume: 31.9,

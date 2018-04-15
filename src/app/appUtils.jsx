@@ -4,8 +4,9 @@ import { Provider } from 'react-redux'
 import AppContainer from '../app/AppContainer'
 import realStore from '../store'
 import { updateAppStatus } from '../../src/app/appActions'
+import { updateShapeConfiguration } from '../shape/shapeActions'
 import * as box from '../shape/box'
-import * as random from '../../src/app/random'
+import { getRandomShapeName, getRandomVolume } from '../../src/app/random'
 
 export const shapes = { box }
 
@@ -26,10 +27,19 @@ export function startApp(win = window, store = realStore) {
     })
 }
 
-export function generateRandomShapes(store = realStore) {
-    store.dispatch(updateAppStatus({
+export function generateRandomShapes(
+    store = realStore,
+    getRandomShapeN = getRandomShapeName,
+    getRandomV = getRandomVolume,
+) {
+    store.dispatch(updateShapeConfiguration({
         side: 'left',
-        shape: random.getRandomShapeName(),
-        volume: random.getRandomVolume(),
+        shape: getRandomShapeN(),
+        volume: getRandomV(),
+    }))
+    store.dispatch(updateShapeConfiguration({
+        side: 'right',
+        shape: getRandomShapeN(),
+        volume: getRandomV(),
     }))
 }

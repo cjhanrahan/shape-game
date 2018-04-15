@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack",
     "lint": "eslint . --fix",
-    "start": "npm run test && npm run build",
+    "start": "karma start",
     "test": "eslint . --fix && karma start --single-run"
   },
   "author": "Conor John Hanrahan",
@@ -16,7 +16,6 @@
     "babel-eslint": "^8.2.2",
     "babel-loader": "^7.1.4",
     "babel-plugin-external-helpers": "^6.22.0",
-    "babel-plugin-rewire": "^1.1.0",
     "babel-preset-es2015-rollup": "^3.0.0",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-3": "^6.24.1",
