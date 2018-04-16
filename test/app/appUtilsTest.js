@@ -2,7 +2,11 @@ import { expect } from 'chai'
 import ReactDOM from 'react-dom'
 import { getFakeWindow } from '../utils/dom'
 import { getMockStore } from '../utils/redux'
-import { startApp, generateRandomShapes } from '../../src/app/appUtils'
+import {
+    startApp,
+    generateRandomShapes,
+    makeActionCreator,
+} from '../../src/app/appUtils'
 import { updateAppStatus } from '../../src/app/appActions'
 import { updateShapeConfiguration } from '../../src/shape/shapeActions'
 
@@ -29,11 +33,11 @@ describe('appUtils', function () {
         })
 
         it('properly updates loading state', function () {
-            expect(store.getActions()).to.eql([updateAppStatus('loading')])
+            expect(store.getActions()).to.eql([updateAppStatus({ newStatus: 'loading' })])
             handler()
             expect(store.getActions()).to.eql([
-                updateAppStatus('loading'),
-                updateAppStatus('ready'),
+                updateAppStatus({ newStatus: 'loading' }),
+                updateAppStatus({ newStatus: 'ready' }),
             ])
         })
     })
@@ -91,6 +95,28 @@ describe('appUtils', function () {
                 volume: 2.11,
                 relativeDimensions: { height: 8.1, baseWidth: 4 },
             }))
+        })
+    })
+
+    describe('makeActionCreator', function () {
+        let actionCreator
+
+        beforeEach(function () {
+            actionCreator = makeActionCreator(
+                'DO_STUFF',
+                ['cat', 'dog']
+            )
+        })
+
+        it('returns an action with the type name and payload', function () {
+            expect(actionCreator({ cat: 3, dog: 4 })).to.eql({
+                type: 'DO_STUFF',
+                payload: { cat: 3, dog: 4 }
+            })
+        })
+
+        it('throws an error for invalid arguments', function () {
+            expect(() => actionCreator({ cat: 3, dog: 4, gerbil: 9 })).to.throw()
         })
     })
 })

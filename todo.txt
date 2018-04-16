@@ -1,3 +1,4 @@
+make buildAction
 get two shapes in store
 get it working for boxes only
 add webpack dev server

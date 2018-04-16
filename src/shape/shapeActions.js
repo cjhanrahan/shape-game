@@ -1,6 +1,6 @@
-export function updateShapeConfiguration({ side, shape, volume, relativeDimensions }) {
-    return {
-        type: 'UPDATE_SHAPE_CONFIGURATION',
-        payload: { side, shape, volume, relativeDimensions },
-    }
-}
+import { makeActionCreator } from '../app/appUtils'
+
+export const updateShapeConfiguration = makeActionCreator(
+    'UPDATE_SHAPE_CONFIGURATION',
+    ['side', 'shape', 'volume', 'relativeDimensions'],
+)

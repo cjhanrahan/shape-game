@@ -1,3 +1,11 @@
+import {
+    allPass,
+    contains,
+    identity,
+    keys,
+    pipe,
+    sortBy,
+} from 'ramda'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
@@ -24,10 +32,10 @@ export function renderApp(domNode, store) {
 
 
 export function startApp(win = window, store = realStore) {
-    store.dispatch(updateAppStatus('loading'))
+    store.dispatch(updateAppStatus({ newStatus: 'loading' }))
     win.addEventListener('load', () => {
         renderApp(win.document.getElementById('app-container'), store)
-        store.dispatch(updateAppStatus('ready'))
+        store.dispatch(updateAppStatus({ newStatus: 'ready' }))
     })
 }
 
@@ -54,4 +62,18 @@ export function generateRandomShapes(
         volume: getRandomV(),
         relativeDimensions: rightShapeRelativeDim,
     }))
+}
+
+export function makeActionCreator(type, payloadArgs) {
+    return (obj) => {
+        const specifiedKeys = sortBy(identity, payloadArgs)
+        const givenKeys = pipe(keys, sortBy(identity))(obj)
+        const keysAreAllowed = givenKeys.map(x => contains(x))
+        if (!allPass(keysAreAllowed)(specifiedKeys)) {
+            throw new Error(
+                `Invalid key! Given keys: ${givenKeys} allowed keys: ${specifiedKeys}`
+            )
+        }
+        return { type, payload: obj }
+    }
 }

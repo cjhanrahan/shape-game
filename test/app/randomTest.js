@@ -33,7 +33,7 @@ describe('getRandomRelativeDimensions', function () {
             { name: 'height' },
             { name: 'topRadius', relativeMin: 0.4, relativeMax: 0.8 },
             { name: 'bottomRadius', relativeMin: 19, relativeMax: 22 },
-        ]      
+        ]
         const randomFunc = this.sinon.stub()
         randomFunc.withArgs({ min: 0.4, max: 0.8 })
             .returns(0.7)

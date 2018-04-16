@@ -7,7 +7,7 @@ describe('appReducer', function () {
         testReducer({
             reducer: appReducer,
             oldState: { status: 'ready' },
-            action: updateAppStatus('loading'),
+            action: updateAppStatus({ newStatus: 'loading' }),
             expectedState: { status: 'loading' },
         })
     })

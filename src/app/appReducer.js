@@ -7,7 +7,7 @@ export const appReducer = (state = defaultState, action) => {
         case 'UPDATE_APP_STATUS':
             return {
                 ...state,
-                status: action.payload,
+                status: action.payload.newStatus,
             }
         default:
             return state
