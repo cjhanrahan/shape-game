@@ -30,15 +30,6 @@ export function renderApp(domNode, store) {
     ), domNode)
 }
 
-
-export function startApp(win = window, store = realStore) {
-    store.dispatch(updateAppStatus({ newStatus: 'loading' }))
-    win.addEventListener('load', () => {
-        renderApp(win.document.getElementById('app-container'), store)
-        store.dispatch(updateAppStatus({ newStatus: 'ready' }))
-    })
-}
-
 export function generateRandomShapes(
     store = realStore,
     shapez = shapes,
@@ -62,6 +53,20 @@ export function generateRandomShapes(
         volume: getRandomV(),
         relativeDimensions: rightShapeRelativeDim,
     }))
+}
+
+
+export function startApp(
+    win = window,
+    store = realStore,
+    generateRandomS = generateRandomShapes
+) {
+    generateRandomS()
+    store.dispatch(updateAppStatus({ newStatus: 'loading' }))
+    win.addEventListener('load', () => {
+        renderApp(win.document.getElementById('app-container'), store)
+        store.dispatch(updateAppStatus({ newStatus: 'ready' }))
+    })
 }
 
 export function makeActionCreator(type, payloadArgs) {

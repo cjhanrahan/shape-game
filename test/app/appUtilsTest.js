@@ -16,12 +16,14 @@ describe('appUtils', function () {
         let eventName
         let handler
         let store
+        let generateRandomS
 
         beforeEach(function () {
             store = getMockStore({})
             this.sinon.stub(ReactDOM, 'render')
             fakeWindow = getFakeWindow(this.sinon)
-            startApp(fakeWindow, store);
+            generateRandomS = this.sinon.spy()
+            startApp(fakeWindow, store, generateRandomS);
             [eventName, handler] = fakeWindow.addEventListener.firstCall.args
         })
 
@@ -33,12 +35,16 @@ describe('appUtils', function () {
         })
 
         it('properly updates loading state', function () {
-            expect(store.getActions()).to.eql([updateAppStatus({ newStatus: 'loading' })])
+            expect(store.getActions()).to.deep.include(updateAppStatus({ newStatus: 'loading' }))
             handler()
-            expect(store.getActions()).to.eql([
+            expect(store.getActions()).to.have.deep.ordered.members([
                 updateAppStatus({ newStatus: 'loading' }),
                 updateAppStatus({ newStatus: 'ready' }),
             ])
+        })
+
+        it('calls generateRandomShapes', function () {
+            this.sinon.assert.called(generateRandomS)
         })
     })
 
