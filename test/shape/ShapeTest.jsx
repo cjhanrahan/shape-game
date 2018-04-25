@@ -75,17 +75,12 @@ describe('Shape', function () {
     })
 
     it('creates a bound animate function', function () {
-        const { boundStartAnimation } = instance
         this.sinon.spy(instance.renderer, 'render')
-        boundStartAnimation()
-        expect(instance.startAnimation.calledOn(instance)).to.be.true
-        expect(
-            requestAnimationFrame.calledWith(instance.boundStartAnimation)
-        ).to.be.true
-        expect(instance.onAnimationTick.called).to.be.true
-        expect(
-            instance.renderer.render.calledWith(instance.scene, instance.camera)
-        ).to.be.true
+        instance.boundStartAnimation()
+        this.sinon.assert.calledOn(instance.startAnimation, instance)
+        this.sinon.assert.calledWith(requestAnimationFrame, instance.boundStartAnimation)
+        this.sinon.assert.called(instance.onAnimationTick)
+        this.sinon.assert.calledWith(instance.renderer.render, instance.scene, instance.camera)
     })
 
 
@@ -94,8 +89,8 @@ describe('Shape', function () {
         instance.stopAnimation()
         requestAnimationFrame.resetHistory()
         setTimeout(() => {
-            expect(requestAnimationFrame.called).to.be.false
+            this.sinon.assert.notCalled(requestAnimationFrame)
             done()
-        }, 50)
+        }, 100)
     })
 })
