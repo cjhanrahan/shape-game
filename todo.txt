@@ -1,7 +1,4 @@
-rename shapeTest
 get shape to render
-remove boundStartAnimation call in ShapeComponent
-stop using pyramid in AppComponent
 update dependencies
 switch to webpack-dev-server
 get rid of Pyramid and Box

@@ -30,7 +30,7 @@ describe('Shape', function () {
         geometry = new ConeGeometry(3, 5)
         material = new MeshBasicMaterial({ color: 0xabab33 })
         this.sinon.spy(window, 'requestAnimationFrame')
-        this.sinon.spy(Shape.prototype, 'startAnimation')
+        this.sinon.spy(Shape.prototype, 'animate')
         this.sinon.spy(Shape.prototype, 'onAnimationTick')
         wrapper = mount(
             <Shape
@@ -76,9 +76,10 @@ describe('Shape', function () {
 
     it('creates a bound animate function', function () {
         this.sinon.spy(instance.renderer, 'render')
-        instance.boundStartAnimation()
-        this.sinon.assert.calledOn(instance.startAnimation, instance)
-        this.sinon.assert.calledWith(requestAnimationFrame, instance.boundStartAnimation)
+        instance.startAnimation()
+        instance.boundAnimate()
+        this.sinon.assert.calledOn(instance.animate, instance)
+        this.sinon.assert.calledWith(requestAnimationFrame, instance.boundAnimate)
         this.sinon.assert.called(instance.onAnimationTick)
         this.sinon.assert.calledWith(instance.renderer.render, instance.scene, instance.camera)
     })

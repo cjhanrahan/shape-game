@@ -29,7 +29,9 @@ export default class Shape extends React.Component {
         this.mesh = new Mesh(geometry, material)
         this.scene = getScene(this.mesh)
         this.camera = getCamera(canvas)
-        this.boundStartAnimation = this.startAnimation.bind(this)
+        this.boundAnimate = this.animate.bind(this)
+        this.startAnimation()
+        this.boundAnimate()
     }
 
     onAnimationTick() {
@@ -37,14 +39,21 @@ export default class Shape extends React.Component {
     }
 
     startAnimation() {
-        this.animationRequestId = requestAnimationFrame(this.boundStartAnimation)
-        this.onAnimationTick()
-        this.renderer.render(this.scene, this.camera)
+        this.animationShouldRun = true
+    }
+
+    animate() {
+        if (this.animationShouldRun) {
+            this.animationRequestId = requestAnimationFrame(this.boundAnimate)
+            this.onAnimationTick()
+            this.renderer.render(this.scene, this.camera)
+        }
     }
 
     stopAnimation() {
-        this.animationRequestId = null
         cancelAnimationFrame(this.animationRequestId)
+        this.animationRequestId = null
+        this.animationShouldRun = false
     }
 
     render() {
