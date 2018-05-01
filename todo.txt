@@ -1,4 +1,3 @@
-get shape to render
 update dependencies
 switch to webpack-dev-server
 get rid of Pyramid and Box

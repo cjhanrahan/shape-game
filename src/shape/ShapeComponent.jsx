@@ -16,6 +16,7 @@ export default class Shape extends React.Component {
     constructor(props) {
         super(props)
         this.containerNode = createRef()
+        this.boundAnimate = this.animate.bind(this)
     }
 
     componentDidMount() {
@@ -29,7 +30,6 @@ export default class Shape extends React.Component {
         this.mesh = new Mesh(geometry, material)
         this.scene = getScene(this.mesh)
         this.camera = getCamera(canvas)
-        this.boundAnimate = this.animate.bind(this)
         this.startAnimation()
         this.boundAnimate()
     }

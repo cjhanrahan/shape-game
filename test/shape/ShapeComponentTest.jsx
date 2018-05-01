@@ -64,6 +64,10 @@ describe('Shape', function () {
         expect(instance.camera.aspect).to.be.closeTo(400 / 600, 0.1)
     })
 
+    it('the camera is positioned a little closer to the viewer', function () {
+        expect(instance.camera.position.z).to.be.above(0)
+    })
+
     it('adds a mesh with the given geometry/material to the scene', function () {
         expect(instance.mesh.geometry).to.equal(geometry)
         expect(instance.mesh.material).to.equal(material)
