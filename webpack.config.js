@@ -34,5 +34,6 @@ module.exports = {
     devServer: {
         index: 'index.html',
         watchContentBase: true,
+        publicPath: '/dist'
     },
 }

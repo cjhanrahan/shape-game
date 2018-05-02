@@ -10,7 +10,7 @@ const boxShape = (
     <Shape
         canvas={document.createElement('canvas')}
         geometry={boxGeometry}
-        material={new MeshBasicMaterial({ color: 0xf41505 })}
+        material={new MeshBasicMaterial({ color: 0x9415f5 })}
     />
 )
 
