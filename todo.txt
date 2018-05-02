@@ -1,12 +1,10 @@
-update dependencies
-switch to webpack-dev-server
 get rid of Pyramid and Box
 get two shapes in store
 get it working for boxes only
 add webpack dev server
 make loading state more useful
 add different geometry tests
-serve CSS from webpack
+
 
 each round:
     pick two shapes

@@ -27,4 +27,12 @@ module.exports = {
     resolve: {
         extensions: ['*', '.js', '.jsx'],
     },
+    watch: true,
+    watchOptions: {
+        poll: 1000,
+    },
+    devServer: {
+        index: 'index.html',
+        watchContentBase: true,
+    },
 }
