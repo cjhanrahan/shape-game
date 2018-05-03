@@ -14,7 +14,7 @@ import { setOffsetDimensions } from '../utils/dom'
 import Shape from '../../src/shape/ShapeComponent'
 
 
-describe('Shape', function () {
+describe('ShapeComponent', function () {
     let canvas
     let instance
     let geometry

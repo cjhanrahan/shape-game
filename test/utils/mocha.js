@@ -7,19 +7,19 @@ function isPropTypeError(warning) {
 
 export default function setupTest() {
     beforeEach(function () {
-        // this.sinon.stub(console, 'error')
-        // // eslint-disable-next-line no-console
-        // console.error.withArgs(isPropTypeError)
-        //     .callsFake((warning) => { throw new ReferenceError(warning) })
-        // // eslint-disable-next-line no-console
-        // console.error.callThrough()
+        this.sinon.stub(console, 'error')
+        // eslint-disable-next-line no-console
+        console.error.withArgs(isPropTypeError)
+            .callsFake((warning) => { throw new ReferenceError(warning) })
+        // eslint-disable-next-line no-console
+        console.error.callThrough()
     })
 
     afterEach(function () {
-        // // eslint-disable-next-line no-console
-        // this.sinon.assert.notCalled(console.error)
-        // // eslint-disable-next-line no-console
-        // console.error.restore()
-        // // eslint-disable-next-line no-undef
+        // eslint-disable-next-line no-console
+        this.sinon.assert.notCalled(console.error)
+        // eslint-disable-next-line no-console
+        console.error.restore()
+        // eslint-disable-next-line no-undef
     })
 }

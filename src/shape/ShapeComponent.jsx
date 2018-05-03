@@ -35,7 +35,7 @@ export default class Shape extends React.Component {
     }
 
     onAnimationTick() {
-        this.mesh.rotation.y += 0.1
+        this.mesh.rotation.y += 0.01
     }
 
     startAnimation() {

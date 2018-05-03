@@ -1,7 +1,5 @@
-get rid of Pyramid and Box
-get two shapes in store
-get it working for boxes only
-add webpack dev server
+make two shapes in app
+fix eslint errors
 make loading state more useful
 add different geometry tests
 
