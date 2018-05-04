@@ -1,5 +1,6 @@
-make two shapes in app
-fix eslint errors
+add shiny material
+make the shapes print volume information
+should two shapes really be in app container?
 make loading state more useful
 add different geometry tests
 

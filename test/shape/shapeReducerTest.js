@@ -10,17 +10,20 @@ describe('shapeReducer', function () {
                 leftShapeConfiguration: {
                     shape: null,
                     volume: null,
+                    relativeDimensions: null,
                 },
             },
             action: updateShapeConfiguration({
                 side: 'left',
                 shape: 'cone',
-                volume: 34.2
+                volume: 34.2,
+                relativeDimensions: { foo: 12 },
             }),
             expectedState: {
                 leftShapeConfiguration: {
                     shape: 'cone',
                     volume: 34.2,
+                    relativeDimensions: { foo: 12 },
                 },
             },
         })
@@ -30,17 +33,20 @@ describe('shapeReducer', function () {
                 rightShapeConfiguration: {
                     shape: null,
                     volume: null,
+                    relativeDimensions: null,
                 },
             },
             action: updateShapeConfiguration({
                 side: 'right',
                 shape: 'sphere',
                 volume: 10.3,
+                relativeDimensions: { bar: 94 },
             }),
             expectedState: {
                 rightShapeConfiguration: {
                     shape: 'sphere',
                     volume: 10.3,
+                    relativeDimensions: { bar: 94 },
                 },
             },
         })

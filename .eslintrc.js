@@ -14,6 +14,7 @@ module.exports = {
         'prefer-arrow-callback': 0,
         'newline-per-chained-call': 0,
         'no-underscore-dangle': 0,
+        'object-curly-newline': 0,
     },
     env: {
         browser: true,

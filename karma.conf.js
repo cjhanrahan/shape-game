@@ -126,6 +126,7 @@ module.exports = function (config) {
         },
 
         mochaReporter: {
+            maxLogLines: 80,
             showDiff: true,
         },
     })

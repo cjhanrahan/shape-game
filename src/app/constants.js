@@ -1,6 +1,6 @@
 import * as box from '../shape/box'
 
-export const shapes = new Map([
+export const shapeMap = new Map([
     ['box', box]
 ])
 
