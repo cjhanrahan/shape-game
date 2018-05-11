@@ -6,8 +6,11 @@ import {
 import {
     makeGetThreeGeometries,
 } from '../../src/shape/shapeSelectors'
+import setupTest from '../utils/mocha'
 
 describe('shapeSelector', function () {
+    setupTest()
+
     describe('makeGetThreeGeometries', function () {
         it('Returns the left and right selectors', function () {
             const shapeMap = new Map([

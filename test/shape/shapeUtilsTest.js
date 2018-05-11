@@ -1,9 +1,11 @@
 import { expect } from 'chai'
 import {
+    AmbientLight,
     BoxBufferGeometry,
     Mesh,
     MeshBasicMaterial,
     Scene,
+    SpotLight,
     WebGLRenderer,
 } from 'three'
 import 'mocha-sinon'
@@ -13,8 +15,11 @@ import {
     getRenderer,
     getScene,
 } from '../../src/shape/ShapeUtils'
+import setupTest from '../utils/mocha'
 
 describe('Shape render functions', function () {
+    setupTest()
+
     describe('getRenderer', function () {
         let renderer
         let canvas
@@ -36,13 +41,26 @@ describe('Shape render functions', function () {
     })
 
     describe('getScene', function () {
-        it('returns a scene with the given mesh', function () {
+        let scene
+        let mesh
+
+        beforeEach(function () {
             const geo = new BoxBufferGeometry(1, 3, 5)
             const material = new MeshBasicMaterial({ color: 0x00ff00 })
-            const mesh = new Mesh(geo, material)
-            const scene = getScene(mesh)
+            mesh = new Mesh(geo, material)
+            scene = getScene(mesh)
+        })
+
+        it('returns a scene with the given mesh', function () {
             expect(scene).to.be.an.instanceOf(Scene)
             expect(scene.children).to.include(mesh)
+        })
+
+        it('the scene has an AmbientLight and a SpotLight', function () {
+            expect(scene.children.some(x => x instanceof AmbientLight))
+                .to.equal(true, 'has ambient light')
+            expect(scene.children.some(x => x instanceof SpotLight))
+                .to.equal(true, 'has spot light')
         })
     })
 

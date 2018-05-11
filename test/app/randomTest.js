@@ -4,8 +4,11 @@ import {
     getRandomVolume,
     getRandomRelativeDimensions,
 } from '../../src/app/random'
+import setupTest from '../utils/mocha'
 
 describe('getRandomShapeName', function () {
+    setupTest()
+
     it('picks a random shape from the shapes object', function () {
         const shapes = new Map([
             ['shape1', {}],
@@ -19,6 +22,8 @@ describe('getRandomShapeName', function () {
 })
 
 describe('getRandomVolume', function () {
+    setupTest()
+
     it('picks a random volume within the range', function () {
         const randomFunc = this.sinon.stub()
         randomFunc.withArgs({ min: 10, max: 30 })
@@ -28,6 +33,8 @@ describe('getRandomVolume', function () {
 })
 
 describe('getRandomRelativeDimensions', function () {
+    setupTest()
+
     it('picks random relative dimensions for all dimensions other than the first', function () {
         const testDimensions = [
             { name: 'height' },

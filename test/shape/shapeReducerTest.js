@@ -1,8 +1,11 @@
 import { shapeReducer } from '../../src/shape/shapeReducer'
 import { testReducer } from '../utils/redux'
 import { updateShapeConfiguration } from '../../src/shape/shapeActions'
+import setupTest from '../utils/mocha'
 
 describe('shapeReducer', function () {
+    setupTest()
+
     it('lets you set shape configurations', function () {
         testReducer({
             reducer: shapeReducer,

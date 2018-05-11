@@ -98,4 +98,8 @@ describe('ShapeComponent', function () {
             done()
         }, 100)
     })
+
+    it('shows the volume of the shae', function () {
+
+    })
 })

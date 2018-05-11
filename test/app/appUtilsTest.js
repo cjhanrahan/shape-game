@@ -9,8 +9,11 @@ import {
 } from '../../src/app/appUtils'
 import { updateAppStatus } from '../../src/app/appActions'
 import { updateShapeConfiguration } from '../../src/shape/shapeActions'
+import setupTest from '../utils/mocha'
 
 describe('appUtils', function () {
+    setupTest()
+
     describe('startApp', function () {
         let fakeWindow
         let eventName

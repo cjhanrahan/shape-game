@@ -3,8 +3,11 @@ import {
     getAbsoluteDimensions,
     getThreeGeometry,
 } from '../../src/shape/box'
+import setupTest from '../utils/mocha'
 
 describe('getAbsoluteDimensions', function () {
+    setupTest()
+
     it('given a volume and relative height/depth, it returns the correct dimensions', function () {
         const relativeDimensions1 = { height: 5, depth: 1.25 }
         const absoluteDimensions1 = getAbsoluteDimensions(400, relativeDimensions1)
@@ -20,6 +23,8 @@ describe('getAbsoluteDimensions', function () {
 })
 
 describe('getThreeGeometry', function () {
+    setupTest()
+
     it('return a three.js shape with the right dimensions', function () {
         const absoluteDimensions = { width: 4, height: 9, depth: 13 }
         const box = getThreeGeometry(absoluteDimensions)

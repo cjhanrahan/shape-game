@@ -1,10 +1,11 @@
 import React from 'react'
-import { Geometry, BufferGeometry, MeshBasicMaterial } from 'three'
+import { Geometry, BufferGeometry, MeshLambertMaterial } from 'three'
 import { func, instanceOf, oneOfType, string } from 'prop-types'
 import Shape from '../shape/ShapeComponent'
 import './app.scss'
 
 const getRealCanvas = () => document.createElement('canvas')
+const material = new MeshLambertMaterial({ color: 0x9475f5 })
 
 const App = ({
     status,
@@ -16,12 +17,12 @@ const App = ({
         <Shape
             canvas={getCanvas()}
             geometry={leftGeometry}
-            material={new MeshBasicMaterial({ color: 0x9475f5 })}
+            material={material}
         />
         <Shape
             canvas={getCanvas()}
             geometry={rightGeometry}
-            material={new MeshBasicMaterial({ color: 0x9475f5 })}
+            material={material}
         />
         <div className="loading"><span>loading...</span></div>
     </div>
