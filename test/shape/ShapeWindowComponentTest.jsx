@@ -28,6 +28,7 @@ describe('ShapeWindowComponent', function () {
         wrapper = shallow(
             <ShapeWindow
                 shape={shape}
+                volume={34.9}
             />
         )
     })
@@ -35,5 +36,6 @@ describe('ShapeWindowComponent', function () {
     it('renders a Shape and a Volume', function () {
         const shape = wrapper.find(Shape)
         expect(shape.prop('geometry')).to.equal(geometry)
+        expect(wrapper.find('.shape-window .volume').text()).to.equal('34.9')
     })
 })
