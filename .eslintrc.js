@@ -15,6 +15,10 @@ module.exports = {
         'newline-per-chained-call': 0,
         'no-underscore-dangle': 0,
         'object-curly-newline': 0,
+        'import/no-extraneous-dependencies': [
+            'error',
+            { devDependencies: ['karma.conf.js', 'test/**'] }
+        ],
     },
     env: {
         browser: true,

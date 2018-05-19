@@ -23,7 +23,9 @@ describe('App', function () {
         wrapper = shallow(
             <App
                 leftGeometry={leftGeometry}
+                leftVolume={31.9}
                 rightGeometry={rightGeometry}
+                rightVolume={99}
                 status="ready"
             />
         )
