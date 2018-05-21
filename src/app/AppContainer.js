@@ -1,18 +1,10 @@
 import { connect } from 'react-redux'
 import App from './AppComponent'
-import { makeGetThreeGeometries } from '../shape/shapeSelectors'
-import { shapeMap } from './constants'
+import { getAllShapeIds } from '../shape/shapeSelectors'
 
-const getMapStateToProps = () => {
-    const getThreeGeometries = makeGetThreeGeometries()
-    return (state) => {
-        const { leftGeometry, rightGeometry } = getThreeGeometries(state, { shapeMap })
-        return {
-            status: state.app.status,
-            leftGeometry,
-            rightGeometry,
-        }
-    }
-}
+const mapStateToProps = state => ({
+    status: state.app.status,
+    shapeIds: getAllShapeIds(state),
+})
 
-export default connect(getMapStateToProps)(App)
+export default connect(mapStateToProps)(App)

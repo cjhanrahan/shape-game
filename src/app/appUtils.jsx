@@ -9,18 +9,18 @@ import {
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
+import shortid from 'shortid'
 import AppContainer from '../app/AppContainer'
 import realStore from '../store'
 import { updateAppStatus } from '../../src/app/appActions'
 import { updateShapeConfiguration } from '../shape/shapeActions'
-import * as box from '../shape/box'
 import {
     getRandomShapeName,
     getRandomVolume,
     getRandomRelativeDimensions,
 } from '../../src/app/random'
+import { shapeModulesByName } from './constants'
 
-export const shapes = { box }
 
 export function renderApp(domNode, store) {
     ReactDOM.render((
@@ -32,23 +32,24 @@ export function renderApp(domNode, store) {
 
 export function generateRandomShapes(
     store = realStore,
-    shapez = shapes,
+    shapesByN = shapeModulesByName,
     getRandomShapeN = getRandomShapeName,
     getRandomV = getRandomVolume,
     getRandomRelativeD = getRandomRelativeDimensions,
+    getId = shortid.generate,
 ) {
     const leftShapeName = getRandomShapeN()
-    const leftShapeRelativeDim = getRandomRelativeD(shapez[leftShapeName].dimensions)
+    const leftShapeRelativeDim = getRandomRelativeD(shapesByN[leftShapeName].dimensions)
     const rightShapeName = getRandomShapeN()
-    const rightShapeRelativeDim = getRandomRelativeD(shapez[rightShapeName].dimensions)
+    const rightShapeRelativeDim = getRandomRelativeD(shapesByN[rightShapeName].dimensions)
     store.dispatch(updateShapeConfiguration({
-        side: 'left',
+        id: getId(),
         shape: leftShapeName,
         volume: getRandomV(),
         relativeDimensions: leftShapeRelativeDim,
     }))
     store.dispatch(updateShapeConfiguration({
-        side: 'right',
+        id: getId(),
         shape: rightShapeName,
         volume: getRandomV(),
         relativeDimensions: rightShapeRelativeDim,

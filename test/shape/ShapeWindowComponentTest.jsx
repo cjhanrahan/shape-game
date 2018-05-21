@@ -1,41 +1,31 @@
 import React from 'react'
 import { expect } from 'chai'
-import {
-    CylinderGeometry,
-    MeshBasicMaterial,
-} from 'three'
 import 'mocha-sinon'
-import Shape from '../../src/shape/ShapeComponent'
 import ShapeWindow from '../../src/shape/ShapeWindowComponent'
 import setupTest from '../utils/mocha'
 import { shallow } from '../utils/enzyme'
 
 describe('ShapeWindowComponent', function () {
     let wrapper
-    let geometry
 
     setupTest()
 
     beforeEach(function () {
-        geometry = new CylinderGeometry()
-        const shape = (
-            <Shape
-                canvas={document.createElement('canvas')}
-                geometry={geometry}
-                material={new MeshBasicMaterial()}
-            />
-        )
+        const shape = <div className="fake-shape" />
         wrapper = shallow(
             <ShapeWindow
-                shape={shape}
                 volume={34.9}
-            />
+            >
+                {shape}
+            </ShapeWindow>
         )
     })
 
-    it('renders a Shape and a Volume', function () {
-        const shape = wrapper.find(Shape)
-        expect(shape.prop('geometry')).to.equal(geometry)
+    it('renders its shape', function () {
+        expect(wrapper.find('.fake-shape')).to.have.lengthOf(1)
+    })
+
+    it('adds the volume', function () {
         expect(wrapper.find('.shape-window .volume').text()).to.equal('34.9')
     })
 })

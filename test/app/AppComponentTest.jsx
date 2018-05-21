@@ -1,39 +1,28 @@
 import React from 'react'
 import { expect } from 'chai'
 import 'mocha-sinon'
-import {
-    DodecahedronGeometry,
-    OctahedronBufferGeometry,
-} from 'three'
 import setupTest from '../utils/mocha'
 import { shallow } from '../utils/enzyme'
 import App from '../../src/app/AppComponent'
-import Shape from '../../src/shape/ShapeComponent'
+import ShapeWindow from '../../src/shape/ShapeWindowComponent'
 
-describe('App', function () {
+describe.only('AppComponent', function () {
     let wrapper
-    let leftGeometry
-    let rightGeometry
 
     setupTest()
 
     beforeEach(function () {
-        leftGeometry = new DodecahedronGeometry(3)
-        rightGeometry = new OctahedronBufferGeometry(2)
         wrapper = shallow(
             <App
-                leftGeometry={leftGeometry}
-                leftVolume={31.9}
-                rightGeometry={rightGeometry}
-                rightVolume={99}
                 status="ready"
+                shapeIds={['one', 'two', 'three']}
             />
         )
     })
 
-    it('renders the left and right geometries', function () {
-        const shapes = wrapper.find(Shape)
-        expect(shapes.first().prop('geometry')).to.equal(leftGeometry)
-        expect(shapes.at(1).prop('geometry')).to.equal(rightGeometry)
+    it('renders a ShapeWindow for all the shape ids', function () {
+        expect(wrapper.find('.shape-window[data-id="one"]')).to.have.lengthOf(1)
+        expect(wrapper.find('.shape-window[data-id="two"]')).to.have.lengthOf(1)
+        expect(wrapper.find('.shape-window[data-id="three"]')).to.have.lengthOf(1)
     })
 })

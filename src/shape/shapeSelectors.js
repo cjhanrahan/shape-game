@@ -1,27 +1,43 @@
 import { createSelector } from 'reselect'
+import createCachedSelector from 're-reselect'
 
-const getLeftConfig = state => state.shapes.leftShapeConfiguration
-const getRightConfig = state => state.shapes.rightShapeConfiguration
-const getShapeMap = (__, props) => props.shapeMap
+const getConfigs = state => state.shapes.shapeConfigurationsById
+const getShapeId = (__, props) => props.shapeId
+const getShapeModulesByName = (__, props) => props.shapeModulesByName
 
-const makeGeometry = (config, map) => {
-    const { getAbsoluteDimensions, getThreeGeometry } = map.get(config.shape)
-    const absoluteDimensions = getAbsoluteDimensions(config.volume, config.relativeDimensions)
-    return getThreeGeometry(absoluteDimensions)
-}
-
-const getLeftGeometrySelector = createSelector(
-    [getLeftConfig, getShapeMap],
-    (config, map) => makeGeometry(config, map)
+export const getAllShapeIds = createSelector(
+    [getConfigs],
+    configs => Object.keys(configs).sort()
 )
 
-const getRightGeometrySelector = createSelector(
-    [getRightConfig, getShapeMap],
-    (config, map) => makeGeometry(config, map)
+export const getConfigByShapeId = createCachedSelector(
+    [getConfigs, getShapeId],
+    (configs, shapeId) => configs[shapeId],
+)(
+    getShapeId,
 )
 
-export const makeGetThreeGeometries = () =>
-    createSelector(
-        [getLeftGeometrySelector, getRightGeometrySelector],
-        (leftGeometry, rightGeometry) => ({ leftGeometry, rightGeometry })
-    )
+export const getModuleByShapeId = createCachedSelector(
+    [getConfigByShapeId, getShapeModulesByName],
+    (config, modules) => modules[config.shape]
+)(
+    getShapeId,
+)
+
+export const getGeometryByShapeId = createCachedSelector(
+    [getConfigByShapeId, getModuleByShapeId],
+    (config, shapeMod) => {
+        const { getAbsoluteDimensions, getThreeGeometry } = shapeMod
+        const absoluteDimensions = getAbsoluteDimensions(config.volume, config.relativeDimensions)
+        return getThreeGeometry(absoluteDimensions)
+    }
+)(
+    getShapeId,
+)
+
+export const getVolumeByShapeId = createCachedSelector(
+    [getConfigByShapeId],
+    config => config.volume
+)(
+    getShapeId,
+)

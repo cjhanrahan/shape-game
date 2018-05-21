@@ -1,8 +1,8 @@
 import randomNumber from 'random-number'
-import { shapeMap, volumeRange } from './constants'
+import { shapeModulesByName, volumeRange } from './constants'
 
-export function getRandomShapeName(givenShapes = shapeMap, randomFunc = randomNumber) {
-    const shapesArray = [...givenShapes.keys()]
+export function getRandomShapeName(givenShapes = shapeModulesByName, randomFunc = randomNumber) {
+    const shapesArray = Object.keys(givenShapes).sort()
     const index = randomFunc({
         min: 0,
         max: shapesArray.length - 1,

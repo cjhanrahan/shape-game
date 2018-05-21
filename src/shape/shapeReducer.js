@@ -1,29 +1,21 @@
 export const defaultState = {
-    leftShapeConfiguration: {
-        shape: null,
-        volume: null,
-        relativeDimensions: null,
-    },
-    rightShapeConfiguration: {
-        shape: null,
-        volume: null,
-        relativeDimensions: null,
-    },
+    shapeConfigurationsById: {},
 }
 
 export const shapeReducer = (state = defaultState, action) => {
     switch (action.type) {
         case 'UPDATE_SHAPE_CONFIGURATION': {
             const {
-                side,
+                id,
                 shape,
                 volume,
                 relativeDimensions,
             } = action.payload
-            const key = `${side}ShapeConfiguration`
             return {
-                ...state,
-                [key]: { shape, volume, relativeDimensions },
+                shapeConfigurationsById: {
+                    ...state.shapeConfigurationsById,
+                    [id]: { shape, volume, relativeDimensions },
+                }
             }
         }
         default:

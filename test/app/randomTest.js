@@ -10,14 +10,16 @@ describe('getRandomShapeName', function () {
     setupTest()
 
     it('picks a random shape from the shapes object', function () {
-        const shapes = new Map([
-            ['shape1', {}],
-            ['shape2', {}],
-            ['shape3', {}],
-        ])
+        const shapeModulesByName = {
+            shape1: {},
+            shape2: {},
+            shape3: {},
+        }
+
         const randomFunc = this.sinon.stub()
         randomFunc.withArgs({ min: 0, max: 2, integer: true }).returns(2)
-        expect(getRandomShapeName(shapes, randomFunc)).to.equal('shape3')
+        const expectedKey = Object.keys(shapeModulesByName).sort()[2]
+        expect(getRandomShapeName(shapeModulesByName, randomFunc)).to.equal(expectedKey)
     })
 })
 

@@ -52,7 +52,7 @@ describe('appUtils', function () {
     })
 
     describe('generateRandomShapes', function () {
-        it('triggers updateShapeConfiguration for each side with random values', function () {
+        it('generates two random shapes', function () {
             const store = getMockStore({})
             const fakeShapes = {
                 pyramid: {
@@ -84,26 +84,33 @@ describe('appUtils', function () {
             fakeRandomDimensions
                 .withArgs(fakeShapes.triangularPrism.dimensions)
                 .returns({ height: 8.1, baseWidth: 4 })
+            const fakeGetId = this.sinon.stub()
+            fakeGetId
+                .onFirstCall().returns('foo')
+                .onSecondCall().returns('bar')
             generateRandomShapes(
                 store,
                 fakeShapes,
                 fakeRandomShape,
                 fakeRandomVolume,
                 fakeRandomDimensions,
+                fakeGetId,
             )
-            const [firstAction, secondAction] = store.getActions()
-            expect(firstAction).to.eql(updateShapeConfiguration({
-                side: 'left',
-                shape: 'pyramid',
-                volume: 31.9,
-                relativeDimensions: { baseWidth: 0.64 },
-            }))
-            expect(secondAction).to.eql(updateShapeConfiguration({
-                side: 'right',
-                shape: 'triangularPrism',
-                volume: 2.11,
-                relativeDimensions: { height: 8.1, baseWidth: 4 },
-            }))
+            const expectedActions = [
+                updateShapeConfiguration({
+                    id: 'foo',
+                    shape: 'pyramid',
+                    volume: 31.9,
+                    relativeDimensions: { baseWidth: 0.64 },
+                }),
+                updateShapeConfiguration({
+                    id: 'bar',
+                    shape: 'triangularPrism',
+                    volume: 2.11,
+                    relativeDimensions: { height: 8.1, baseWidth: 4 },
+                })
+            ]
+            expect(store.getActions()).to.include.deep.members(expectedActions)
         })
     })
 

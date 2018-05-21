@@ -1,11 +1,9 @@
 import React from 'react'
-import { number } from 'prop-types'
-import Shape from './ShapeComponent'
-import { componentPropType } from '../../test/utils/react'
+import { element, number } from 'prop-types'
 
-const ShapeWindowComponent = ({ shape, volume }) => (
+const ShapeWindowComponent = ({ children, volume }) => (
     <div className="shape-window">
-        {shape}
+        {children}
         <div className="stats">
             <span className="volume">{volume}</span>
         </div>
@@ -14,7 +12,7 @@ const ShapeWindowComponent = ({ shape, volume }) => (
 
 ShapeWindowComponent.propTypes = {
     volume: number.isRequired,
-    shape: componentPropType(Shape).isRequired,
+    children: element.isRequired,
 }
 
 export default ShapeWindowComponent

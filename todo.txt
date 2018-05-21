@@ -1,7 +1,9 @@
+fix AppComponentTest
+just pass shapeid to ShapeWindow
+check in browser
 make the shapes print volume information
+split up scss
 have it show volume only when clicked
 have it flash green or red based on right or wrong
-should two shapes really be in app container?
 make loading state more useful
-add different geometry tests
-
+add different shape modules
