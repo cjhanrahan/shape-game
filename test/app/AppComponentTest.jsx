@@ -3,10 +3,11 @@ import { expect } from 'chai'
 import 'mocha-sinon'
 import setupTest from '../utils/mocha'
 import { shallow } from '../utils/enzyme'
+// import { getMockStore } from '../utils/redux'
 import App from '../../src/app/AppComponent'
-import ShapeWindow from '../../src/shape/ShapeWindowComponent'
+import ShapeWindowContainer from '../../src/shape/ShapeWindowContainer'
 
-describe.only('AppComponent', function () {
+describe('AppComponent', function () {
     let wrapper
 
     setupTest()
@@ -16,13 +17,12 @@ describe.only('AppComponent', function () {
             <App
                 status="ready"
                 shapeIds={['one', 'two', 'three']}
-            />
+            />,
+            // { context: { store: getMockStore({}) } }
         )
     })
 
     it('renders a ShapeWindow for all the shape ids', function () {
-        expect(wrapper.find('.shape-window[data-id="one"]')).to.have.lengthOf(1)
-        expect(wrapper.find('.shape-window[data-id="two"]')).to.have.lengthOf(1)
-        expect(wrapper.find('.shape-window[data-id="three"]')).to.have.lengthOf(1)
+        expect(wrapper.containsMatchingElement(<ShapeWindowContainer shapeId="one" />)).to.be.true
     })
 })

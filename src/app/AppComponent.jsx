@@ -1,7 +1,7 @@
 import React from 'react'
 // import { Geometry, BufferGeometry, MeshLambertMaterial } from 'three'
 import { arrayOf, string } from 'prop-types'
-import ShapeWindow from '../shape/ShapeWindowComponent'
+import ShapeWindowContainer from '../shape/ShapeWindowContainer'
 import './app.scss'
 
 // const getRealCanvas = () => document.createElement('canvas')
@@ -12,7 +12,7 @@ const App = ({
     shapeIds,
 }) => (
     <div className="app" data-status={status}>
-        {shapeIds.map(id => <ShapeWindow shapeId={id} key={id} />)}
+        {shapeIds.map(id => <ShapeWindowContainer shapeId={id} key={id} />)}
         <div className="loading"><span>loading...</span></div>
     </div>
 )

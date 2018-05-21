@@ -1,5 +1,4 @@
-fix AppComponentTest
-just pass shapeid to ShapeWindow
+update dependencies
 check in browser
 make the shapes print volume information
 split up scss
@@ -7,3 +6,4 @@ have it show volume only when clicked
 have it flash green or red based on right or wrong
 make loading state more useful
 add different shape modules
+print timing statistics from webpack build
