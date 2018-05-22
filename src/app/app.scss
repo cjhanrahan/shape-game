@@ -27,6 +27,20 @@
         font-size: 30px;
     }
 }
+.shape-window {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    flex: 1;
+    .stats {
+        position: absolute;
+        bottom: 0;
+        display: flex;
+        color: #ffffff;
+        justify-content: center;
+        font-size: 2rem;
+    }
+}
 .shape-container {
     position: relative;
     height: 100%;

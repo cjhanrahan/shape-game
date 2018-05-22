@@ -1,18 +1,25 @@
 import React from 'react'
-// import { Geometry, BufferGeometry, MeshLambertMaterial } from 'three'
-import { arrayOf, string } from 'prop-types'
+import { arrayOf, func, object, objectOf, shape, string } from 'prop-types'
 import ShapeWindowContainer from '../shape/ShapeWindowContainer'
+import { shapeModulesByName as shapeModulesByNameFromConstants } from './constants'
 import './app.scss'
 
-// const getRealCanvas = () => document.createElement('canvas')
-// const material = new MeshLambertMaterial({ color: 0x9475f5 })
 
 const App = ({
     status,
     shapeIds,
+    shapeModulesByName,
 }) => (
     <div className="app" data-status={status}>
-        {shapeIds.map(id => <ShapeWindowContainer shapeId={id} key={id} />)}
+        {shapeIds.map(
+            id => (
+                <ShapeWindowContainer
+                    shapeModulesByName={shapeModulesByName}
+                    shapeId={id}
+                    key={id}
+                />
+            )
+        )}
         <div className="loading"><span>loading...</span></div>
     </div>
 )
@@ -20,7 +27,15 @@ const App = ({
 App.propTypes = {
     status: string.isRequired,
     shapeIds: arrayOf(string).isRequired,
+    shapeModulesByName: objectOf(shape({
+        dimensions: arrayOf(object).isRequired,
+        getAbsoluteDimensions: func,
+        getThreeGeometry: func.isRequired,
+    })),
 }
 
+App.defaultProps = {
+    shapeModulesByName: shapeModulesByNameFromConstants,
+}
 
 export default App
