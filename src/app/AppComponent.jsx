@@ -10,7 +10,7 @@ const App = ({
     shapeIds,
     shapeModulesByName,
 }) => (
-    <div className="app" data-status={status}>
+    <div styleName="app" data-status={status}>
         {shapeIds.map(
             id => (
                 <ShapeWindowContainer
@@ -20,7 +20,7 @@ const App = ({
                 />
             )
         )}
-        <div className="loading"><span>loading...</span></div>
+        <div styleName="loading"><span>loading...</span></div>
     </div>
 )
 

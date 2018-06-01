@@ -11,6 +11,7 @@ import {
     getScene,
     getRenderer,
 } from '../shape/ShapeUtils'
+import './shape.scss'
 
 export default class Shape extends React.Component {
     constructor(props) {
@@ -59,7 +60,7 @@ export default class Shape extends React.Component {
     render() {
         return (
             <div
-                className="shape-container"
+                styleName="shape-container"
                 ref={this.containerNode}
             />
         )

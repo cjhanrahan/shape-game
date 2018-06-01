@@ -7,18 +7,19 @@ import {
 import { round } from 'mathjs'
 import { func, instanceOf, oneOfType, number } from 'prop-types'
 import Shape from './ShapeComponent'
+import './shapeWindow.scss'
 
 const getRealCanvas = () => document.createElement('canvas')
 const material = new MeshLambertMaterial({ color: 0xdb7093 })
 
 const ShapeWindowComponent = ({ getCanvas = getRealCanvas, geometry, volume }) => (
-    <div className="shape-window">
+    <div styleName="shape-window">
         <Shape
             canvas={getCanvas()}
             geometry={geometry}
             material={material}
         />
-        <div className="stats">
+        <div styleName="stats">
             <span className="volume">{round(volume, 2)}</span>
         </div>
     </div>

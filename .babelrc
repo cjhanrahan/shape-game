@@ -3,5 +3,31 @@
         ["es2015", { "modules": false }],
         "stage-3",
         "react"
-    ]
+    ],
+    "env": {
+        "development": {
+            "plugins": [
+                ["react-css-modules", {
+                    "filetypes": {
+                        ".scss": {
+                            "syntax": "postcss-scss"
+                        }
+                    },
+                    "generateScopedName": "[name]__[local]__[hash:base64:5]"
+                }]
+            ]
+        },
+        "test": {
+            "plugins": [
+                ["react-css-modules", {
+                    "filetypes": {
+                        ".scss": {
+                            "syntax": "postcss-scss"
+                        }
+                    },
+                    "generateScopedName": "[local]"
+                }]
+            ]
+        },
+    },
 }
