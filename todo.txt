@@ -1,3 +1,5 @@
+t2b dev server tutorial
+get dev server working
 read html webpack plugin
 fix index.html (need html plugin?)
 remove Component from file names
