@@ -1,4 +1,5 @@
-is index.html being imported?
+read html webpack plugin
+fix index.html (need html plugin?)
 remove Component from file names
 have it flash green or red based on right or wrong
 have it show volume only when clicked

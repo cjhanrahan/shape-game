@@ -1,4 +1,5 @@
 const path = require('path')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 module.exports = {
     mode: 'development',
@@ -31,14 +32,19 @@ module.exports = {
             },
             {
                 test: /\.html$/,
+                // exclude: /index.html$/,
                 loader: 'file-loader',
+                options: {
+                    name: '[path][name].[ext]',
+                },
             },
         ],
     },
+    plugins: [new CleanWebpackPlugin(['dist'])],
     resolve: {
         extensions: ['*', '.js', '.jsx'],
     },
-    watch: true,
+    watch: false,
     watchOptions: {
         ignored: /node_modules/,
         poll: 1000,
