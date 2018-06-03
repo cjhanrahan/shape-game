@@ -6,7 +6,7 @@ import {
 } from 'three'
 import { round } from 'mathjs'
 import { func, instanceOf, oneOfType, number } from 'prop-types'
-import Shape from './ShapeComponent'
+import Shape from './Shape'
 import './shapeWindow.scss'
 
 const getRealCanvas = () => document.createElement('canvas')

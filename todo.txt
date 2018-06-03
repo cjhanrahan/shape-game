@@ -1,8 +1,3 @@
-t2b dev server tutorial
-get dev server working
-read html webpack plugin
-fix index.html (need html plugin?)
-remove Component from file names
 have it flash green or red based on right or wrong
 have it show volume only when clicked
 make loading state more useful

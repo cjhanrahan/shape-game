@@ -4,7 +4,7 @@ import 'mocha-sinon'
 import setupTest from '../utils/mocha'
 import { shallow } from '../utils/enzyme'
 // import { getMockStore } from '../utils/redux'
-import App from '../../src/app/AppComponent'
+import App from '../../src/app/App'
 import ShapeWindowContainer from '../../src/shape/ShapeWindowContainer'
 
 describe('AppComponent', function () {
@@ -18,7 +18,6 @@ describe('AppComponent', function () {
                 status="ready"
                 shapeIds={['one', 'two', 'three']}
             />,
-            // { context: { store: getMockStore({}) } }
         )
     })
 

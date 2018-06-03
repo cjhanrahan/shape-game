@@ -50,9 +50,6 @@ module.exports = {
         poll: 1000,
     },
     devServer: {
-        // index: 'dist/index.html',
-        // watchContentBase: true,
-        // publicPath: '/dist'
         contentBase: '/dist'
     },
 }

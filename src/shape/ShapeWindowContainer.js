@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import ShapeWindow from './ShapeWindowComponent'
+import ShapeWindow from './ShapeWindow'
 import {
     getGeometryByShapeId,
     getVolumeByShapeId,

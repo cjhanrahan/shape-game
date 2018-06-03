@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import App from './AppComponent'
+import App from './App'
 import { getAllShapeIds } from '../shape/shapeSelectors'
 
 const mapStateToProps = state => ({
