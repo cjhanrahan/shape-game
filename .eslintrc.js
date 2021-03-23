@@ -4,6 +4,7 @@ module.exports = {
     rules: {
         semi: ['error', 'never'],
         indent: ['error', 4, { SwitchCase: 1 }],
+        'react/jsx-filename-extension': 'off',
         'react/jsx-indent': ['error', 4],
         'react/jsx-indent-props': ['error', 4],
         'func-names': 'off',

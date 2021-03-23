@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+      "sourceMap": true,
+      "noImplicitAny": false,
+      "module": "commonjs",
+      "target": "es6",
+      "lib": [
+        "esnext",
+        "dom",
+        "dom.iterable"
+      ],
+      "allowSyntheticDefaultImports": true,
+      "jsx": "react",
+      "allowJs": true,
+      "baseUrl": "./",
+      "esModuleInterop": true,
+      "resolveJsonModule": true,
+      "moduleResolution": "node",
+      "downlevelIteration": true,
+      "strict": true
+    },
+    "include": [
+      "./src/**/*",
+      "./webpack.config.ts"
+    ]
+  }
