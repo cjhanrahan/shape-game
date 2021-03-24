@@ -1,9 +1,10 @@
 module.exports = {
     parser: 'babel-eslint',
-    extends: "airbnb",
+    extends: ['airbnb', 'plugin:import/typescript'],
     rules: {
         semi: ['error', 'never'],
         indent: ['error', 4, { SwitchCase: 1 }],
+        'arrow-parens': ['error', 'as-needed'],
         'react/jsx-filename-extension': 'off',
         'react/jsx-indent': ['error', 4],
         'react/jsx-indent-props': ['error', 4],
@@ -20,6 +21,7 @@ module.exports = {
             'error',
             { devDependencies: ['karma.conf.js', 'test/**'] }
         ],
+        'import/extensions': 'off',
         'mocha/no-exclusive-tests': 'error',
         'mocha/no-skipped-tests': 'error',
     },
@@ -29,5 +31,5 @@ module.exports = {
     },
     plugins: [
         'mocha',
-    ],
-};
+    ]
+}

@@ -1,4 +1,17 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { TutorialShape } from './TutorialShape'
+import '../styles.css'
 
-ReactDOM.render(<div>foo</div>, document.getElementById('root'))
+const jsx = (
+    <div id="app-container">
+        <h1>Volume Game</h1>
+        <canvas />
+    </div>
+)
+
+document.addEventListener('DOMContentLoaded', () => {
+    TutorialShape.main()
+})
+
+ReactDOM.render(jsx, document.getElementById('root'))
