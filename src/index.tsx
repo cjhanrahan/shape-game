@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { TutorialShape } from './TutorialShape'
+import * as TutorialShape from './TutorialShape'
 import '../styles.css'
 
 const jsx = (
