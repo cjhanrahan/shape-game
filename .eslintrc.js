@@ -1,5 +1,5 @@
 module.exports = {
-    parser: 'babel-eslint',
+    parser: '@typescript-eslint/parser',
     extends: ['airbnb', 'plugin:import/typescript'],
     rules: {
         'arrow-parens': ['error', 'as-needed'],
@@ -19,12 +19,14 @@ module.exports = {
         'no-new': 'off',
         'no-unused-expressions': 'off',
         'no-underscore-dangle': 'off',
+        'no-use-before-define': 'off',
         'object-curly-newline': 'off',
         'prefer-arrow-callback': 'off',
         'react/jsx-filename-extension': 'off',
         'react/jsx-indent': ['error', 4],
         'react/jsx-indent-props': ['error', 4],
         semi: ['error', 'never'],
+        '@typescript-eslint/no-use-before-define': ['error'],
     },
     env: {
         browser: true,
@@ -32,5 +34,6 @@ module.exports = {
     },
     plugins: [
         'mocha',
+        '@typescript-eslint'
     ]
 }
