@@ -21,6 +21,7 @@ module.exports = {
         'no-console': 'off',
         'no-new': 'off',
         'no-unused-expressions': 'off',
+        'no-unused-vars': 'warn',
         'no-underscore-dangle': 'off',
         'no-use-before-define': 'off',
         'object-curly-newline': 'off',
