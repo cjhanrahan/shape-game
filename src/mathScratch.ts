@@ -26,5 +26,4 @@ export const mappedData = ({ points }: { points: number[][] }) =>
 
 export const main = () => {
     console.log(mappedData({ points: realPoints }))
-    console.log(distanceToOrigin({ coords: [0.5, 0, 0.5] }))
 }

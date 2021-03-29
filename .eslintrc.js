@@ -25,6 +25,7 @@ module.exports = {
         'no-underscore-dangle': 'off',
         'no-use-before-define': 'off',
         'object-curly-newline': 'off',
+        'operator-linebreak': 'off',
         'prefer-arrow-callback': 'off',
         'react/jsx-filename-extension': 'off',
         'react/jsx-indent': ['error', 4],

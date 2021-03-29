@@ -1,16 +1,21 @@
 import {
     ArcRotateCamera,
+    Color3,
     Engine,
     HemisphericLight,
+    Mesh,
     // HemisphericLight,
     MeshBuilder,
     Scene,
+    StandardMaterial,
+    Texture,
     Vector3,
+    Vector4,
 } from '@babylonjs/core'
 
 export const BOX_HEIGHT = 1
-export const ROOF_HEIGHT = 1
-export const ROOF_DIAMETER = 1
+export const ROOF_CYL_HEIGHT = 1.2
+export const ROOF_DIAMETER = 1.2
 export const TESSELATIONS = 3
 
 export interface SetupCameraArgs {
@@ -42,23 +47,38 @@ export interface MakeBoxArgs {
     scene: Scene
 }
 export const makeBox = ({ scene }: MakeBoxArgs) => {
+    const faceUV = [
+        new Vector4(0.5, 0, 0.75, 1),
+        new Vector4(0, 0, 0.25, 1),
+        new Vector4(0.25, 0, 0.5, 1),
+        new Vector4(0.75, 0, 1, 1),
+    ]
     const box = MeshBuilder.CreateBox(
         'box',
         {
+            depth: 1,
+            faceUV,
             height: BOX_HEIGHT,
             width: 1,
-            depth: 1,
+            wrap: true,
         },
         scene,
     )
+    const material = new StandardMaterial('boxMat', scene)
+    material.diffuseTexture = new Texture('assets/cubehouse.webp', scene)
+    box.material = material
     box.position.y = BOX_HEIGHT / 2
+    return box
 }
 
-export const makeGround = () => {
+export const makeGround = ({ scene }: { scene: Scene }) => {
     const ground = MeshBuilder.CreateGround('ground', {
         width: 2,
         height: 3,
     })
+    const material = new StandardMaterial('groundMat', scene)
+    material.diffuseColor = new Color3(0, 0.5, 0)
+    ground.material = material
     return ground
 }
 
@@ -78,30 +98,35 @@ export const makeAxes = () => {
     return [x, y, z]
 }
 
-export const getRoofXOffset = () => {
-    if (TESSELATIONS % 2 === 0) {
-        return 0
-    }
+export const getRoofXAxisLength = () => {
     const angle = (2 * Math.PI) / TESSELATIONS
     const slicesPerSide = Math.floor(TESSELATIONS / 2)
     const angleOfLeftmostPoint = slicesPerSide * angle
     const xValueOfLeftmostPoint =
         Math.cos(-angleOfLeftmostPoint) * (ROOF_DIAMETER / 2)
     const xAxisLength = ROOF_DIAMETER / 2 - xValueOfLeftmostPoint
-    const offset = (ROOF_DIAMETER - xAxisLength) / 2
-    console.log({ xValueOfLeftmostPoint, xAxisLength, offset })
-    return offset
+    return xAxisLength
 }
 
-export const makeRoof = () => {
+export const getRoofXOffset = () => (ROOF_DIAMETER - getRoofXAxisLength()) / 2
+
+export const getFlippedRoofPosition = () => {}
+
+export const makeRoof = ({ scene }: { scene: Scene }) => {
     const roof = MeshBuilder.CreateCylinder('roof', {
         diameter: ROOF_DIAMETER,
-        height: ROOF_HEIGHT,
+        height: ROOF_CYL_HEIGHT,
         tessellation: TESSELATIONS,
     })
-    roof.position.x = -getRoofXOffset()
-    roof.position.y = BOX_HEIGHT + ROOF_HEIGHT / 2
-    // roof.rotation.z = Math.PI / 2
+    // roof.position.x = -getRoofXOffset()
+    roof.position.y = BOX_HEIGHT + getRoofXOffset() * 2
+    roof.rotation.z = Math.PI / 2
+    const material = new StandardMaterial('roofMat', scene)
+    material.diffuseTexture = new Texture(
+        'https://api.creativecommons.engineering/v1/thumbs/b1c25412-203c-4219-9249-3b2336fbac44',
+        scene,
+    )
+    roof.material = material
     return roof
 }
 
@@ -111,9 +136,18 @@ export const main = () => {
     const scene = new Scene(engine)
     setupCamera({ canvas, scene })
     makeAxes()
-    makeBox({ scene })
-    makeGround()
-    const roof = makeRoof()
+    const box = makeBox({ scene })
+    makeGround({ scene })
+    const roof = makeRoof({ scene })
+    const combined = Mesh.MergeMeshes(
+        [box, roof],
+        true,
+        false,
+        undefined,
+        false,
+        true,
+    )
+    console.log(roof.position)
     getRoofXOffset()
     new HemisphericLight('light1', new Vector3(1, 1, 0), scene)
     window.addEventListener('keydown', e => {
