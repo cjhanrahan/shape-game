@@ -2,10 +2,12 @@ module.exports = {
     parser: '@typescript-eslint/parser',
     extends: ['airbnb', 'plugin:import/typescript'],
     rules: {
+        'arrow-body-style': 'off',
         'arrow-parens': ['error', 'as-needed'],
         'comma-dangle': 'off',
         'func-names': 'off',
         'function-paren-newline': 'off',
+        'implicit-arrow-linebreak': 'off',
         'import/extensions': 'off',
         'import/no-extraneous-dependencies': [
             'error',
@@ -16,6 +18,7 @@ module.exports = {
         'mocha/no-exclusive-tests': 'error',
         'mocha/no-skipped-tests': 'error',
         'newline-per-chained-call': 'off',
+        'no-console': 'off',
         'no-new': 'off',
         'no-unused-expressions': 'off',
         'no-underscore-dangle': 'off',

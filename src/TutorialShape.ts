@@ -9,6 +9,7 @@ import {
 } from '@babylonjs/core'
 
 export const BOX_HEIGHT = 1
+export const ROOF_HEIGHT = 1
 
 export interface SetupCameraArgs {
     canvas: HTMLCanvasElement
@@ -28,7 +29,7 @@ const setupCamera = ({ canvas, scene }: SetupCameraArgs) => {
         'Camera',
         -Math.PI / 2,
         Math.PI / 2.5,
-        3,
+        6,
         Vector3.Zero(),
         scene,
     )
@@ -43,8 +44,8 @@ export const makeBox = ({ scene }: MakeBoxArgs) => {
         'box',
         {
             height: BOX_HEIGHT,
-            width: 0.5,
-            depth: 1.7,
+            width: 1,
+            depth: 1,
         },
         scene,
     )
@@ -59,6 +60,17 @@ export const makeGround = () => {
     return ground
 }
 
+export const makeRoof = () => {
+    const roof = MeshBuilder.CreateCylinder('roof', {
+        diameter: 1,
+        height: ROOF_HEIGHT,
+        tessellation: 3,
+    })
+    roof.position.y = BOX_HEIGHT + ROOF_HEIGHT / 2
+    // roof.rotation.z = Math.PI / 2
+    return roof
+}
+
 export const main = () => {
     const canvas = getCanvas()
     const engine = new Engine(canvas, true)
@@ -66,6 +78,7 @@ export const main = () => {
     setupCamera({ canvas, scene })
     makeBox({ scene })
     makeGround()
+    makeRoof()
     new HemisphericLight('light1', new Vector3(1, 1, 0), scene)
     window.addEventListener('keydown', e => {
         if (e.keyCode === 73) {
