@@ -36,7 +36,7 @@ const setupCamera = ({ canvas, scene }: SetupCameraArgs) => {
         'Camera',
         -Math.PI / 2,
         Math.PI / 2.5,
-        6,
+        30,
         Vector3.Zero(),
         scene,
     )
@@ -73,8 +73,8 @@ export const makeBox = ({ scene }: MakeBoxArgs) => {
 
 export const makeGround = ({ scene }: { scene: Scene }) => {
     const ground = MeshBuilder.CreateGround('ground', {
-        width: 2,
-        height: 3,
+        width: 30,
+        height: 30,
     })
     const material = new StandardMaterial('groundMat', scene)
     material.diffuseColor = new Color3(0, 0.5, 0)
@@ -85,7 +85,7 @@ export const makeGround = ({ scene }: { scene: Scene }) => {
 export const makeAxis = ({ name }: { name: string }) =>
     MeshBuilder.CreateCylinder(name, {
         diameter: 0.03,
-        height: 5,
+        height: 50,
         tessellation: 5,
     })
 
@@ -130,14 +130,8 @@ export const makeRoof = ({ scene }: { scene: Scene }) => {
     return roof
 }
 
-export const main = () => {
-    const canvas = getCanvas()
-    const engine = new Engine(canvas, true)
-    const scene = new Scene(engine)
-    setupCamera({ canvas, scene })
-    makeAxes()
+export const makeHouse = ({ scene }: { scene: Scene }) => {
     const box = makeBox({ scene })
-    makeGround({ scene })
     const roof = makeRoof({ scene })
     const combined = Mesh.MergeMeshes(
         [box, roof],
@@ -147,7 +141,46 @@ export const main = () => {
         false,
         true,
     )
-    console.log(roof.position)
+    if (!combined) {
+        throw new Error("Couldn't combine roof and box")
+    }
+    return combined
+}
+
+export const makeCircleOfHouses = ({
+    numberOfHouses,
+    radius,
+    scene,
+}: {
+    numberOfHouses: number
+    radius: number
+    scene: Scene
+}) => {
+    const initialHouse = makeHouse({ scene })
+    const houses = [initialHouse]
+    const angleDelta = (2 * Math.PI) / numberOfHouses
+    for (let i = 0; i < numberOfHouses; i += 1) {
+        const currentAngle = angleDelta * i
+        const house = initialHouse.clone(`clonedHouse: ${i}`)
+        house.position.x = Math.cos(currentAngle) * radius
+        house.position.z = Math.sin(currentAngle) * radius
+        house.rotation.y = -currentAngle
+        console.log({ i, currentAngle, angleDelta, pos: house.position })
+        houses.push(house)
+    }
+    // @ts-ignore
+    window.houses = houses
+    return houses
+}
+
+export const main = () => {
+    const canvas = getCanvas()
+    const engine = new Engine(canvas, true)
+    const scene = new Scene(engine)
+    setupCamera({ canvas, scene })
+    makeAxes()
+    makeGround({ scene })
+    makeCircleOfHouses({ numberOfHouses: 18, radius: 10, scene })
     getRoofXOffset()
     new HemisphericLight('light1', new Vector3(1, 1, 0), scene)
     window.addEventListener('keydown', e => {
