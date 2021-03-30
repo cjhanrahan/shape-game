@@ -36,7 +36,7 @@ const setupCamera = ({ canvas, scene }: SetupCameraArgs) => {
         'Camera',
         -Math.PI / 2,
         Math.PI / 2.5,
-        30,
+        3,
         Vector3.Zero(),
         scene,
     )
@@ -84,7 +84,7 @@ export const makeGround = ({ scene }: { scene: Scene }) => {
 
 export const makeAxis = ({ name }: { name: string }) =>
     MeshBuilder.CreateCylinder(name, {
-        diameter: 0.03,
+        diameter: 0.01,
         height: 50,
         tessellation: 5,
     })
@@ -168,9 +168,41 @@ export const makeCircleOfHouses = ({
         console.log({ i, currentAngle, angleDelta, pos: house.position })
         houses.push(house)
     }
-    // @ts-ignore
-    window.houses = houses
     return houses
+}
+
+const makeCar = () => {
+    const leftX = -0.2
+    const zIndexOfFlatSide = -0.2
+    const startLineToArcX = 0
+    const radiusOfArc = 0.2
+    const lengthFromFlatToArc = startLineToArcX - leftX
+    const depth = 0.1
+    const outline = [
+        new Vector3(leftX, 0, zIndexOfFlatSide),
+        new Vector3(startLineToArcX, 0, zIndexOfFlatSide),
+    ]
+    const carSegments = 20
+    const angleDelta = Math.PI / 2 / carSegments
+    for (let i = 0; i < carSegments; i += 1) {
+        const angle = i * angleDelta
+        const newPoint = new Vector3(
+            radiusOfArc * Math.cos(angle) + lengthFromFlatToArc,
+            0,
+            radiusOfArc * Math.sin(angle) + zIndexOfFlatSide,
+        )
+        outline.push(newPoint)
+    }
+    outline.push(
+        // new Vector3(leftX, 0, arcXLength),
+        new Vector3(leftX, 0, zIndexOfFlatSide + radiusOfArc),
+    )
+    console.log(outline)
+    const car = MeshBuilder.ExtrudePolygon('car', {
+        shape: outline,
+        depth,
+    })
+    return car
 }
 
 export const main = () => {
@@ -179,8 +211,9 @@ export const main = () => {
     const scene = new Scene(engine)
     setupCamera({ canvas, scene })
     makeAxes()
-    makeGround({ scene })
-    makeCircleOfHouses({ numberOfHouses: 18, radius: 10, scene })
+    // makeGround({ scene })
+    makeCar()
+    // makeCircleOfHouses({ numberOfHouses: 18, radius: 10, scene })
     getRoofXOffset()
     new HemisphericLight('light1', new Vector3(1, 1, 0), scene)
     window.addEventListener('keydown', e => {
