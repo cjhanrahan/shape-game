@@ -171,7 +171,7 @@ export const makeCircleOfHouses = ({
     return houses
 }
 
-const makeCar = () => {
+const makeCar = ({ scene }: { scene: Scene }) => {
     const LEFT_X = -0.2
     const Z_INDEX_OF_FLAT_SIDE = -0.2
     const STRAIGHT_LINE_TO_ARC_TRANSITION_POINT_X = 0
@@ -202,14 +202,28 @@ const makeCar = () => {
         outline.push(newPoint)
     }
     outline.push(new Vector3(LEFT_X, 0, Z_INDEX_OF_FLAT_SIDE + RADIUS_OF_ARC))
-    const car = MeshBuilder.ExtrudePolygon('car', {
-        shape: outline,
-        depth: DEPTH,
-    })
-    const wheelBackRight = MeshBuilder.CreateCylinder('wheelBackRight', {
-        diameter: 2 * WHEEL_RADIUS,
-        height: WHEEL_THICKNESS,
-    })
+    const car = MeshBuilder.ExtrudePolygon(
+        'car',
+        {
+            shape: outline,
+            depth: DEPTH,
+        },
+        scene,
+    )
+    const carMaterial = new StandardMaterial('carMaterial', scene)
+    carMaterial.diffuseColor = new Color3(0.7, 0, 0)
+    car.material = carMaterial
+    const wheelBackRight = MeshBuilder.CreateCylinder(
+        'wheelBackRight',
+        {
+            diameter: 2 * WHEEL_RADIUS,
+            height: WHEEL_THICKNESS,
+        },
+        scene,
+    )
+    const wheelMaterial = new StandardMaterial('wheelMaterial', scene)
+    wheelMaterial.diffuseColor = new Color3(0.1, 0.11, 0.1)
+    wheelBackRight.material = wheelMaterial
     wheelBackRight.parent = car
     wheelBackRight.position.x = LEFT_X + CAR_EDGE_TO_WHEEL_EDGE + WHEEL_RADIUS
     wheelBackRight.position.y = WHEEL_THICKNESS / 2
@@ -237,7 +251,7 @@ export const main = () => {
     setupCamera({ canvas, scene })
     makeAxes()
     // makeGround({ scene })
-    makeCar()
+    makeCar({ scene })
     // makeCircleOfHouses({ numberOfHouses: 18, radius: 10, scene })
     getRoofXOffset()
     new HemisphericLight('light1', new Vector3(1, 1, 0), scene)
