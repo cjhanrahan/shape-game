@@ -1,16 +1,19 @@
 import {
+    Animation,
     Color3,
     Mesh,
     MeshBuilder,
     Scene,
     StandardMaterial,
+    Texture,
     Vector3,
+    Vector4,
 } from '@babylonjs/core'
 export const LEFT_X = -0.2
 export const Z_INDEX_OF_FLAT_SIDE = -0.2
 export const STRAIGHT_LINE_TO_ARC_TRANSITION_POINT_X = 0
 export const RADIUS_OF_ARC = 0.2
-export const DEPTH = 0.1
+export const CAR_BODY_THICKNESS = 0.2
 export const CAR_SEGMENTS = 20
 export const WHEEL_RADIUS = 0.05
 export const WHEEL_THICKNESS = 0.03
@@ -43,7 +46,7 @@ export const makeCarBody = ({ scene }: { scene: Scene }) => {
         'car',
         {
             shape: outline,
-            depth: DEPTH,
+            depth: CAR_BODY_THICKNESS,
         },
         scene,
     )
@@ -53,6 +56,42 @@ export const makeCarBody = ({ scene }: { scene: Scene }) => {
     return car
 }
 
+export const makeBackRightWheel = ({ scene }: { scene: Scene }) => {
+    const wheelTexture = new Texture(
+        'https://doc.babylonjs.com/_next/image?url=%2Fimg%2Fgetstarted%2Fwheel.png&w=1920&q=75',
+        scene,
+    )
+    const wheelFaceUv = new Vector4(0, 0, 1, 1)
+    const wheelEdgeUv = new Vector4(0, 0.5, 0, 0.5) // black part of texture
+    const wheelUvs = [wheelFaceUv, wheelEdgeUv, wheelFaceUv.clone()]
+    const wheelBackRight = MeshBuilder.CreateCylinder(
+        'wheelBackRight',
+        {
+            diameter: 2 * WHEEL_RADIUS,
+            faceUV: wheelUvs,
+            height: WHEEL_THICKNESS,
+        },
+        scene,
+    )
+    const wheelMaterial = new StandardMaterial('wheelMaterial', scene)
+    wheelMaterial.diffuseTexture = wheelTexture
+    wheelBackRight.material = wheelMaterial
+    const animation = new Animation(
+        'wheelAnimation',
+        'rotation.y',
+        30,
+        Animation.ANIMATIONTYPE_FLOAT,
+        Animation.ANIMATIONLOOPMODE_CYCLE,
+    )
+    const wheelKeys = [
+        { frame: 0, value: 0 },
+        { frame: 30, value: 2 * Math.PI },
+    ]
+    animation.setKeys(wheelKeys)
+    wheelBackRight.animations = [animation]
+    return wheelBackRight
+}
+
 export const makeWheels = ({
     carBody,
     scene,
@@ -60,27 +99,24 @@ export const makeWheels = ({
     carBody: Mesh
     scene: Scene
 }) => {
-    const wheelBackRight = MeshBuilder.CreateCylinder(
-        'wheelBackRight',
-        {
-            diameter: 2 * WHEEL_RADIUS,
-            height: WHEEL_THICKNESS,
-        },
-        scene,
-    )
-    const wheelMaterial = new StandardMaterial('wheelMaterial', scene)
-    wheelMaterial.diffuseColor = new Color3(0.1, 0.11, 0.1)
-    wheelBackRight.material = wheelMaterial
+    const wheelBackRight = makeBackRightWheel({ scene })
     wheelBackRight.position.x = LEFT_X + CAR_EDGE_TO_WHEEL_EDGE + WHEEL_RADIUS
     wheelBackRight.position.y = WHEEL_THICKNESS / 2
     wheelBackRight.position.z = Z_INDEX_OF_FLAT_SIDE
     wheelBackRight.parent = carBody
     const wheelBackLeft = wheelBackRight.clone('wheelBackLeft')
-    wheelBackLeft.position.y = -DEPTH - WHEEL_THICKNESS / 2
+    wheelBackLeft.position.y = -CAR_BODY_THICKNESS - WHEEL_THICKNESS / 2
     const wheelFrontRight = wheelBackRight.clone('wheelFrontRight')
     wheelFrontRight.position.x = rightX - WHEEL_RADIUS - CAR_EDGE_TO_WHEEL_EDGE
     const wheelFrontLeft = wheelBackLeft.clone('wheelFrontLeft')
     wheelFrontLeft.position.x = rightX - WHEEL_RADIUS - CAR_EDGE_TO_WHEEL_EDGE
+    const allWheels = [
+        wheelBackLeft,
+        wheelBackRight,
+        wheelFrontLeft,
+        wheelFrontRight,
+    ]
+    allWheels.forEach(wheel => scene.beginAnimation(wheel, 0, 30, true))
 }
 
 export const makeCar = ({ scene }: { scene: Scene }) => {
@@ -93,5 +129,8 @@ export const makeCar = ({ scene }: { scene: Scene }) => {
         rightX,
         STRAIGHT_LINE_TO_ARC_TRANSITION_POINT_X,
     })
+    carBody.rotation.x = -Math.PI / 2
+    carBody.position.z = -CAR_BODY_THICKNESS / 2
+    carBody.position.y = RADIUS_OF_ARC + WHEEL_RADIUS
     return carBody
 }
