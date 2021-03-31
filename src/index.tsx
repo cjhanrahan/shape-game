@@ -1,7 +1,7 @@
 import earcut from 'earcut'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import * as TutorialShape from './TutorialShape'
+import * as render from './render'
 import * as mathScratch from './mathScratch'
 import '../styles.css'
 
@@ -16,7 +16,7 @@ const jsx = (
 )
 
 document.addEventListener('DOMContentLoaded', () => {
-    TutorialShape.main()
+    render.main()
     mathScratch.main()
 })
 
