@@ -1,25 +1,19 @@
 {
     "compilerOptions": {
-      "allowJs": true,
-      "allowSyntheticDefaultImports": true,
-      "baseUrl": "./",
-      "downlevelIteration": true,
-      "esModuleInterop": true,
-      "jsx": "react",
-      "lib": [
-        "esnext",
-        "dom",
-        "dom.iterable"
-      ],
-      "module": "commonjs",
-      "moduleResolution": "node",
-      "resolveJsonModule": true,
-      "sourceMap": true,
-      "strict": true,
-      "skipLibCheck": true,
-      "target": "es6"
+        "allowJs": true,
+        "allowSyntheticDefaultImports": true,
+        "baseUrl": "./",
+        "downlevelIteration": true,
+        "esModuleInterop": true,
+        "jsx": "react",
+        "lib": ["esnext", "dom", "dom.iterable"],
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "sourceMap": true,
+        "strict": true,
+        "skipLibCheck": true,
+        "target": "es6"
     },
-    "include": [
-      "./src/**/*"
-    ]
-  }
+    "include": ["./src/**/*"]
+}

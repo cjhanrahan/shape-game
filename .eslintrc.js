@@ -11,7 +11,7 @@ module.exports = {
         'import/extensions': 'off',
         'import/no-extraneous-dependencies': [
             'error',
-            { devDependencies: ['karma.conf.js', 'test/**'] }
+            { devDependencies: ['karma.conf.js', 'test/**'] },
         ],
         'import/prefer-default-export': 'off',
         indent: ['error', 4, { SwitchCase: 1 }],
@@ -37,8 +37,5 @@ module.exports = {
         browser: true,
         mocha: true,
     },
-    plugins: [
-        'mocha',
-        '@typescript-eslint'
-    ]
+    plugins: ['mocha', '@typescript-eslint'],
 }

@@ -1,23 +1,12 @@
 import earcut from 'earcut'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import * as render from './render'
-import * as mathScratch from './mathScratch'
 import '../styles.css'
+import { App } from './app/App'
 
 // @ts-ignore
 window.earcut = earcut
 
-const jsx = (
-    <div id="app-container">
-        <h1>Volume Game</h1>
-        <canvas />
-    </div>
-)
+document.addEventListener('DOMContentLoaded', () => {})
 
-document.addEventListener('DOMContentLoaded', () => {
-    render.main()
-    mathScratch.main()
-})
-
-ReactDOM.render(jsx, document.getElementById('root'))
+ReactDOM.render(<App />, document.getElementById('root'))
