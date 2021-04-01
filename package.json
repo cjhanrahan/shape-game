@@ -7,7 +7,8 @@
         "startDev": "webpack-cli serve --mode=development --env development --hot",
         "build": "webpack --mode=production --env production --progress",
         "lint": "eslint './src/**/*.{ts,tsx}'",
-        "lintFix": "eslint './src/**/*.{ts,tsx}' --fix"
+        "lintFix": "eslint './src/**/*.{ts,tsx}' --fix",
+        "test": "ava"
     },
     "author": "Conor John Hanrahan",
     "license": "ISC",
@@ -20,6 +21,7 @@
         "@types/webpack-dev-server": "^3.11.3",
         "@typescript-eslint/eslint-plugin": "^4.20.0",
         "@typescript-eslint/parser": "^4.20.0",
+        "ava": "^3.15.0",
         "babel-eslint": "^10.1.0",
         "css-loader": "^5.2.0",
         "eslint": "^7.23.0",
@@ -46,6 +48,17 @@
         "@babylonjs/core": "^4.2.0",
         "earcut": "^2.2.2",
         "react": "^17.0.2",
-        "react-dom": "^17.0.2"
+        "react-dom": "^17.0.2",
+        "react-redux": "^7.2.3",
+        "redux": "^4.0.5",
+        "reselect": "^4.0.0"
+    },
+    "ava": {
+        "extensions": [
+			"ts"
+		],
+		"require": [
+			"ts-node/register"
+		]
     }
 }

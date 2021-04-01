@@ -11,7 +11,7 @@ module.exports = {
         'import/extensions': 'off',
         'import/no-extraneous-dependencies': [
             'error',
-            { devDependencies: ['karma.conf.js', 'test/**'] },
+            { devDependencies: ['*Test.ts', '*Test.tsx'] },
         ],
         'import/prefer-default-export': 'off',
         indent: ['error', 4, { SwitchCase: 1 }],
