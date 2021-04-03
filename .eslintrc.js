@@ -11,7 +11,7 @@ module.exports = {
         'import/extensions': 'off',
         'import/no-extraneous-dependencies': [
             'error',
-            { devDependencies: ['*Test.ts', '*Test.tsx'] },
+            { devDependencies: ['*/**/*Test.ts', '*/**/*Test.tsx'] },
         ],
         'import/prefer-default-export': 'off',
         indent: ['error', 4, { SwitchCase: 1 }],
@@ -21,7 +21,7 @@ module.exports = {
         'no-console': 'off',
         'no-new': 'off',
         'no-unused-expressions': 'off',
-        'no-unused-vars': 'warn',
+        'no-unused-vars': 'off',
         'no-underscore-dangle': 'off',
         'no-use-before-define': 'off',
         'object-curly-newline': 'off',
@@ -32,6 +32,7 @@ module.exports = {
         'react/jsx-indent-props': ['error', 4],
         semi: ['error', 'never'],
         '@typescript-eslint/no-use-before-define': ['error'],
+        '@typescript-eslint/no-unused-vars': 'error'
     },
     env: {
         browser: true,

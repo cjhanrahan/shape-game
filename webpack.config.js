@@ -5,6 +5,9 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin')
 
 const webpackConfig = env => ({
+    devServer: {
+        writeToDisk: true
+    },
     entry: './src/index.tsx',
     ...(env.production || !env.development
         ? {}
