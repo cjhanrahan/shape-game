@@ -1,6 +1,0 @@
-have it flash green or red based on right or wrong
-have it show volume only when clicked
-make loading state more useful
-add different shape modules
-print timing statistics from webpack build
-
