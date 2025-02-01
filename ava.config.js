@@ -1,10 +1,16 @@
 const config = {
-    require: ['@babel/register'],
+    // babel: {
+    //     testOptions: {
+    //         presets: ['es2015', 'stage-0', 'react']
+    //     },
+    // },
+    babel: true,
+    require: ['./babelRegister.js'],
     typescript: {
         extensions: ['ts', 'tsx'],
-        // rewritePaths: {
-        //     'src/': 'dist/'
-        // }
+        rewritePaths: {
+            'src/': 'build/'
+        }
     },
 }
 

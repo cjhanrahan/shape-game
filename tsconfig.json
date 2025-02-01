@@ -9,6 +9,7 @@
         "lib": ["esnext", "dom", "dom.iterable"],
         "module": "commonjs",
         "moduleResolution": "node",
+        "outDir": "build",
         "resolveJsonModule": true,
         "sourceMap": true,
         "strict": true,
