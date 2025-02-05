@@ -6,6 +6,7 @@ import { OrbitControls } from 'three/examples/jsm/Addons.js'
 export function getRendererNode() {
     const scene = new Scene()
     const camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
+    camera.position.z = 5
     const renderer = new WebGLRenderer()
     // renderer.shadowMap.enabled = true
     // renderer.physicallyCorrectLights = true
@@ -13,7 +14,6 @@ export function getRendererNode() {
     const geometry = new BoxGeometry()
     const material = new MeshStandardMaterial({ color: 0x00ff00 })
     const cube = new Mesh(geometry, material)
-    // cube.position.z = 1
     scene.add(cube)
     
     const planeGeometry = new PlaneGeometry(10, 10)
@@ -21,8 +21,8 @@ export function getRendererNode() {
     const plane = new Mesh(planeGeometry, planeMaterial)
     plane.receiveShadow = true
     plane.rotation.x = -Math.PI / 2
-    plane.position.y = -1
-    // scene.add(plane)
+    plane.position.y = -0.5
+    scene.add(plane)
     
     const light = new DirectionalLight(0xffffff, 1)
     light.position.set(5, 5, 5)
