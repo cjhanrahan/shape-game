@@ -15,6 +15,7 @@ const eslintConfig = [
     rules: {
       indent: ["error", 4],
       semi: ["error", "never"],
+      maxLen: ["error", { code: 80 }],
     },
   },
 ];
