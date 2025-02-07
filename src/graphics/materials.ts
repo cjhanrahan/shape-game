@@ -24,14 +24,14 @@ export function applyMaterial(
 
 export function getSolidMaterial(geometry: THREE.BufferGeometry) {
     const material = new THREE.MeshBasicMaterial({ 
-        color: Colors.MEDIUMSLATEBLUE 
+        color: Colors.MEDIUM_SLATE_BLUE 
     })
     return new THREE.Mesh(geometry, material)
 }
 
 export function getGradientMaterial(geometry: THREE.BufferGeometry) {   
     const material = new THREE.MeshPhongMaterial({ 
-        color: Colors.MEDIUMSLATEBLUE, 
+        color: Colors.MEDIUM_SLATE_BLUE, 
     })
     return new THREE.Mesh(geometry, material)
 }
@@ -41,7 +41,7 @@ export function getWireframeMaterial(geometry: THREE.BufferGeometry) {
     const segments = new LineSegmentsGeometry()
     const lineSegmentsGeometry = segments.fromWireframeGeometry(wireframe)
     const material = new LineMaterial({
-        color: Colors.MEDIUMSLATEBLUE,
+        color: Colors.MEDIUM_SLATE_BLUE,
         linewidth: 3,
     })
     return new LineSegments2(lineSegmentsGeometry, material)

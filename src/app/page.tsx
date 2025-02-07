@@ -1,10 +1,12 @@
-import FirstNode from "./FirstNode"
+import './page.module.css'
+import NodeContainer from '@/graphics/NodeContainer'
 
 export default function Home() {
     return (
         <div id="container">
             {/* <h1>Shape Game!</h1> */}
-            <FirstNode />
+            <NodeContainer />
+            <NodeContainer />
         </div>
     )
 }

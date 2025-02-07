@@ -4,6 +4,6 @@ import { MaterialType } from '@/graphics/materials'
 export const Config = {
     antialiasing: true,
     controlType: ControlType.TRACKBALL, 
-    materialType: MaterialType.SOLID,
+    materialType: MaterialType.GRADIENT,
     plane: false,
 }
