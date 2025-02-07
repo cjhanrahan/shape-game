@@ -1,10 +1,16 @@
 import * as THREE from 'three'
 import random from 'random'
 
+
 export enum ShapeType {
     CUBE,
     PRISM,
 }
+
+export const allShapes = [
+    ShapeType.CUBE,
+    ShapeType.PRISM,
+]
 
 export function getRandomSideLength() {
     return random.float(1, 5)
