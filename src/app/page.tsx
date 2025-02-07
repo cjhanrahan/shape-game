@@ -1,4 +1,4 @@
-import FirstNode from "./FirstNode";
+import FirstNode from "./FirstNode"
 
 export default function Home() {
     return (
