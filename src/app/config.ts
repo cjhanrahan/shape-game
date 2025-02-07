@@ -2,8 +2,8 @@ import { ControlType } from '@/graphics/controls'
 import { MaterialType } from '@/graphics/materials'
 
 export const Config = {
-    antialiasing: false,
+    antialiasing: true,
     controlType: ControlType.TRACKBALL, 
-    materialType: MaterialType.WIREFRAME,
+    materialType: MaterialType.SOLID,
     plane: false,
 }
