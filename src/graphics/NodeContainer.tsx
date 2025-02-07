@@ -1,17 +1,18 @@
 'use client'
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef } from 'react'
+import { 
+    appendSceneToNode,
+} from './scene'
 
-export default function NodeContainer({
-    node,
-}: Readonly<{
-  node: Node;
-}>) {
+export default function NodeContainer(
+    { width, height }: { width: number, height: number }
+) {
     const ref = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
         if (ref.current) {
-            ref.current.appendChild(node)
+            appendSceneToNode(ref.current, height, width)
         }
     })
 

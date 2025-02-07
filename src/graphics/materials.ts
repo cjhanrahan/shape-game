@@ -17,6 +17,8 @@ export function applyMaterial(
             return getSolidMaterial(geometry)
         case MaterialType.WIREFRAME:
             return getWireframeMaterial(geometry)
+        case MaterialType.GRADIENT:
+            return getGradientMaterial(geometry)
     }
 }
 

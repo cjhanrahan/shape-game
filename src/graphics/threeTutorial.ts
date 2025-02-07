@@ -28,13 +28,12 @@ export function getRendererNode() {
     light.castShadow = true
     scene.add(light)
     
-    const controls = getControls(camera, renderer, Config.controlType)
+    // const controls = getControls(camera, renderer, Config.controlType)
 
     function animate() {
         if (Config.controlType === ControlType.TRACKBALL) {
             // controls.update()
         }
-        controls.update()
         renderer.render(scene, camera)
     }
     renderer.setAnimationLoop(animate)

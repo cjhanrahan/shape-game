@@ -1,40 +1,42 @@
-import * as THREE from 'three'
 import { TrackballControls } from 'three/addons/controls/TrackballControls.js'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
+import { Config } from '@/app/config'
+import { SceneConfig } from './scene'
 
 export enum ControlType { ORBIT, TRACKBALL }
 
+
 export function getControls(
-    camera: THREE.Camera, 
-    renderer: THREE.WebGLRenderer, 
-    type: ControlType
+    config: SceneConfig
 ) {
-    switch (type) {
+    switch (Config.controlType) {
         case ControlType.ORBIT:
-            return getOrbitalControls(camera, renderer)
+            return getOrbitalControls(config)
         case ControlType.TRACKBALL:
-            return getTrackballControls(camera, renderer)
+            return getTrackballControls(config)
     }
 }
 
 export function getOrbitalControls(
-    camera: THREE.Camera, 
-    renderer: THREE.WebGLRenderer
+    config: SceneConfig
 ) {
-    const controls = new OrbitControls(camera, renderer.domElement)
+    const controls = new OrbitControls(
+        config.camera,
+        config.renderer.domElement
+    )
     controls.enableDamping = true
     controls.dampingFactor = 2
     controls.enableZoom = false
-    // console.log(controls.maxPolarAngle, controls.minPolarAngle)
-    // window.controls = controls
     return controls
 }
 
 export function getTrackballControls(
-    camera: THREE.Camera, 
-    renderer: THREE.WebGLRenderer
+    config: SceneConfig
 ) {
-    const controls = new TrackballControls(camera, renderer.domElement)
+    const controls = new TrackballControls(
+        config.camera,
+        config.renderer.domElement,
+    )
     controls.rotateSpeed = 1.0
     controls.zoomSpeed = 1.2
     controls.panSpeed = 0.8

@@ -1,6 +1,9 @@
-import { ControlType } from "@/graphics/controls";
+import { ControlType } from '@/graphics/controls'
+import { MaterialType } from '@/graphics/materials'
 
 export const Config = {
     antialiasing: false,
-    controlType: ControlType.ORBIT, 
+    controlType: ControlType.TRACKBALL, 
+    materialType: MaterialType.WIREFRAME,
+    plane: false,
 }
