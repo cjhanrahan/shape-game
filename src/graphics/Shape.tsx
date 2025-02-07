@@ -6,9 +6,7 @@ import {
     appendSceneToNode,
 } from './scene'
 import { ShapeType } from './geometry'
-import { Random } from 'random'
 
-window.random = Random
 
 export default function Shape(
     { type, volume }: { type: ShapeType, volume: number }

@@ -42,7 +42,7 @@ export function getWireframeMaterial(geometry: THREE.BufferGeometry) {
     const lineSegmentsGeometry = segments.fromWireframeGeometry(wireframe)
     const material = new LineMaterial({
         color: Colors.MEDIUM_SLATE_BLUE,
-        linewidth: 3,
+        linewidth: 300,
     })
     return new LineSegments2(lineSegmentsGeometry, material)
 }

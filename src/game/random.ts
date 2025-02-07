@@ -1,12 +1,16 @@
 import { Random } from 'random'
-import { allShapes } from '@/graphics/geometry'
+import { allShapes, ShapeType } from '@/graphics/geometry'
 
 export function getRandomShape(seed: number) {
     const random = new Random(seed)
-    return random.choice(allShapes)
+    return random.choice(allShapes) as ShapeType
 }
 
-export function getRandomVolume(seed: number) {
+export function getRandomVolume(seed: number, notEqual?: number) {
     const random = new Random(seed)
-    return random.float(1, 5)
+    let volume = random.int(10, 100)
+    while (notEqual && volume === notEqual) {
+        volume = random.int(10, 100)
+    }
+    return volume
 }

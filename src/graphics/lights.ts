@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { Colors } from './colors'
 
-const LIGHT_DISTANCE = 0.25
+const LIGHT_DISTANCE = 25
 const LIGHT_INTENSITY = 5
 
 export function generateLight(

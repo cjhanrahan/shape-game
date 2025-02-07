@@ -1,32 +1,33 @@
 import { ShapeType } from '@/graphics/geometry'
+import { getRandomShape, getRandomVolume } from './random'
 
 
 export interface GameState {
-    randomSeed: number
     leftVolume: number
     leftShape: ShapeType
     rightVolume: number
     rightShape: ShapeType
-    lastResult: boolean | null
+    guess: 'left' | 'right' | null
+    result: boolean | null
 }
 
+const initialSeed = Math.random()
+const initialLeftVolume = getRandomVolume(initialSeed)
+
 const initialState: GameState = {
-    randomSeed: Math.random(),
-    leftVolume: 1,
-    leftShape: ShapeType.CUBE,
-    rightVolume: 1.5,
-    rightShape: ShapeType.PRISM,
-    lastResult: null,
+    leftVolume: initialLeftVolume,
+    leftShape: getRandomShape(initialSeed),
+    rightVolume: getRandomVolume(initialSeed + 1, initialLeftVolume),
+    rightShape: getRandomShape(initialSeed + 1),
+    guess: null,
+    result: null,
 }
 
 export type AnswerSide = 'left' | 'right'
 
 export interface AnswerAction {
     type: 'ANSWER'
-    payload: {
-        side: AnswerSide
-        newSeed: number
-    }
+    side: AnswerSide
 }
 
 export type ActionType = AnswerAction
@@ -34,10 +35,7 @@ export type ActionType = AnswerAction
 export function answerAction(side: AnswerSide): AnswerAction {
     return {
         type: 'ANSWER',
-        payload: {
-            side,
-            newSeed: Math.random(),
-        }
+        side,
     }
 }
 
@@ -48,13 +46,13 @@ export function gameReducer(
     switch (action.type) {
         case 'ANSWER':
             const leftWins = state.leftVolume > state.rightVolume
-            const correct = action.payload.side === 'left' 
+            const correct = action.side === 'left' 
                 ? leftWins 
                 : !leftWins
             return {
                 ...state,
-                randomSeed: action.payload.newSeed,
-                lastResult: correct,
+                guess: action.side,
+                result: correct,
             }
         default:
             return state
