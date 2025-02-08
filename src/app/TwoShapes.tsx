@@ -7,9 +7,9 @@ import classnames from 'classnames'
 import { answerAction, gameReducer, getInitialState } from '@/game/reducer'
 import Result from './Result'
 
-const initialState = getInitialState()
 
-export default function TwoShapes() {
+export default function TwoShapes({ initialSeed }: { initialSeed: number }) {
+    const initialState = getInitialState(initialSeed)
     const [state, dispatch] = useReducer(gameReducer, initialState)
     const pickLeft = () => dispatch(answerAction('left'))
     const pickRight = () => dispatch(answerAction('right'))
