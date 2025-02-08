@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import { Colors } from './colors'
 
 const LIGHT_DISTANCE = 25
-const LIGHT_INTENSITY = 5
+const LIGHT_INTENSITY = 3
 
 export function generateLight(
     color: number, 
@@ -16,6 +16,7 @@ export function generateLight(
 }
 
 export function getLights() {
+    const AmbientLight = new THREE.AmbientLight( Colors.LIGHT_YELLOW, 3 );
     const lights: THREE.Light[] = [
         generateLight(
             Colors.WHITE,
@@ -24,7 +25,7 @@ export function getLights() {
             LIGHT_DISTANCE,
         ),
         generateLight(
-            Colors.BISQUE,
+            Colors.WHITE,
             -LIGHT_DISTANCE,
             -LIGHT_DISTANCE,
             -LIGHT_DISTANCE,
@@ -36,11 +37,12 @@ export function getLights() {
             LIGHT_DISTANCE,
         ),
         generateLight(
-            Colors.LIGHT_SKY_BLUE,
+            Colors.WHITE,
             LIGHT_DISTANCE,
             -LIGHT_DISTANCE,
             -LIGHT_DISTANCE,
         ),
+        AmbientLight,
     ]
 
     return lights
