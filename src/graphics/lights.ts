@@ -16,7 +16,7 @@ export function generateLight(
 }
 
 export function getLights() {
-    const AmbientLight = new THREE.AmbientLight( Colors.LIGHT_YELLOW, 3 );
+    const AmbientLight = new THREE.AmbientLight( Colors.LIGHT_YELLOW, 0.5 )
     const lights: THREE.Light[] = [
         generateLight(
             Colors.WHITE,
