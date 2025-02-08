@@ -1,0 +1,12 @@
+.resultModal {
+    padding: 20px;
+    background-color: tomato;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.correct {
+    background-color: lightgreen;
+}

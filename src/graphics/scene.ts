@@ -43,7 +43,7 @@ export function setUpCamera(config: SceneConfig) {
         0.1, 
         100000
     )
-    camera.position.z = 5
+    camera.position.z = 15
     return camera
 }
 

@@ -1,3 +1,5 @@
+'use client'
+
 import { Random } from 'random'
 import { allShapes, ShapeType } from '@/graphics/geometry'
 

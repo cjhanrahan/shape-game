@@ -1,0 +1,26 @@
+.twoShapesAndOverlay {
+    display: flex;
+    align-items: stretch;
+    flex: 1 1 0;
+    position: relative;
+}
+.twoShapes {
+  display: flex;
+  align-items: stretch;
+  flex: 1 1 0;
+}
+
+.resultOverlay {
+    position: absolute;
+    color: darkslategray;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hiddenOverlay {
+  pointer-events: none;
+}

@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "classnames": "^2.5.1",
     "next": "15.1.6",
     "random": "^5.1.1",
     "react": "^19.0.0",

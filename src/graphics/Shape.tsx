@@ -6,13 +6,28 @@ import {
     appendSceneToNode,
 } from './scene'
 import { ShapeType } from './geometry'
+import { AnswerSide } from '@/game/reducer'
 
 
 export default function Shape(
-    { type, volume }: { type: ShapeType, volume: number }
+    { 
+        type, 
+        side,
+        volume, 
+        onPick 
+    }: { 
+        type: ShapeType, 
+        side: AnswerSide,
+        volume: number, 
+        onPick: () => void 
+    }
 ) {
     const ref = useRef<HTMLDivElement>(null)
-
+    const clickHandler = (e: React.MouseEvent) => {
+        e.preventDefault()
+        onPick()
+    }
+    console.log({ type, side, volume })
     useEffect(() => {
         if (ref.current) {
             while (ref.current.firstChild) {
@@ -23,10 +38,19 @@ export default function Shape(
     }, [type, volume])
 
     return (
-        <div className={styles.shape}>
-            <div className={styles.shapeThreeJsContainer} ref={ref} />
-            <div className={styles.controls}>
-                <input type="button" value="Choose shape" />
+        <div className={styles.shapeAndOverlay}>
+            <div className={styles.overlay}>
+                <div>{type.toString()}</div>
+            </div>
+            <div className={styles.shape}>
+                <div className={styles.shapeThreeJsContainer} ref={ref} />
+                <div className={styles.controls}>
+                    <input 
+                        type="button" 
+                        value="Choose shape" 
+                        onClick={clickHandler} 
+                    />
+                </div>
             </div>
         </div>
     )

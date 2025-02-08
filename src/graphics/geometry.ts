@@ -3,13 +3,13 @@ import random from 'random'
 
 
 export enum ShapeType {
-    CUBE,
-    PRISM,
+    CUBE = 'CUBE',
+    RECTANGULAR_PRISM = 'RECTANGULAR PRISM',
 }
 
 export const allShapes = [
     ShapeType.CUBE,
-    ShapeType.PRISM,
+    ShapeType.RECTANGULAR_PRISM,
 ]
 
 export function getRandomSideLength() {
@@ -20,7 +20,7 @@ export function getShape(volume: number, type: ShapeType) {
     switch (type) {
         case ShapeType.CUBE:
             return makeCube(volume)
-        case ShapeType.PRISM:
+        case ShapeType.RECTANGULAR_PRISM:
             return makePrism(volume)
     }
 }

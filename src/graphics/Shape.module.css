@@ -1,8 +1,14 @@
+.shapeAndOverlay {
+  position: relative;
+  flex: 1 1 0;
+  border: 1px solid ivory;
+}
+
 .shape {
   display: flex;
   flex-direction: column;
-  flex: 1 1 0;
-  border: 1px solid ivory;
+  width: 100%;
+  height: 100%;
 }
 .shape + .shape {
   border-left-width: 0;
@@ -15,4 +21,15 @@
 .controls {
   display: flex;
   justify-content: center;
+}
+
+.overlay {
+  position: absolute;
+  color: lemonchiffon;
+  pointer-events: none;
+  top: 5;
+  left: 5;
+  width: 100%;
+  height: 100%;
+  display: flex;
 }
