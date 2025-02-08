@@ -17,6 +17,7 @@ export default function TwoShapes() {
     const [mounted, setHasMounted] = useState(false)
     const initialState = getInitialState(Math.random())
     const [state, dispatch] = useReducer(gameReducer, initialState)
+    console.log({ state })
     const pickLeft = () => dispatch(answerAction('left'))
     const pickRight = () => dispatch(answerAction('right'))
     const newQuestion = () => dispatch(newQuestionAction())
@@ -36,12 +37,14 @@ export default function TwoShapes() {
                 {mounted && (
                     <>
                         <Shape 
+                            color={state.leftColor}
                             type={state.leftShape} 
                             volume={state.leftVolume} 
                             onPick={pickLeft} 
                             side="left"
                         />
                         <Shape 
+                            color={state.rightColor}
                             type={state.rightShape} 
                             volume={state.rightVolume} 
                             onPick={pickRight} 

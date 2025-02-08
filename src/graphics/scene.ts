@@ -10,6 +10,7 @@ import { applyMaterial } from './materials'
 export interface SceneConfig {
     width: number
     height: number
+    color: number
     type: ShapeType 
     volume: number
 }
@@ -23,11 +24,12 @@ export interface ThreeJsObjects {
 export function getSceneConfig(
     node: Element, 
     type: ShapeType, 
-    volume: number
+    volume: number,
+    color: number
 ): SceneConfig {
     const width = node.clientWidth
     const height = node.clientHeight
-    return { width, height, type, volume }
+    return { width, height, type, volume, color }
 }
 
 export function setUpRenderer(config: SceneConfig) {
@@ -53,7 +55,7 @@ export function setUpSceneObject(config: SceneConfig) {
         scene.add(light)
     }
     const geometry = getShape(config.volume, config.type)
-    const buffer = applyMaterial(geometry, Config.materialType)
+    const buffer = applyMaterial(geometry, Config.materialType, config.color)
     scene.add(buffer)
     if (Config.plane) {
         scene.add(getPlane())
@@ -82,9 +84,10 @@ export function getAnimateFunction(
 export function appendSceneToNode(
     node: Element, 
     type: ShapeType, 
-    volume: number
+    volume: number,
+    color: number
 ) {
-    const config = getSceneConfig(node, type, volume)
+    const config = getSceneConfig(node, type, volume, color)
     const objects = getThreeJsObjects(config)
     node.appendChild(objects.renderer.domElement)
     const controls = getControls(objects)

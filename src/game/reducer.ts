@@ -4,13 +4,16 @@ import { ShapeType } from '@/graphics/geometry'
 import { 
     getRandomShape, 
     getRandomLeftVolume, 
-    getRandomRightVolume 
+    getRandomRightVolume, 
+    getRandomColor
 } from './random'
 
 
 export interface GameState {
-    leftVolume: number
+    leftColor: number
     leftShape: ShapeType
+    leftVolume: number
+    rightColor: number
     rightVolume: number
     rightShape: ShapeType
     guess: AnswerSide | null
@@ -21,8 +24,10 @@ export interface GameState {
 export function getInitialState(initialSeed: number): GameState {
     const initialLeftVolume = getRandomLeftVolume(initialSeed)
     return {
+        leftColor: getRandomColor(initialSeed),
         leftVolume: initialLeftVolume,
         leftShape: getRandomShape(initialSeed),
+        rightColor: getRandomColor(initialSeed + 1),
         rightVolume: getRandomRightVolume(initialSeed + 1, initialLeftVolume),
         rightShape: getRandomShape(initialSeed + 1),
         guess: null,
@@ -78,8 +83,10 @@ export function gameReducer(
             const leftVolume = getRandomLeftVolume(action.seed)
             return {
                 ...state,
+                leftColor: getRandomColor(action.seed),
                 leftVolume,
                 leftShape: getRandomShape(action.seed),
+                rightColor: getRandomColor(action.seed + 1),
                 rightVolume: getRandomRightVolume(action.seed + 1, leftVolume),
                 rightShape: getRandomShape(action.seed + 1),
                 guess: null,

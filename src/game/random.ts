@@ -3,10 +3,16 @@
 import { Random } from 'random'
 import { allShapes, ShapeType } from '@/graphics/geometry'
 import { Config } from '@/app/config'
+import { sphereColors } from '@/graphics/colors'
 
 export function getRandomShape(seed: number) {
     const random = new Random(seed)
     return random.choice(allShapes) as ShapeType
+}
+
+export function getRandomColor(seed: number) {
+    const random = new Random(seed)
+    return random.choice(sphereColors) as number
 }
 
 export function getRandomLeftVolume(seed: number) {
@@ -59,7 +65,10 @@ export function getRandomRightVolume(seed: number, leftVolume: number) {
         console.log('result', leftRange[0] + indexInCombinedRange)
         return leftRange[0] + indexInCombinedRange
     } else {
-        console.log('result', rightRange[0] + indexInCombinedRange - leftRangeLength)
+        console.log(
+            'result', 
+            rightRange[0] + indexInCombinedRange - leftRangeLength
+        )
         return rightRange[0] + indexInCombinedRange - leftRangeLength
     }
 }

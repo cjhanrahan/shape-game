@@ -14,9 +14,11 @@ export default function Shape(
         type, 
         side,
         volume, 
+        color,
         onPick 
     }: { 
         type: ShapeType, 
+        color: number
         side: AnswerSide,
         volume: number, 
         onPick: () => void 
@@ -33,9 +35,9 @@ export default function Shape(
             while (ref.current.firstChild) {
                 ref.current.removeChild(ref.current.firstChild)
             }
-            appendSceneToNode(ref.current, type, volume)
+            appendSceneToNode(ref.current, type, volume, color)
         }
-    }, [type, volume])
+    }, [type, volume, color])
 
     return (
         <div className={styles.shapeAndOverlay}>
