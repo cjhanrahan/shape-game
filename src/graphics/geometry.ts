@@ -5,13 +5,15 @@ import random from 'random'
 export enum ShapeType {
     CUBE = 'CUBE',
     RECTANGULAR_PRISM = 'RECTANGULAR PRISM',
-    REGULAR_PRISM = 'REGULAR PRISM'
+    REGULAR_PRISM = 'REGULAR PRISM',
+    SPHERE = 'SPHERE',
 }
 
 export const allShapes = [
     ShapeType.CUBE,
     ShapeType.RECTANGULAR_PRISM,
-    ShapeType.REGULAR_PRISM
+    ShapeType.REGULAR_PRISM,
+    ShapeType.SPHERE,
 ]
 
 export function getRandomSideLength() {
@@ -26,6 +28,8 @@ export function getShape(volume: number, type: ShapeType) {
             return makeRectangularPrism(volume)
         case ShapeType.REGULAR_PRISM:
             return makeRegularPrism(volume)
+        case ShapeType.SPHERE:
+            return makeSphere(volume)
     }
 }
 
@@ -80,4 +84,9 @@ export function makeRegularPrism(volume: number) {
         numOfSides,
         1
     )
+}
+
+export function makeSphere(volume: number) {
+    const radius = Math.cbrt(volume / (4/3 * Math.PI))
+    return new THREE.SphereGeometry(radius)
 }
