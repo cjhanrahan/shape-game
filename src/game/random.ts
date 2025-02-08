@@ -49,25 +49,6 @@ export function getRandomRightVolume(seed: number, leftVolume: number) {
     const rightRangeLength = rightRange[1] - rightRange[0] + 1
     const combinedRangeLength = leftRangeLength + rightRangeLength
     const indexInCombinedRange = random.int(0, combinedRangeLength - 1)
-    console.log({
-        leftVolume,
-        smallestDistanceFromLeftVolume,
-        biggestDistanceFromLeftVolume,
-        deadZoneAroundLeftVolumeMin,
-        deadZoneAroundLeftVolumeMax,
-        lowestPossibleVolume,
-        highestPossibleVolume,
-        leftRange,
-        rightRange,
-        leftRangeLength,
-        rightRangeLength,
-        combinedRangeLength,
-        indexInCombinedRange,
-        indexInCombinedRangeLessThanLeftRange: 
-            indexInCombinedRange < leftRangeLength,
-        leftResult: leftRange[0] + indexInCombinedRange,
-        rightResult: rightRange[0] + indexInCombinedRange - leftRangeLength,
-    })
     if (indexInCombinedRange < leftRangeLength) {
         return leftRange[0] + indexInCombinedRange
     } else {
