@@ -1,7 +1,11 @@
 'use client'
 
 import { ShapeType } from '@/graphics/geometry'
-import { getRandomShape, getRandomVolume } from './random'
+import { 
+    getRandomShape, 
+    getRandomLeftVolume, 
+    getRandomRightVolume 
+} from './random'
 
 
 export interface GameState {
@@ -14,13 +18,12 @@ export interface GameState {
 }
 
 
-export function getInitialState(seed?: number): GameState {
-    const initialSeed = seed || Math.random()
-    const initialLeftVolume = getRandomVolume(initialSeed)
+export function getInitialState(initialSeed: number): GameState {
+    const initialLeftVolume = getRandomLeftVolume(initialSeed)
     return {
         leftVolume: initialLeftVolume,
         leftShape: getRandomShape(initialSeed),
-        rightVolume: getRandomVolume(initialSeed + 1, initialLeftVolume),
+        rightVolume: getRandomRightVolume(initialSeed + 1, initialLeftVolume),
         rightShape: getRandomShape(initialSeed + 1),
         guess: null,
         result: null,
@@ -34,7 +37,6 @@ export interface AnswerAction {
     side: AnswerSide
 }
 
-export type ActionType = AnswerAction
 
 export function answerAction(side: AnswerSide): AnswerAction {
     return {
@@ -42,6 +44,20 @@ export function answerAction(side: AnswerSide): AnswerAction {
         side,
     }
 }
+
+export interface NewQuestionAction {
+    type: 'NEW_QUESTION'
+    seed: number
+}
+
+export function newQuestionAction(seed?: number): NewQuestionAction {
+    return {
+        type: 'NEW_QUESTION',
+        seed: seed || Math.random(),
+    }
+}
+
+export type ActionType = AnswerAction | NewQuestionAction
 
 export function gameReducer(
     state: GameState, 
@@ -57,6 +73,17 @@ export function gameReducer(
                 ...state,
                 guess: action.side,
                 result: correct,
+            }
+        case 'NEW_QUESTION':
+            const leftVolume = getRandomLeftVolume(action.seed)
+            return {
+                ...state,
+                leftVolume,
+                leftShape: getRandomShape(action.seed),
+                rightVolume: getRandomRightVolume(action.seed + 1, leftVolume),
+                rightShape: getRandomShape(action.seed + 1),
+                guess: null,
+                result: null,
             }
         default:
             return state

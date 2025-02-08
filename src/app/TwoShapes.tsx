@@ -4,7 +4,12 @@ import { useReducer } from 'react'
 import styles from './TwoShapes.module.css'
 import Shape from '@/graphics/Shape'
 import classnames from 'classnames'
-import { answerAction, gameReducer, getInitialState } from '@/game/reducer'
+import { 
+    answerAction, 
+    gameReducer, 
+    getInitialState, 
+    newQuestionAction 
+} from '@/game/reducer'
 import Result from './Result'
 
 
@@ -13,13 +18,14 @@ export default function TwoShapes({ initialSeed }: { initialSeed: number }) {
     const [state, dispatch] = useReducer(gameReducer, initialState)
     const pickLeft = () => dispatch(answerAction('left'))
     const pickRight = () => dispatch(answerAction('right'))
+    const newQuestion = () => dispatch(newQuestionAction())
     const overlayClass = classnames(
         styles.resultOverlay, 
         { [styles.hiddenOverlay]: state.result === null }
     )
     return (
         <div className={styles.twoShapesAndOverlay}>
-            <div className={overlayClass}>
+            <div className={overlayClass} onClick={newQuestion}>
                 <Result state={state} />
             </div>
             <div className={styles.twoShapes}>
