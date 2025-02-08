@@ -18,23 +18,25 @@ export function getRandomRightVolume(seed: number, leftVolume: number) {
     const random = new Random(seed)
 
     // Areas within this range are too close to the left volume
+    const smallestDistanceFromLeftVolume = Config.minAnswerDelta * leftVolume
     const deadZoneAroundLeftVolumeMin = Math.max(
         Config.minVolume, 
-        Math.ceil(leftVolume - Config.minAnswerDelta * leftVolume)
+        Math.floor(leftVolume - smallestDistanceFromLeftVolume)
     )
     const deadZoneAroundLeftVolumeMax = Math.min(
         Config.maxVolume, 
-        Math.floor(leftVolume + Config.minAnswerDelta * leftVolume)
+        Math.ceil(leftVolume + smallestDistanceFromLeftVolume)
     )
    
     // These are as far as we can go from the left volume
+    const biggestDistanceFromLeftVolume = Config.maxAnswerDelta * leftVolume
     const lowestPossibleVolume = Math.max(
         Config.minVolume, 
-        Math.ceil(leftVolume - Config.maxAnswerDelta * leftVolume)
+        Math.ceil(leftVolume - biggestDistanceFromLeftVolume)
     )
     const highestPossibleVolume = Math.min(
         Config.maxVolume, 
-        Math.floor(leftVolume + Config.maxAnswerDelta * leftVolume)
+        Math.floor(leftVolume + biggestDistanceFromLeftVolume)
     )
 
     // The number must follow within these ranges
@@ -49,6 +51,8 @@ export function getRandomRightVolume(seed: number, leftVolume: number) {
     const indexInCombinedRange = random.int(0, combinedRangeLength - 1)
     console.log({
         leftVolume,
+        smallestDistanceFromLeftVolume,
+        biggestDistanceFromLeftVolume,
         deadZoneAroundLeftVolumeMin,
         deadZoneAroundLeftVolumeMax,
         lowestPossibleVolume,
