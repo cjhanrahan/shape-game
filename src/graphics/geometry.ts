@@ -7,6 +7,7 @@ export enum ShapeType {
     RECTANGULAR_PRISM = 'RECTANGULAR PRISM',
     REGULAR_PRISM = 'REGULAR PRISM',
     SPHERE = 'SPHERE',
+    TORUS = 'TORUS',
 }
 
 export const allShapes = [
@@ -14,6 +15,7 @@ export const allShapes = [
     ShapeType.RECTANGULAR_PRISM,
     ShapeType.REGULAR_PRISM,
     ShapeType.SPHERE,
+    ShapeType.TORUS,
 ]
 
 export function getRandomSideLength() {
@@ -30,6 +32,8 @@ export function getShape(volume: number, type: ShapeType) {
             return makeRegularPrism(volume)
         case ShapeType.SPHERE:
             return makeSphere(volume)
+        case ShapeType.TORUS:
+            return makeTorus(volume)
     }
 }
 
@@ -89,4 +93,16 @@ export function makeRegularPrism(volume: number) {
 export function makeSphere(volume: number) {
     const radius = Math.cbrt(volume / (4/3 * Math.PI))
     return new THREE.SphereGeometry(radius)
+}
+
+export function makeTorus(volume: number){
+    const majorRadius = getRandomSideLength()
+    const minorRadius = random.float(0.25, 3)
+    const multiplier = Math.cbrt(
+        volume / (2 * Math.PI * Math.PI * majorRadius * minorRadius)
+    )
+    return new THREE.TorusGeometry(
+        majorRadius * multiplier,
+        minorRadius * multiplier
+    )
 }
