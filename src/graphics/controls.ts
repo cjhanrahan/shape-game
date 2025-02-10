@@ -1,11 +1,7 @@
 import { TrackballControls } from 'three/addons/controls/TrackballControls.js'
 import { ThreeJsObjects } from './scene'
 
-
-
-export function getControls(
-    threeJsObjects: ThreeJsObjects,
-) {
+export function getControls(threeJsObjects: ThreeJsObjects) {
     const controls = new TrackballControls(
         threeJsObjects.camera,
         threeJsObjects.renderer.domElement,

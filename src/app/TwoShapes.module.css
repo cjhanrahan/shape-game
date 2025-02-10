@@ -5,9 +5,9 @@
     position: relative;
 }
 .twoShapes {
-  display: flex;
-  align-items: stretch;
-  flex: 1 1 0;
+    display: flex;
+    align-items: stretch;
+    flex: 1 1 0;
 }
 
 .resultOverlay {
@@ -22,5 +22,5 @@
 }
 
 .hiddenOverlay {
-  pointer-events: none;
+    pointer-events: none;
 }

@@ -4,19 +4,14 @@ import { Colors } from './colors'
 const LIGHT_DISTANCE = 25
 const LIGHT_INTENSITY = 3
 
-export function generateLight(
-    color: number, 
-    x: number, 
-    y: number, 
-    z: number
-) {
+export function generateLight(color: number, x: number, y: number, z: number) {
     const light = new THREE.DirectionalLight(color, LIGHT_INTENSITY)
     light.position.set(x, y, z)
     return light
 }
 
 export function getLights() {
-    const AmbientLight = new THREE.AmbientLight( Colors.LIGHT_YELLOW, 0.5 )
+    const AmbientLight = new THREE.AmbientLight(Colors.LIGHT_YELLOW, 0.5)
     const lights: THREE.Light[] = [
         generateLight(
             Colors.WHITE,

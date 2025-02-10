@@ -5,7 +5,6 @@ import { allShapes, ShapeType } from '@/graphics/geometry'
 import { Config } from '@/app/config'
 import { sphereColors } from '@/graphics/colors'
 
-
 export enum SeedOffset {
     LEFT = 0,
     RIGHT = 1,
@@ -54,29 +53,29 @@ export function getRandomRightVolume(
     // Areas within this range are too close to the left volume
     const smallestDistanceFromLeftVolume = Config.minAnswerDelta * leftVolume
     const deadZoneAroundLeftVolumeMin = Math.max(
-        Config.minVolume, 
-        Math.floor(leftVolume - smallestDistanceFromLeftVolume)
+        Config.minVolume,
+        Math.floor(leftVolume - smallestDistanceFromLeftVolume),
     )
     const deadZoneAroundLeftVolumeMax = Math.min(
-        Config.maxVolume, 
-        Math.ceil(leftVolume + smallestDistanceFromLeftVolume)
+        Config.maxVolume,
+        Math.ceil(leftVolume + smallestDistanceFromLeftVolume),
     )
-   
+
     // These are as far as we can go from the left volume
     const biggestDistanceFromLeftVolume = Config.maxAnswerDelta * leftVolume
     const lowestPossibleVolume = Math.max(
-        Config.minVolume, 
-        Math.ceil(leftVolume - biggestDistanceFromLeftVolume)
+        Config.minVolume,
+        Math.ceil(leftVolume - biggestDistanceFromLeftVolume),
     )
     const highestPossibleVolume = Math.min(
-        Config.maxVolume, 
-        Math.floor(leftVolume + biggestDistanceFromLeftVolume)
+        Config.maxVolume,
+        Math.floor(leftVolume + biggestDistanceFromLeftVolume),
     )
 
     // The number must follow within these ranges
     const leftRange = [lowestPossibleVolume, deadZoneAroundLeftVolumeMin]
     const rightRange = [deadZoneAroundLeftVolumeMax, highestPossibleVolume]
-    
+
     // We will pick a random number from the combined ranges,
     // then pick an index in either leftRange or rightRange
     const leftRangeLength = leftRange[1] - leftRange[0] + 1
@@ -94,8 +93,8 @@ export function getRandomRightVolume(
         return leftRange[0] + indexInCombinedRange
     } else {
         console.log(
-            'result', 
-            rightRange[0] + indexInCombinedRange - leftRangeLength
+            'result',
+            rightRange[0] + indexInCombinedRange - leftRangeLength,
         )
         return rightRange[0] + indexInCombinedRange - leftRangeLength
     }

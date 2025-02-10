@@ -2,22 +2,15 @@
 
 import { useEffect, useRef } from 'react'
 import styles from './Shape.module.css'
-import { 
-    appendSceneToNode,
-    SceneConfig,
-    ThreeJsConfig,
-} from './scene'
+import { appendSceneToNode, SceneConfig, ThreeJsConfig } from './scene'
 
-
-export default function Shape(
-    { 
-        sceneConfig,
-        onPick 
-    }: { 
-        sceneConfig: SceneConfig
-        onPick: () => void 
-    }
-) {
+export default function Shape({
+    sceneConfig,
+    onPick,
+}: {
+    sceneConfig: SceneConfig
+    onPick: () => void
+}) {
     const ref = useRef<HTMLDivElement>(null)
     const clickHandler = (e: React.MouseEvent) => {
         e.preventDefault()
@@ -44,10 +37,10 @@ export default function Shape(
             <div className={styles.shape}>
                 <div className={styles.shapeThreeJsContainer} ref={ref} />
                 <div className={styles.controls}>
-                    <input 
-                        type="button" 
-                        value="Choose shape" 
-                        onClick={clickHandler} 
+                    <input
+                        type="button"
+                        value="Choose shape"
+                        onClick={clickHandler}
                     />
                 </div>
             </div>

@@ -1,5 +1,3 @@
-
-
 export const Colors = {
     BISQUE: 0xffe4c4,
     DARK_SLATE_GRAY: 0x2f4f4f,
@@ -21,5 +19,5 @@ export const sphereColors = [
     Colors.LIGHT_SKY_BLUE,
     Colors.SALMON,
     Colors.SEA_GREEN,
-    Colors.REBECCA_PURPLE
+    Colors.REBECCA_PURPLE,
 ]

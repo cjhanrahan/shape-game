@@ -1,15 +1,14 @@
 'use client'
 
 import { ShapeType } from '@/graphics/geometry'
-import { 
-    getRandomShape, 
-    getRandomLeftVolume, 
-    getRandomRightVolume, 
+import {
+    getRandomShape,
+    getRandomLeftVolume,
+    getRandomRightVolume,
     getRandomColor,
     makeSeededGenerator,
-    RandomGenerator
+    RandomGenerator,
 } from './random'
-
 
 export interface GameState {
     leftColor: number
@@ -22,10 +21,7 @@ export interface GameState {
     result: boolean | null
 }
 
-
-export function getInitialState(
-    generator: RandomGenerator,
-): GameState {
+export function getInitialState(generator: RandomGenerator): GameState {
     const initialLeftVolume = getRandomLeftVolume(generator)
     return {
         leftColor: getRandomColor(generator),
@@ -45,7 +41,6 @@ export interface AnswerAction {
     type: 'ANSWER'
     side: AnswerSide
 }
-
 
 export function answerAction(side: AnswerSide): AnswerAction {
     return {
@@ -68,16 +63,11 @@ export function newQuestionAction(seed?: number): NewQuestionAction {
 
 export type ActionType = AnswerAction | NewQuestionAction
 
-export function gameReducer(
-    state: GameState, 
-    action: ActionType
-): GameState {
+export function gameReducer(state: GameState, action: ActionType): GameState {
     switch (action.type) {
         case 'ANSWER':
             const leftWins = state.leftVolume > state.rightVolume
-            const correct = action.side === 'left' 
-                ? leftWins 
-                : !leftWins
+            const correct = action.side === 'left' ? leftWins : !leftWins
             return {
                 ...state,
                 guess: action.side,

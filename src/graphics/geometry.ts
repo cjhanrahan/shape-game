@@ -2,7 +2,6 @@ import * as THREE from 'three'
 import { RandomGenerator } from '@/game/random'
 import { SceneConfig } from './scene'
 
-
 export enum ShapeType {
     CUBE = 'CUBE',
     RECTANGULAR_PRISM = 'RECTANGULAR PRISM',
@@ -21,11 +20,9 @@ export const allShapes = [
 
 export function getRandomSideLength(generator: RandomGenerator) {
     return generator.float(1, 5)
-}   
+}
 
-export function getShape(
-    config: SceneConfig,
-) {
+export function getShape(config: SceneConfig) {
     switch (config.type) {
         case ShapeType.CUBE:
             return makeCube(config)
@@ -46,17 +43,15 @@ export function makeCube(config: SceneConfig) {
     return geometry
 }
 
-export function makeRectangularPrism(
-    config: SceneConfig,
-) {
+export function makeRectangularPrism(config: SceneConfig) {
     const sideRatios = [
         getRandomSideLength(config.generator),
         getRandomSideLength(config.generator),
-        getRandomSideLength(config.generator)
+        getRandomSideLength(config.generator),
     ]
     const ratioVolume = sideRatios.reduce((acc, cur) => acc * cur, 1)
     const ratioMultiplier = Math.cbrt(config.volume / ratioVolume)
-    const sideLengths = sideRatios.map(side => side * ratioMultiplier)
+    const sideLengths = sideRatios.map((side) => side * ratioMultiplier)
     const geometry = new THREE.BoxGeometry(...sideLengths)
     return geometry
 }
@@ -66,7 +61,7 @@ export function makeRegularPrism(config: SceneConfig) {
     const height = getRandomSideLength(config.generator)
     const radius = getRandomSideLength(config.generator)
     const centralAngle = (2 * Math.PI) / numOfSides
-    
+
     // value I need to multiple the height and radius by to get the right volume
     const numerator = 2 * config.volume
     const denominator = numOfSides * centralAngle * radius * radius * height
@@ -77,12 +72,12 @@ export function makeRegularPrism(config: SceneConfig) {
         radius * sideMultiplier,
         height * sideMultiplier,
         numOfSides,
-        1
+        1,
     )
 }
 
 export function makeSphere(config: SceneConfig) {
-    const radius = Math.cbrt(config.volume / (4/3 * Math.PI))
+    const radius = Math.cbrt(config.volume / ((4 / 3) * Math.PI))
     return new THREE.SphereGeometry(radius)
 }
 
@@ -91,11 +86,9 @@ export function makeTorus(config: SceneConfig) {
     const minorRadius = config.generator.float(0.25, 3)
     const denominator =
         2 * Math.PI * Math.PI * majorRadius * minorRadius * minorRadius
-    const multiplier = Math.cbrt(
-        config.volume / denominator
-    )
+    const multiplier = Math.cbrt(config.volume / denominator)
     return new THREE.TorusGeometry(
         majorRadius * multiplier,
-        minorRadius * multiplier
+        minorRadius * multiplier,
     )
 }

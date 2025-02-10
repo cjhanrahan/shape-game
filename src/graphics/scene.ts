@@ -10,7 +10,7 @@ import { Config } from '@/app/config'
 
 export interface SceneConfig {
     color: number
-    type: ShapeType 
+    type: ShapeType
     generator: RandomGenerator
     volume: number
 }
@@ -34,18 +34,16 @@ export function setUpRenderer(threeJsConfig: ThreeJsConfig) {
 
 export function setUpCamera(threeJsConfig: ThreeJsConfig) {
     const camera = new THREE.PerspectiveCamera(
-        75, 
-        threeJsConfig.width / threeJsConfig.height, 
-        0.1, 
-        100000
+        75,
+        threeJsConfig.width / threeJsConfig.height,
+        0.1,
+        100000,
     )
     camera.position.z = 15
     return camera
 }
 
-export function setUpSceneObject(
-    sceneConfig: SceneConfig
-) {
+export function setUpSceneObject(sceneConfig: SceneConfig) {
     const scene = new THREE.Scene()
     for (const light of getLights()) {
         scene.add(light)
@@ -54,7 +52,7 @@ export function setUpSceneObject(
     const buffer = applyMaterial(
         geometry,
         Config.materialType,
-        sceneConfig.color
+        sceneConfig.color,
     )
     scene.add(buffer)
     if (Config.plane) {
@@ -65,7 +63,7 @@ export function setUpSceneObject(
 
 export function getThreeJsObjects(
     sceneConfig: SceneConfig,
-    threeJsConfig: ThreeJsConfig
+    threeJsConfig: ThreeJsConfig,
 ): ThreeJsObjects {
     const renderer = setUpRenderer(threeJsConfig)
     const camera = setUpCamera(threeJsConfig)
@@ -76,7 +74,7 @@ export function getThreeJsObjects(
 
 export function getAnimateFunction(
     objects: ThreeJsObjects,
-    controls: TrackballControls
+    controls: TrackballControls,
 ) {
     return function animate() {
         controls.update()
@@ -87,7 +85,7 @@ export function getAnimateFunction(
 export function appendSceneToNode(
     sceneConfig: SceneConfig,
     threeJsConfig: ThreeJsConfig,
-    node: Element
+    node: Element,
 ) {
     const objects = getThreeJsObjects(sceneConfig, threeJsConfig)
     node.appendChild(objects.renderer.domElement)

@@ -37,8 +37,7 @@ describe('geometry', () => {
         const width = 3
         const height = 4
         const depth = 2
-        randomMock
-            .floatMock
+        randomMock.floatMock
             .mockReturnValueOnce(width)
             .mockReturnValueOnce(height)
             .mockReturnValueOnce(depth)
@@ -69,8 +68,8 @@ describe('geometry', () => {
         const randomMock = makeRandomMock()
         const majorRadius = 4
         const minorRadius = 0.5
-        randomMock
-            .floatMock.mockReturnValueOnce(majorRadius)
+        randomMock.floatMock
+            .mockReturnValueOnce(majorRadius)
             .mockReturnValueOnce(minorRadius)
         const volume =
             2 * Math.PI * Math.PI * majorRadius * minorRadius * minorRadius

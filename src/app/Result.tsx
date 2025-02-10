@@ -6,10 +6,9 @@ import { GameState } from '@/game/reducer'
 
 export default function Result({ state }: { state: GameState }) {
     const resultString = state.result === true ? 'CORRECT' : 'WRONG'
-    const resultModalClass = classnames(
-        styles.resultModal,
-        { [styles.correct]: state.result === true }
-    )
+    const resultModalClass = classnames(styles.resultModal, {
+        [styles.correct]: state.result === true,
+    })
 
     return (
         <>

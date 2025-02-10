@@ -1,16 +1,15 @@
 .container {
-  height: 100vh;
-  width: 100vw;
-  background-color: darkslategrey;
-  display: flex;
-  justify-content: center;
-  align-items: stretch;
-  flex-direction: column;
-  margin-bottom: 15px;
+    height: 100vh;
+    width: 100vw;
+    background-color: darkslategrey;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    flex-direction: column;
+    margin-bottom: 15px;
 }
 
 .title {
-  text-align: center;
-  color: lemonchiffon
+    text-align: center;
+    color: lemonchiffon;
 }
-
