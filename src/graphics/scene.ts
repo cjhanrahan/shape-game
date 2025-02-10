@@ -1,18 +1,23 @@
 import * as THREE from 'three'
 import { TrackballControls } from 'three/addons/controls/TrackballControls.js'
-import { Config } from '@/app/config'
 import { getPlane } from './plane'
 import { getLights } from './lights'
 import { getControls } from './controls'
 import { getShape, ShapeType } from './geometry'
 import { applyMaterial } from './materials'
+import { RandomGenerator } from '@/game/random'
+import { Config } from '@/app/config'
 
 export interface SceneConfig {
-    width: number
-    height: number
     color: number
     type: ShapeType 
+    generator: RandomGenerator
     volume: number
+}
+
+export interface ThreeJsConfig {
+    height: number
+    width: number
 }
 
 export interface ThreeJsObjects {
@@ -21,27 +26,16 @@ export interface ThreeJsObjects {
     camera: THREE.Camera
 }
 
-export function getSceneConfig(
-    node: Element, 
-    type: ShapeType, 
-    volume: number,
-    color: number
-): SceneConfig {
-    const width = node.clientWidth
-    const height = node.clientHeight
-    return { width, height, type, volume, color }
-}
-
-export function setUpRenderer(config: SceneConfig) {
+export function setUpRenderer(threeJsConfig: ThreeJsConfig) {
     const renderer = new THREE.WebGLRenderer({ antialias: Config.antialiasing })
-    renderer.setSize(config.width, config.height)
+    renderer.setSize(threeJsConfig.width, threeJsConfig.height)
     return renderer
 }
 
-export function setUpCamera(config: SceneConfig) {
+export function setUpCamera(threeJsConfig: ThreeJsConfig) {
     const camera = new THREE.PerspectiveCamera(
         75, 
-        config.width / config.height, 
+        threeJsConfig.width / threeJsConfig.height, 
         0.1, 
         100000
     )
@@ -49,13 +43,19 @@ export function setUpCamera(config: SceneConfig) {
     return camera
 }
 
-export function setUpSceneObject(config: SceneConfig) {
+export function setUpSceneObject(
+    sceneConfig: SceneConfig
+) {
     const scene = new THREE.Scene()
     for (const light of getLights()) {
         scene.add(light)
     }
-    const geometry = getShape(config.volume, config.type)
-    const buffer = applyMaterial(geometry, Config.materialType, config.color)
+    const geometry = getShape(sceneConfig)
+    const buffer = applyMaterial(
+        geometry,
+        Config.materialType,
+        sceneConfig.color
+    )
     scene.add(buffer)
     if (Config.plane) {
         scene.add(getPlane())
@@ -63,10 +63,13 @@ export function setUpSceneObject(config: SceneConfig) {
     return scene
 }
 
-export function getThreeJsObjects(config: SceneConfig): ThreeJsObjects {
-    const renderer = setUpRenderer(config)
-    const camera = setUpCamera(config)
-    const scene = setUpSceneObject(config)
+export function getThreeJsObjects(
+    sceneConfig: SceneConfig,
+    threeJsConfig: ThreeJsConfig
+): ThreeJsObjects {
+    const renderer = setUpRenderer(threeJsConfig)
+    const camera = setUpCamera(threeJsConfig)
+    const scene = setUpSceneObject(sceneConfig)
     const objects = { renderer, scene, camera }
     return objects
 }
@@ -82,13 +85,11 @@ export function getAnimateFunction(
 }
 
 export function appendSceneToNode(
-    node: Element, 
-    type: ShapeType, 
-    volume: number,
-    color: number
+    sceneConfig: SceneConfig,
+    threeJsConfig: ThreeJsConfig,
+    node: Element
 ) {
-    const config = getSceneConfig(node, type, volume, color)
-    const objects = getThreeJsObjects(config)
+    const objects = getThreeJsObjects(sceneConfig, threeJsConfig)
     node.appendChild(objects.renderer.domElement)
     const controls = getControls(objects)
     const animateFunction = getAnimateFunction(objects, controls)

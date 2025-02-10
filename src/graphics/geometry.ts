@@ -1,5 +1,6 @@
 import * as THREE from 'three'
-import random from 'random'
+import { RandomGenerator } from '@/game/random'
+import { SceneConfig } from './scene'
 
 
 export enum ShapeType {
@@ -18,69 +19,59 @@ export const allShapes = [
     ShapeType.TORUS,
 ]
 
-export function getRandomSideLength() {
-    return random.float(1, 5)
+export function getRandomSideLength(generator: RandomGenerator) {
+    return generator.float(1, 5)
 }   
 
-export function getShape(volume: number, type: ShapeType) {
-    switch (type) {
+export function getShape(
+    config: SceneConfig,
+) {
+    switch (config.type) {
         case ShapeType.CUBE:
-            return makeCube(volume)
+            return makeCube(config)
         case ShapeType.RECTANGULAR_PRISM:
-            return makeRectangularPrism(volume)
+            return makeRectangularPrism(config)
         case ShapeType.REGULAR_PRISM:
-            return makeRegularPrism(volume)
+            return makeRegularPrism(config)
         case ShapeType.SPHERE:
-            return makeSphere(volume)
+            return makeSphere(config)
         case ShapeType.TORUS:
-            return makeTorus(volume)
+            return makeTorus(config)
     }
 }
 
-export function makeCube(volume: number){
-    const sideLength = Math.cbrt(volume)
+export function makeCube(config: SceneConfig) {
+    const sideLength = Math.cbrt(config.volume)
     const geometry = new THREE.BoxGeometry(sideLength, sideLength, sideLength)
-    console.log({ sideLength, volume })
     return geometry
 }
 
-export function makeRectangularPrism(volume: number) {
+export function makeRectangularPrism(
+    config: SceneConfig,
+) {
     const sideRatios = [
-        getRandomSideLength(),
-        getRandomSideLength(),
-        getRandomSideLength()
+        getRandomSideLength(config.generator),
+        getRandomSideLength(config.generator),
+        getRandomSideLength(config.generator)
     ]
     const ratioVolume = sideRatios.reduce((acc, cur) => acc * cur, 1)
-    const ratioMultiplier = Math.cbrt(volume / ratioVolume)
+    const ratioMultiplier = Math.cbrt(config.volume / ratioVolume)
     const sideLengths = sideRatios.map(side => side * ratioMultiplier)
-    console.log({
-        volume, sideRatios, ratioVolume, ratioMultiplier, sideLengths
-    })
     const geometry = new THREE.BoxGeometry(...sideLengths)
     return geometry
 }
 
-export function makeRegularPrism(volume: number) {
-    const numOfSides = random.int(3, 8)
-    const height = getRandomSideLength()
-    const radius = getRandomSideLength()
+export function makeRegularPrism(config: SceneConfig) {
+    const numOfSides = config.generator.int(3, 8)
+    const height = getRandomSideLength(config.generator)
+    const radius = getRandomSideLength(config.generator)
     const centralAngle = (2 * Math.PI) / numOfSides
     
     // value I need to multiple the height and radius by to get the right volume
-    const numerator = 2 * volume
+    const numerator = 2 * config.volume
     const denominator = numOfSides * centralAngle * radius * radius * height
     const sideMultiplier = Math.cbrt(numerator / denominator)
 
-    console.log({
-        volume,
-        numOfSides,
-        height,
-        radius,
-        centralAngle,
-        numerator,
-        denominator,
-        sideMultiplier,
-    })
     return new THREE.CylinderGeometry(
         radius * sideMultiplier,
         radius * sideMultiplier,
@@ -90,16 +81,16 @@ export function makeRegularPrism(volume: number) {
     )
 }
 
-export function makeSphere(volume: number) {
-    const radius = Math.cbrt(volume / (4/3 * Math.PI))
+export function makeSphere(config: SceneConfig) {
+    const radius = Math.cbrt(config.volume / (4/3 * Math.PI))
     return new THREE.SphereGeometry(radius)
 }
 
-export function makeTorus(volume: number){
-    const majorRadius = getRandomSideLength()
-    const minorRadius = random.float(0.25, 3)
+export function makeTorus(config: SceneConfig) {
+    const majorRadius = getRandomSideLength(config.generator)
+    const minorRadius = config.generator.float(0.25, 3)
     const multiplier = Math.cbrt(
-        volume / (2 * Math.PI * Math.PI * majorRadius * minorRadius)
+        config.volume / (2 * Math.PI * Math.PI * majorRadius * minorRadius)
     )
     return new THREE.TorusGeometry(
         majorRadius * multiplier,

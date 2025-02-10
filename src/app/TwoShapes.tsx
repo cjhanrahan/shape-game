@@ -11,20 +11,45 @@ import {
     newQuestionAction 
 } from '@/game/reducer'
 import Result from './Result'
+import { SceneConfig } from '@/graphics/scene'
+import { makeSeededGenerator, RandomGenerator } from '@/game/random'
 
 
-export default function TwoShapes() {
+export default function TwoShapes({
+    generator1,
+    generator2,
+}: {
+    generator1?: RandomGenerator,
+    generator2?: RandomGenerator,
+}) {
+    const gen1 = generator1 || makeSeededGenerator(Math.random())
+    const gen2 = generator2 || makeSeededGenerator(Math.random())
+
     const [mounted, setHasMounted] = useState(false)
-    const initialState = getInitialState(Math.random())
+
+    const initialState = getInitialState(gen1, gen2)
     const [state, dispatch] = useReducer(gameReducer, initialState)
-    console.log({ state })
     const pickLeft = () => dispatch(answerAction('left'))
     const pickRight = () => dispatch(answerAction('right'))
     const newQuestion = () => dispatch(newQuestionAction())
+
     const overlayClass = classnames(
         styles.resultOverlay, 
         { [styles.hiddenOverlay]: state.result === null }
     )
+    const leftSceneConfig: SceneConfig = {
+        type: state.leftShape,
+        volume: state.leftVolume,
+        color: state.leftColor,
+        generator: gen1,
+    }
+    const rightSceneConfig: SceneConfig = {
+        type: state.rightShape,
+        volume: state.rightVolume,
+        color: state.rightColor,
+        generator: gen2,
+    }
+
     useEffect(() => {
         setHasMounted(true)
     }, [])
@@ -37,18 +62,12 @@ export default function TwoShapes() {
                 {mounted && (
                     <>
                         <Shape 
-                            color={state.leftColor}
-                            type={state.leftShape} 
-                            volume={state.leftVolume} 
+                            sceneConfig={leftSceneConfig}
                             onPick={pickLeft} 
-                            side="left"
                         />
                         <Shape 
-                            color={state.rightColor}
-                            type={state.rightShape} 
-                            volume={state.rightVolume} 
+                            sceneConfig={rightSceneConfig}
                             onPick={pickRight} 
-                            side="right"
                         />
                     </>
                 )}

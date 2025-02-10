@@ -5,24 +5,46 @@ import { allShapes, ShapeType } from '@/graphics/geometry'
 import { Config } from '@/app/config'
 import { sphereColors } from '@/graphics/colors'
 
-export function getRandomShape(seed: number) {
-    const random = new Random(seed)
-    return random.choice(allShapes) as ShapeType
+export interface RandomGenerator {
+    choice<T>(array: T[]): T
+    int(min: number, max: number): number
+    float(min: number, max: number): number
 }
 
-export function getRandomColor(seed: number) {
+export function makeSeededGenerator(seed: number): RandomGenerator {
     const random = new Random(seed)
-    return random.choice(sphereColors) as number
+    return {
+        choice<T>(array: T[]) {
+            if (!array.length) {
+                throw new Error('Cannot choose from an empty array')
+            }
+            return random.choice(array) as T
+        },
+        int(min: number, max: number) {
+            return random.int(min, max)
+        },
+        float(min: number, max: number) {
+            return random.float(min, max)
+        }
+    }
 }
 
-export function getRandomLeftVolume(seed: number) {
-    const random = new Random(seed)
-    return random.int(10, 100)
+export function getRandomShape(generator: RandomGenerator) {
+    return generator.choice(allShapes) as ShapeType
 }
 
-export function getRandomRightVolume(seed: number, leftVolume: number) {
-    const random = new Random(seed)
+export function getRandomColor(generator: RandomGenerator) {
+    return generator.choice(sphereColors) as number
+}
 
+export function getRandomLeftVolume(generator: RandomGenerator) {
+    return generator.int(10, 100)
+}
+
+export function getRandomRightVolume(
+    generator: RandomGenerator,
+    leftVolume: number,
+) {
     // Areas within this range are too close to the left volume
     const smallestDistanceFromLeftVolume = Config.minAnswerDelta * leftVolume
     const deadZoneAroundLeftVolumeMin = Math.max(
@@ -54,7 +76,7 @@ export function getRandomRightVolume(seed: number, leftVolume: number) {
     const leftRangeLength = leftRange[1] - leftRange[0] + 1
     const rightRangeLength = rightRange[1] - rightRange[0] + 1
     const combinedRangeLength = leftRangeLength + rightRangeLength
-    const indexInCombinedRange = random.int(0, combinedRangeLength - 1)
+    const indexInCombinedRange = generator.int(0, combinedRangeLength - 1)
     console.log({
         smallestDistanceFromLeftVolume,
         deadZoneAroundLeftVolumeMin,

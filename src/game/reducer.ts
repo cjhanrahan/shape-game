@@ -5,7 +5,9 @@ import {
     getRandomShape, 
     getRandomLeftVolume, 
     getRandomRightVolume, 
-    getRandomColor
+    getRandomColor,
+    makeSeededGenerator,
+    RandomGenerator
 } from './random'
 
 
@@ -21,15 +23,18 @@ export interface GameState {
 }
 
 
-export function getInitialState(initialSeed: number): GameState {
-    const initialLeftVolume = getRandomLeftVolume(initialSeed)
+export function getInitialState(
+    generator: RandomGenerator,
+    otherGenerator: RandomGenerator,
+): GameState {
+    const initialLeftVolume = getRandomLeftVolume(generator)
     return {
-        leftColor: getRandomColor(initialSeed),
+        leftColor: getRandomColor(generator),
         leftVolume: initialLeftVolume,
-        leftShape: getRandomShape(initialSeed),
-        rightColor: getRandomColor(initialSeed + 1),
-        rightVolume: getRandomRightVolume(initialSeed + 1, initialLeftVolume),
-        rightShape: getRandomShape(initialSeed + 1),
+        leftShape: getRandomShape(generator),
+        rightColor: getRandomColor(otherGenerator),
+        rightVolume: getRandomRightVolume(otherGenerator, initialLeftVolume),
+        rightShape: getRandomShape(otherGenerator),
         guess: null,
         result: null,
     }
@@ -80,15 +85,17 @@ export function gameReducer(
                 result: correct,
             }
         case 'NEW_QUESTION':
-            const leftVolume = getRandomLeftVolume(action.seed)
+            const generator = makeSeededGenerator(action.seed)
+            const otherGenerator = makeSeededGenerator(action.seed + 1)
+            const leftVolume = getRandomLeftVolume(generator)
             return {
                 ...state,
-                leftColor: getRandomColor(action.seed),
+                leftColor: getRandomColor(generator),
                 leftVolume,
-                leftShape: getRandomShape(action.seed),
-                rightColor: getRandomColor(action.seed + 1),
-                rightVolume: getRandomRightVolume(action.seed + 1, leftVolume),
-                rightShape: getRandomShape(action.seed + 1),
+                leftShape: getRandomShape(generator),
+                rightColor: getRandomColor(otherGenerator),
+                rightVolume: getRandomRightVolume(otherGenerator, leftVolume),
+                rightShape: getRandomShape(otherGenerator),
                 guess: null,
                 result: null,
             }

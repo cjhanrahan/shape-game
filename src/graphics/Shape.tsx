@@ -4,23 +4,17 @@ import { useEffect, useRef } from 'react'
 import styles from './Shape.module.css'
 import { 
     appendSceneToNode,
+    SceneConfig,
+    ThreeJsConfig,
 } from './scene'
-import { ShapeType } from './geometry'
-import { AnswerSide } from '@/game/reducer'
 
 
 export default function Shape(
     { 
-        type, 
-        side,
-        volume, 
-        color,
+        sceneConfig,
         onPick 
     }: { 
-        type: ShapeType, 
-        color: number
-        side: AnswerSide,
-        volume: number, 
+        sceneConfig: SceneConfig
         onPick: () => void 
     }
 ) {
@@ -29,20 +23,23 @@ export default function Shape(
         e.preventDefault()
         onPick()
     }
-    console.log({ type, side, volume })
     useEffect(() => {
         if (ref.current) {
             while (ref.current.firstChild) {
                 ref.current.removeChild(ref.current.firstChild)
             }
-            appendSceneToNode(ref.current, type, volume, color)
+            const threeJsConfig: ThreeJsConfig = {
+                width: ref.current.clientWidth,
+                height: ref.current.clientHeight,
+            }
+            appendSceneToNode(sceneConfig, threeJsConfig, ref.current)
         }
-    }, [type, volume, color])
+    }, [sceneConfig])
 
     return (
         <div className={styles.shapeAndOverlay}>
             <div className={styles.overlay}>
-                <div>{type.toString()}</div>
+                <div>{sceneConfig.type.toString()}</div>
             </div>
             <div className={styles.shape}>
                 <div className={styles.shapeThreeJsContainer} ref={ref} />
