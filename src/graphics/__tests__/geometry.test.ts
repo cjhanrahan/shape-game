@@ -33,17 +33,54 @@ describe('geometry', () => {
     })
 
     it('generates rectangular prism geometries', () => {
-        const length = 2
+        const randomMock = makeRandomMock()
         const width = 3
         const height = 4
-        const volume = length * width * height
+        const depth = 2
+        randomMock
+            .floatMock
+            .mockReturnValueOnce(width)
+            .mockReturnValueOnce(height)
+            .mockReturnValueOnce(depth)
+        const volume = depth * width * height
         const geometry = getShape({
             ...config,
+            generator: randomMock,
             type: ShapeType.RECTANGULAR_PRISM,
             volume,
         }) as THREE.BoxGeometry
         expect(geometry.parameters.width).toBe(width)
         expect(geometry.parameters.height).toBe(height)
-        expect(geometry.parameters.depth).toBe(length)
+        expect(geometry.parameters.depth).toBe(depth)
+    })
+
+    it('generates sphere geometries', () => {
+        const radius = 1
+        const volume = (4 / 3) * Math.PI * Math.pow(radius, 3)
+        const geometry = getShape({
+            ...config,
+            type: ShapeType.SPHERE,
+            volume,
+        }) as THREE.SphereGeometry
+        expect(geometry.parameters.radius).toBe(radius)
+    })
+
+    it('generates torus geometries', () => {
+        const randomMock = makeRandomMock()
+        const majorRadius = 4
+        const minorRadius = 0.5
+        randomMock
+            .floatMock.mockReturnValueOnce(majorRadius)
+            .mockReturnValueOnce(minorRadius)
+        const volume =
+            2 * Math.PI * Math.PI * majorRadius * minorRadius * minorRadius
+        const geometry = getShape({
+            ...config,
+            generator: randomMock,
+            type: ShapeType.TORUS,
+            volume,
+        }) as THREE.TorusGeometry
+        expect(geometry.parameters.radius).toBe(majorRadius)
+        expect(geometry.parameters.tube).toBe(minorRadius)
     })
 })

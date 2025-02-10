@@ -89,8 +89,10 @@ export function makeSphere(config: SceneConfig) {
 export function makeTorus(config: SceneConfig) {
     const majorRadius = getRandomSideLength(config.generator)
     const minorRadius = config.generator.float(0.25, 3)
+    const denominator =
+        2 * Math.PI * Math.PI * majorRadius * minorRadius * minorRadius
     const multiplier = Math.cbrt(
-        config.volume / (2 * Math.PI * Math.PI * majorRadius * minorRadius)
+        config.volume / denominator
     )
     return new THREE.TorusGeometry(
         majorRadius * multiplier,
