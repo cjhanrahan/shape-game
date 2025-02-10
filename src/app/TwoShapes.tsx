@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useReducer, useState } from 'react'
+import { useEffect, useMemo, useReducer, useRef, useState } from 'react'
 import styles from './TwoShapes.module.css'
 import Shape from '@/graphics/Shape'
 import classnames from 'classnames'
@@ -20,7 +20,9 @@ export default function TwoShapes({
 }: {
     generator?: RandomGenerator,
 }) {
-    const gen = generator || makeSeededGenerator(Math.random())
+    const gen = useRef(
+        generator || makeSeededGenerator(Math.random()),
+    ).current
 
     const [mounted, setHasMounted] = useState(false)
 
@@ -34,18 +36,18 @@ export default function TwoShapes({
         styles.resultOverlay, 
         { [styles.hiddenOverlay]: state.result === null }
     )
-    const leftSceneConfig: SceneConfig = {
+    const leftSceneConfig: SceneConfig = useMemo(() => ({
         type: state.leftShape,
         volume: state.leftVolume,
         color: state.leftColor,
         generator: gen,
-    }
-    const rightSceneConfig: SceneConfig = {
+    }), [state.leftShape, state.leftVolume, state.leftColor, gen])
+    const rightSceneConfig: SceneConfig = useMemo(() => ({ 
         type: state.rightShape,
         volume: state.rightVolume,
         color: state.rightColor,
         generator: gen,
-    }
+    }), [state.rightShape, state.rightVolume, state.rightColor, gen])
 
     useEffect(() => {
         setHasMounted(true)
