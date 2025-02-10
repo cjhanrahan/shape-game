@@ -25,16 +25,15 @@ export interface GameState {
 
 export function getInitialState(
     generator: RandomGenerator,
-    otherGenerator: RandomGenerator,
 ): GameState {
     const initialLeftVolume = getRandomLeftVolume(generator)
     return {
         leftColor: getRandomColor(generator),
         leftVolume: initialLeftVolume,
         leftShape: getRandomShape(generator),
-        rightColor: getRandomColor(otherGenerator),
-        rightVolume: getRandomRightVolume(otherGenerator, initialLeftVolume),
-        rightShape: getRandomShape(otherGenerator),
+        rightColor: getRandomColor(generator),
+        rightVolume: getRandomRightVolume(generator, initialLeftVolume),
+        rightShape: getRandomShape(generator),
         guess: null,
         result: null,
     }

@@ -5,6 +5,12 @@ import { allShapes, ShapeType } from '@/graphics/geometry'
 import { Config } from '@/app/config'
 import { sphereColors } from '@/graphics/colors'
 
+
+export enum SeedOffset {
+    LEFT = 0,
+    RIGHT = 1,
+}
+
 export interface RandomGenerator {
     choice<T>(array: T[]): T
     int(min: number, max: number): number
@@ -25,7 +31,7 @@ export function makeSeededGenerator(seed: number): RandomGenerator {
         },
         float(min: number, max: number) {
             return random.float(min, max)
-        }
+        },
     }
 }
 

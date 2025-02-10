@@ -16,18 +16,15 @@ import { makeSeededGenerator, RandomGenerator } from '@/game/random'
 
 
 export default function TwoShapes({
-    generator1,
-    generator2,
+    generator,
 }: {
-    generator1?: RandomGenerator,
-    generator2?: RandomGenerator,
+    generator?: RandomGenerator,
 }) {
-    const gen1 = generator1 || makeSeededGenerator(Math.random())
-    const gen2 = generator2 || makeSeededGenerator(Math.random())
+    const gen = generator || makeSeededGenerator(Math.random())
 
     const [mounted, setHasMounted] = useState(false)
 
-    const initialState = getInitialState(gen1, gen2)
+    const initialState = getInitialState(gen)
     const [state, dispatch] = useReducer(gameReducer, initialState)
     const pickLeft = () => dispatch(answerAction('left'))
     const pickRight = () => dispatch(answerAction('right'))
@@ -41,13 +38,13 @@ export default function TwoShapes({
         type: state.leftShape,
         volume: state.leftVolume,
         color: state.leftColor,
-        generator: gen1,
+        generator: gen,
     }
     const rightSceneConfig: SceneConfig = {
         type: state.rightShape,
         volume: state.rightVolume,
         color: state.rightColor,
-        generator: gen2,
+        generator: gen,
     }
 
     useEffect(() => {
