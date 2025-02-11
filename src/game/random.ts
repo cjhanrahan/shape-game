@@ -2,7 +2,7 @@
 
 import { Random } from 'random'
 import { allShapes, ShapeType } from '@/graphics/geometry'
-import { Config } from '@/app/config'
+import { AppConfig } from '@/app/config'
 import { sphereColors } from '@/graphics/colors'
 
 export enum SeedOffset {
@@ -51,24 +51,24 @@ export function getRandomRightVolume(
     leftVolume: number,
 ) {
     // Areas within this range are too close to the left volume
-    const smallestDistanceFromLeftVolume = Config.minAnswerDelta * leftVolume
+    const smallestDistanceFromLeftVolume = AppConfig.minAnswerDelta * leftVolume
     const deadZoneAroundLeftVolumeMin = Math.max(
-        Config.minVolume,
+        AppConfig.minVolume,
         Math.floor(leftVolume - smallestDistanceFromLeftVolume),
     )
     const deadZoneAroundLeftVolumeMax = Math.min(
-        Config.maxVolume,
+        AppConfig.maxVolume,
         Math.ceil(leftVolume + smallestDistanceFromLeftVolume),
     )
 
     // These are as far as we can go from the left volume
-    const biggestDistanceFromLeftVolume = Config.maxAnswerDelta * leftVolume
+    const biggestDistanceFromLeftVolume = AppConfig.maxAnswerDelta * leftVolume
     const lowestPossibleVolume = Math.max(
-        Config.minVolume,
+        AppConfig.minVolume,
         Math.ceil(leftVolume - biggestDistanceFromLeftVolume),
     )
     const highestPossibleVolume = Math.min(
-        Config.maxVolume,
+        AppConfig.maxVolume,
         Math.floor(leftVolume + biggestDistanceFromLeftVolume),
     )
 

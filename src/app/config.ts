@@ -1,6 +1,6 @@
 import { MaterialType } from '@/graphics/materials'
 
-export const Config = {
+export const AppConfig = {
     antialiasing: true,
     materialType: MaterialType.GRADIENT,
     minAnswerDelta: 0.1,
