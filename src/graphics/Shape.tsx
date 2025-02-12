@@ -37,11 +37,9 @@ export default function Shape({
             <div className={styles.shape}>
                 <div className={styles.shapeThreeJsContainer} ref={ref} />
                 <div className={styles.controls}>
-                    <input
-                        type="button"
-                        value="Choose shape"
-                        onClick={clickHandler}
-                    />
+                    <div className={styles.button} onClick={clickHandler}>
+                        Choose shape
+                    </div>
                 </div>
             </div>
         </div>

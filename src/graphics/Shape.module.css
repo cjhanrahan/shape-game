@@ -1,8 +1,15 @@
 .shapeAndOverlay {
     position: relative;
     flex: 1 1 0;
-    border: 1px solid ivory;
+    outline: var(--border);
+    border-radius: var(--border-radius);
 }
+/* .shapeAndOverlay:first-child {
+    margin-right: var(--spacing-s);
+}
+.shapeAndOverlay:last-child {
+    margin-left: var(--spacing-s);
+} */
 
 .shape {
     display: flex;
@@ -10,19 +17,29 @@
     width: 100%;
     height: 100%;
 }
-.shape + .shape {
-    border-left-width: 0;
-}
 
 .shapeThreeJsContainer {
     flex: 1 1 0;
+    border-radius: var(--border-radius);
 }
 
 .controls {
     display: flex;
     justify-content: center;
+    border-top: var(--border);
 }
 
+.button {
+    width: 100%;
+    text-align: center;
+    font-size: var(--font-size-m);
+    cursor: pointer;
+    padding: var(--spacing-s);
+}
+
+.button:hover {
+    background-color: darkslategray;
+}
 .overlay {
     position: absolute;
     color: lemonchiffon;

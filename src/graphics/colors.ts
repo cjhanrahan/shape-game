@@ -1,5 +1,6 @@
 export const Colors = {
     BISQUE: 0xffe4c4,
+    BLACK: 0x000000,
     DARK_SLATE_GRAY: 0x2f4f4f,
     DARK_BLUE: 0x00008b,
     LEMON_CHIFFON: 0xfffacd,

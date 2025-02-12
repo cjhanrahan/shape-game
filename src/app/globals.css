@@ -4,4 +4,26 @@
 
 body {
     margin: 0;
+    background-color: aquamarine;
+}
+
+h1 {
+    margin: 0
+}
+
+:root {
+    --background-color: black;
+    --text-color: lemonchiffon;
+    --correct-color: forestgreen;
+    --wrong-color: tomato;
+
+    --spacing-s: 20px;
+    --spacing-m: 40px;
+   
+    --font: 'Verdana', sans-serif;
+    --font-size-s: 10px;
+    --font-size-m: 20px;
+
+    --border: 3px solid var(--text-color);
+    --border-radius: 10px;
 }

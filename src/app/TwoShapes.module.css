@@ -3,16 +3,19 @@
     align-items: stretch;
     flex: 1 1 0;
     position: relative;
+    margin: 0 var(--spacing-m) var(--spacing-m) var(--spacing-m);
 }
 .twoShapes {
     display: flex;
     align-items: stretch;
     flex: 1 1 0;
+    gap: var(--spacing-s);
 }
 
 .resultOverlay {
     position: absolute;
-    color: darkslategray;
+    color: var(--background-color);
+    outline: var(--border);
     z-index: 1;
     width: 100%;
     height: 100%;
