@@ -15,7 +15,6 @@
 .resultOverlay {
     position: absolute;
     color: var(--background-color);
-    outline: var(--border);
     z-index: 1;
     width: 100%;
     height: 100%;

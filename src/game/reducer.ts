@@ -10,12 +10,13 @@ import {
     RandomGenerator,
 } from './random'
 import { getOptions } from './options'
+import { Color } from '@/graphics/colors'
 
 export interface GameState {
-    leftColor: number
+    leftColor: Color
     leftShape: ShapeType
     leftVolume: number
-    rightColor: number
+    rightColor: Color
     rightVolume: number
     rightShape: ShapeType
     guess: AnswerSide | null

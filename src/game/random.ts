@@ -2,7 +2,7 @@
 
 import { Random } from 'random'
 import { allShapes, ShapeType } from '@/graphics/geometry'
-import { sphereColors } from '@/graphics/colors'
+import { Color, sphereColors } from '@/graphics/colors'
 
 export enum SeedOffset {
     LEFT = 0,
@@ -38,7 +38,8 @@ export function getRandomShape(options: { generator: RandomGenerator }) {
 }
 
 export function getRandomColor(options: { generator: RandomGenerator }) {
-    return options.generator.choice(sphereColors) as number
+    const color = options.generator.choice(sphereColors) as Color
+    return color
 }
 
 export type RangeResult = [number, number] | null

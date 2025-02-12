@@ -14,9 +14,8 @@ export default function Result({ state }: { state: GameState }) {
         <>
             {state.result !== null && (
                 <div className={resultModalClass}>
-                    <h1>{resultString}</h1>
-                    <div>Left volume was {state.leftVolume}</div>
-                    <div>Right volume was {state.rightVolume}</div>
+                    <h1 className={styles.resultTitle}>{resultString}</h1>
+                    <p className={styles.continue}>Click to continue</p>
                 </div>
             )}
         </>

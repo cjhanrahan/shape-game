@@ -4,13 +4,12 @@ import { useEffect, useRef } from 'react'
 import styles from './Shape.module.css'
 import { appendSceneToNode, ShapeConfig, ThreeJsConfig } from './scene'
 
-export default function Shape({
-    sceneConfig,
-    onPick,
-}: {
+export default function Shape(props: {
     sceneConfig: ShapeConfig
     onPick: () => void
+    showVolume: boolean
 }) {
+    const { sceneConfig, onPick, showVolume } = props
     const ref = useRef<HTMLDivElement>(null)
     const clickHandler = (e: React.MouseEvent) => {
         e.preventDefault()
@@ -30,16 +29,21 @@ export default function Shape({
     }, [sceneConfig])
 
     return (
-        <div className={styles.shapeAndOverlay}>
-            <div className={styles.overlay}>
-                <div>{sceneConfig.type.toString()}</div>
-            </div>
+        <div className={styles.shapeContainer}>
             <div className={styles.shape}>
                 <div className={styles.shapeThreeJsContainer} ref={ref} />
-                <div className={styles.controls}>
-                    <div className={styles.button} onClick={clickHandler}>
-                        Choose shape
+                <div className={styles.overlay}>
+                    <div className={styles.upperOverlay}>
+                        Shape: {sceneConfig.type.toString()}
                     </div>
+                    <div className={styles.lowerOverlay}>
+                        {showVolume && <div>Volume: {sceneConfig.volume}</div>}
+                    </div>
+                </div>
+            </div>
+            <div className={styles.controls}>
+                <div className={styles.button} onClick={clickHandler}>
+                    Choose shape
                 </div>
             </div>
         </div>

@@ -69,10 +69,12 @@ export default function TwoShapes({
                         <Shape
                             sceneConfig={leftShapeConfig}
                             onPick={pickLeft}
+                            showVolume={state.result !== null}
                         />
                         <Shape
                             sceneConfig={rightShapeConfig}
                             onPick={pickRight}
+                            showVolume={state.result !== null}
                         />
                     </>
                 )}

@@ -1,7 +1,9 @@
 .resultModal {
     padding: 20px;
-    background-color: var(--wrong-color);
-    color: var(--background-color);
+    outline: var(--border);
+    background-color: var(--background-color);
+    color: var(--wrong-color);
+    /* color: var(--background-color); */
     display: flex;
     border-radius: var(--border-radius);
     flex-direction: column;
@@ -9,6 +11,16 @@
     justify-content: space-between;
 }
 
-.correct {
-    background-color: var(--correct-color);
+
+.resultTitle {
+    font-size: var(--font-size-l);
+}
+.correct .resultTitle {
+    color: var(--correct-color);
+}
+
+.continue {
+    font-size: var(--font-size-l);
+    padding-top: var(--spacing-s);
+    color: var(--text-color);
 }

@@ -7,9 +7,10 @@ import { getShape, ShapeType } from './geometry'
 import { applyMaterial } from './materials'
 import { RandomGenerator } from '@/game/random'
 import { getOptions } from '@/game/options'
+import { Color } from './colors'
 
 export interface ShapeConfig {
-    color: number
+    color: Color
     type: ShapeType
     generator: RandomGenerator
     volume: number

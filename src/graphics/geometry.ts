@@ -3,11 +3,11 @@ import { RandomGenerator } from '@/game/random'
 import { ShapeConfig } from './scene'
 
 export enum ShapeType {
-    CUBE = 'CUBE',
-    RECTANGULAR_PRISM = 'RECTANGULAR PRISM',
-    REGULAR_PRISM = 'REGULAR PRISM',
-    SPHERE = 'SPHERE',
-    TORUS = 'TORUS',
+    CUBE = 'Cube',
+    RECTANGULAR_PRISM = 'Rectangular Prism',
+    REGULAR_PRISM = 'Regular Prism',
+    SPHERE = 'Sphere',
+    TORUS = 'Torus',
 }
 
 export const allShapes = [
@@ -83,7 +83,7 @@ export function makeSphere(config: ShapeConfig) {
 
 export function makeTorus(config: ShapeConfig) {
     const majorRadius = getRandomSideLength(config.generator)
-    const minorRadius = config.generator.float(0.25, 1.5)
+    const minorRadius = config.generator.float(0.25, 1)
     const denominator =
         2 * Math.PI * Math.PI * majorRadius * minorRadius * minorRadius
     const multiplier = Math.cbrt(config.volume / denominator)
