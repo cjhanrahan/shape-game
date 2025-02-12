@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import { RandomGenerator } from '@/game/random'
-import { SceneConfig } from './scene'
+import { ShapeConfig } from './scene'
 
 export enum ShapeType {
     CUBE = 'CUBE',
@@ -22,7 +22,7 @@ export function getRandomSideLength(generator: RandomGenerator) {
     return generator.float(1, 5)
 }
 
-export function getShape(config: SceneConfig) {
+export function getShape(config: ShapeConfig) {
     switch (config.type) {
         case ShapeType.CUBE:
             return makeCube(config)
@@ -37,13 +37,13 @@ export function getShape(config: SceneConfig) {
     }
 }
 
-export function makeCube(config: SceneConfig) {
+export function makeCube(config: ShapeConfig) {
     const sideLength = Math.cbrt(config.volume)
     const geometry = new THREE.BoxGeometry(sideLength, sideLength, sideLength)
     return geometry
 }
 
-export function makeRectangularPrism(config: SceneConfig) {
+export function makeRectangularPrism(config: ShapeConfig) {
     const sideRatios = [
         getRandomSideLength(config.generator),
         getRandomSideLength(config.generator),
@@ -56,7 +56,7 @@ export function makeRectangularPrism(config: SceneConfig) {
     return geometry
 }
 
-export function makeRegularPrism(config: SceneConfig) {
+export function makeRegularPrism(config: ShapeConfig) {
     const numOfSides = config.generator.int(3, 8)
     const height = getRandomSideLength(config.generator)
     const radius = getRandomSideLength(config.generator)
@@ -76,12 +76,12 @@ export function makeRegularPrism(config: SceneConfig) {
     )
 }
 
-export function makeSphere(config: SceneConfig) {
+export function makeSphere(config: ShapeConfig) {
     const radius = Math.cbrt(config.volume / ((4 / 3) * Math.PI))
     return new THREE.SphereGeometry(radius)
 }
 
-export function makeTorus(config: SceneConfig) {
+export function makeTorus(config: ShapeConfig) {
     const majorRadius = getRandomSideLength(config.generator)
     const minorRadius = config.generator.float(0.25, 1.5)
     const denominator =

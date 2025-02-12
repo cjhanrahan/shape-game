@@ -2,10 +2,10 @@ import * as THREE from 'three'
 import { describe, it, expect } from 'vitest'
 import { getRandomSideLength, getShape, ShapeType } from '../geometry'
 import { makeRandomMock } from '@/test-utils/randomMock'
-import { SceneConfig } from '../scene'
+import { ShapeConfig } from '../scene'
 
 describe('geometry', () => {
-    const config: SceneConfig = {
+    const config: ShapeConfig = {
         color: 0x000000,
         type: ShapeType.CUBE,
         generator: makeRandomMock(),

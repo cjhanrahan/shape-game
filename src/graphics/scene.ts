@@ -6,9 +6,9 @@ import { getControls } from './controls'
 import { getShape, ShapeType } from './geometry'
 import { applyMaterial } from './materials'
 import { RandomGenerator } from '@/game/random'
-import { AppConfig } from '@/app/config'
+import { getOptions } from '@/game/options'
 
-export interface SceneConfig {
+export interface ShapeConfig {
     color: number
     type: ShapeType
     generator: RandomGenerator
@@ -28,7 +28,7 @@ export interface ThreeJsObjects {
 
 export function setUpRenderer(threeJsConfig: ThreeJsConfig) {
     const renderer = new THREE.WebGLRenderer({
-        antialias: AppConfig.antialiasing,
+        antialias: getOptions().antialiasing,
     })
     renderer.setSize(threeJsConfig.width, threeJsConfig.height)
     return renderer
@@ -45,7 +45,7 @@ export function setUpCamera(threeJsConfig: ThreeJsConfig) {
     return camera
 }
 
-export function setUpSceneObject(sceneConfig: SceneConfig) {
+export function setUpSceneObject(sceneConfig: ShapeConfig) {
     const scene = new THREE.Scene()
     for (const light of getLights()) {
         scene.add(light)
@@ -53,18 +53,18 @@ export function setUpSceneObject(sceneConfig: SceneConfig) {
     const geometry = getShape(sceneConfig)
     const buffer = applyMaterial(
         geometry,
-        AppConfig.materialType,
+        getOptions().materialType,
         sceneConfig.color,
     )
     scene.add(buffer)
-    if (AppConfig.plane) {
+    if (getOptions().plane) {
         scene.add(getPlane())
     }
     return scene
 }
 
 export function getThreeJsObjects(
-    sceneConfig: SceneConfig,
+    sceneConfig: ShapeConfig,
     threeJsConfig: ThreeJsConfig,
 ): ThreeJsObjects {
     const renderer = setUpRenderer(threeJsConfig)
@@ -85,7 +85,7 @@ export function getAnimateFunction(
 }
 
 export function appendSceneToNode(
-    sceneConfig: SceneConfig,
+    sceneConfig: ShapeConfig,
     threeJsConfig: ThreeJsConfig,
     node: Element,
 ) {

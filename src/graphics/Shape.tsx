@@ -2,13 +2,13 @@
 
 import { useEffect, useRef } from 'react'
 import styles from './Shape.module.css'
-import { appendSceneToNode, SceneConfig, ThreeJsConfig } from './scene'
+import { appendSceneToNode, ShapeConfig, ThreeJsConfig } from './scene'
 
 export default function Shape({
     sceneConfig,
     onPick,
 }: {
-    sceneConfig: SceneConfig
+    sceneConfig: ShapeConfig
     onPick: () => void
 }) {
     const ref = useRef<HTMLDivElement>(null)

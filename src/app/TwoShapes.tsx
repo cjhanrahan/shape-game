@@ -11,8 +11,9 @@ import {
     newQuestionAction,
 } from '@/game/reducer'
 import Result from './Result'
-import { SceneConfig } from '@/graphics/scene'
+import { ShapeConfig } from '@/graphics/scene'
 import { makeSeededGenerator, RandomGenerator } from '@/game/random'
+import { getOptions } from '@/game/options'
 
 export default function TwoShapes({
     generator,
@@ -23,7 +24,10 @@ export default function TwoShapes({
 
     const [mounted, setHasMounted] = useState(false)
 
-    const initialState = getInitialState(gen)
+    const initialState = getInitialState({
+        ...getOptions(),
+        generator: gen,
+    })
     const [state, dispatch] = useReducer(gameReducer, initialState)
     const pickLeft = () => dispatch(answerAction('left'))
     const pickRight = () => dispatch(answerAction('right'))
@@ -32,7 +36,7 @@ export default function TwoShapes({
     const overlayClass = classnames(styles.resultOverlay, {
         [styles.hiddenOverlay]: state.result === null,
     })
-    const leftSceneConfig: SceneConfig = useMemo(
+    const leftShapeConfig: ShapeConfig = useMemo(
         () => ({
             type: state.leftShape,
             volume: state.leftVolume,
@@ -41,7 +45,7 @@ export default function TwoShapes({
         }),
         [state.leftShape, state.leftVolume, state.leftColor, gen],
     )
-    const rightSceneConfig: SceneConfig = useMemo(
+    const rightShapeConfig: ShapeConfig = useMemo(
         () => ({
             type: state.rightShape,
             volume: state.rightVolume,
@@ -63,11 +67,11 @@ export default function TwoShapes({
                 {mounted && (
                     <>
                         <Shape
-                            sceneConfig={leftSceneConfig}
+                            sceneConfig={leftShapeConfig}
                             onPick={pickLeft}
                         />
                         <Shape
-                            sceneConfig={rightSceneConfig}
+                            sceneConfig={rightShapeConfig}
                             onPick={pickRight}
                         />
                     </>

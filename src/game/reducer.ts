@@ -9,6 +9,7 @@ import {
     makeSeededGenerator,
     RandomGenerator,
 } from './random'
+import { getOptions } from './options'
 
 export interface GameState {
     leftColor: number
@@ -21,15 +22,24 @@ export interface GameState {
     result: boolean | null
 }
 
-export function getInitialState(generator: RandomGenerator): GameState {
-    const initialLeftVolume = getRandomLeftVolume(generator)
+export function getInitialState(options: {
+    generator: RandomGenerator
+    minVolume: number
+    maxVolume: number
+    minAnswerDelta: number
+    maxAnswerDelta: number
+}): GameState {
+    const leftVolume = getRandomLeftVolume(options)
     return {
-        leftColor: getRandomColor(generator),
-        leftVolume: initialLeftVolume,
-        leftShape: getRandomShape(generator),
-        rightColor: getRandomColor(generator),
-        rightVolume: getRandomRightVolume(generator, initialLeftVolume),
-        rightShape: getRandomShape(generator),
+        leftColor: getRandomColor(options),
+        leftVolume: leftVolume,
+        leftShape: getRandomShape(options),
+        rightColor: getRandomColor(options),
+        rightVolume: getRandomRightVolume({
+            ...options,
+            leftVolume,
+        }),
+        rightShape: getRandomShape(options),
         guess: null,
         result: null,
     }
@@ -75,19 +85,11 @@ export function gameReducer(state: GameState, action: ActionType): GameState {
             }
         case 'NEW_QUESTION':
             const generator = makeSeededGenerator(action.seed)
-            const otherGenerator = makeSeededGenerator(action.seed + 1)
-            const leftVolume = getRandomLeftVolume(generator)
-            return {
-                ...state,
-                leftColor: getRandomColor(generator),
-                leftVolume,
-                leftShape: getRandomShape(generator),
-                rightColor: getRandomColor(otherGenerator),
-                rightVolume: getRandomRightVolume(otherGenerator, leftVolume),
-                rightShape: getRandomShape(otherGenerator),
-                guess: null,
-                result: null,
+            const options = {
+                ...getOptions(),
+                generator,
             }
+            return getInitialState(options)
         default:
             return state
     }

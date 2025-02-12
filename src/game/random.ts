@@ -2,7 +2,6 @@
 
 import { Random } from 'random'
 import { allShapes, ShapeType } from '@/graphics/geometry'
-import { AppConfig } from '@/app/config'
 import { sphereColors } from '@/graphics/colors'
 
 export enum SeedOffset {
@@ -34,68 +33,99 @@ export function makeSeededGenerator(seed: number): RandomGenerator {
     }
 }
 
-export function getRandomShape(generator: RandomGenerator) {
-    return generator.choice(allShapes) as ShapeType
+export function getRandomShape(options: { generator: RandomGenerator }) {
+    return options.generator.choice(allShapes) as ShapeType
 }
 
-export function getRandomColor(generator: RandomGenerator) {
-    return generator.choice(sphereColors) as number
+export function getRandomColor(options: { generator: RandomGenerator }) {
+    return options.generator.choice(sphereColors) as number
 }
 
-export function getRandomLeftVolume(generator: RandomGenerator) {
-    return generator.int(10, 100)
+export type RangeResult = [number, number] | null
+
+export function getRandomLeftVolume(options: {
+    minVolume: number
+    maxVolume: number
+    generator: RandomGenerator
+}) {
+    const { minVolume, maxVolume, generator } = options
+    return generator.int(minVolume, maxVolume)
 }
 
-export function getRandomRightVolume(
-    generator: RandomGenerator,
-    leftVolume: number,
-) {
-    // Areas within this range are too close to the left volume
-    const smallestDistanceFromLeftVolume = AppConfig.minAnswerDelta * leftVolume
-    const deadZoneAroundLeftVolumeMin = Math.max(
-        AppConfig.minVolume,
-        Math.floor(leftVolume - smallestDistanceFromLeftVolume),
-    )
-    const deadZoneAroundLeftVolumeMax = Math.min(
-        AppConfig.maxVolume,
-        Math.ceil(leftVolume + smallestDistanceFromLeftVolume),
-    )
+// Get the set os possible right volumes which are lower than th
+export function getPossibleValuesLowerThanLeftVolume(options: {
+    leftVolume: number
+    minVolume: number
+    minAnswerDelta: number
+    maxAnswerDelta: number
+}): RangeResult {
+    const { leftVolume, minVolume, minAnswerDelta, maxAnswerDelta } = options
 
-    // These are as far as we can go from the left volume
-    const biggestDistanceFromLeftVolume = AppConfig.maxAnswerDelta * leftVolume
-    const lowestPossibleVolume = Math.max(
-        AppConfig.minVolume,
-        Math.ceil(leftVolume - biggestDistanceFromLeftVolume),
+    // based on hard limit for any volume at all
+    const minVolFromConfig = minVolume
+    // based on max percentage distance away from the left volume
+    const minVolByAnswerDelta = Math.ceil(
+        leftVolume - leftVolume * maxAnswerDelta,
     )
-    const highestPossibleVolume = Math.min(
-        AppConfig.maxVolume,
-        Math.floor(leftVolume + biggestDistanceFromLeftVolume),
+    const lowerBound = Math.max(minVolFromConfig, minVolByAnswerDelta)
+    const upperBound = Math.floor(leftVolume - leftVolume * minAnswerDelta)
+    return lowerBound < upperBound ? [lowerBound, upperBound] : null
+}
+
+export function getPossibleValuesHigherThanLeftVolume(options: {
+    leftVolume: number
+    maxVolume: number
+    minAnswerDelta: number
+    maxAnswerDelta: number
+}): RangeResult {
+    const { leftVolume, maxVolume, minAnswerDelta, maxAnswerDelta } = options
+
+    // based on hard limit for any volume at all
+    const maxVolFromConfig = maxVolume
+    // based on max percentage distance away from the left volume
+    const maxVolByAnswerDelta = Math.floor(
+        leftVolume + leftVolume * maxAnswerDelta,
     )
+    const lowerBound = Math.ceil(leftVolume + leftVolume * minAnswerDelta)
+    const upperBound = Math.min(maxVolFromConfig, maxVolByAnswerDelta)
+    return lowerBound < upperBound ? [lowerBound, upperBound] : null
+}
 
-    // The number must follow within these ranges
-    const leftRange = [lowestPossibleVolume, deadZoneAroundLeftVolumeMin]
-    const rightRange = [deadZoneAroundLeftVolumeMax, highestPossibleVolume]
-
-    // We will pick a random number from the combined ranges,
-    // then pick an index in either leftRange or rightRange
-    const leftRangeLength = leftRange[1] - leftRange[0] + 1
-    const rightRangeLength = rightRange[1] - rightRange[0] + 1
-    const combinedRangeLength = leftRangeLength + rightRangeLength
-    const indexInCombinedRange = generator.int(0, combinedRangeLength - 1)
-    console.log({
-        smallestDistanceFromLeftVolume,
-        deadZoneAroundLeftVolumeMin,
-        deadZoneAroundLeftVolumeMax,
-        leftVolume,
-    })
-    if (indexInCombinedRange < leftRangeLength) {
-        console.log('result', leftRange[0] + indexInCombinedRange)
-        return leftRange[0] + indexInCombinedRange
-    } else {
-        console.log(
-            'result',
-            rightRange[0] + indexInCombinedRange - leftRangeLength,
-        )
-        return rightRange[0] + indexInCombinedRange - leftRangeLength
+export function pickRandomValueInTwoRanges(options: {
+    lowerRange: RangeResult
+    higherRange: RangeResult
+    generator: RandomGenerator
+}): number {
+    const { lowerRange, higherRange, generator } = options
+    const lowerRangeLength = lowerRange ? lowerRange[1] - lowerRange[0] + 1 : 0
+    const higherRangeLength = higherRange
+        ? higherRange[1] - higherRange[0] + 1
+        : 0
+    const totalIndicies = lowerRangeLength + higherRangeLength
+    const randomIndex = generator.int(0, totalIndicies - 1)
+    if (!lowerRange && !higherRange) {
+        throw new Error('both ranges are null')
     }
+    if (randomIndex < lowerRangeLength) {
+        return lowerRange![0] + randomIndex
+    } else {
+        return higherRange![0] + randomIndex - lowerRangeLength
+    }
+}
+
+export function getRandomRightVolume(options: {
+    generator: RandomGenerator
+    leftVolume: number
+    minAnswerDelta: number
+    maxAnswerDelta: number
+    minVolume: number
+    maxVolume: number
+}) {
+    const rangeBelowLeftVolume = getPossibleValuesLowerThanLeftVolume(options)
+    const rangeAboveLeftVolume = getPossibleValuesHigherThanLeftVolume(options)
+    return pickRandomValueInTwoRanges({
+        lowerRange: rangeBelowLeftVolume,
+        higherRange: rangeAboveLeftVolume,
+        generator: options.generator,
+    })
 }
