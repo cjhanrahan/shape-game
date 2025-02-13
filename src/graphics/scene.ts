@@ -9,36 +9,18 @@ import { RandomGenerator } from '@/game/random'
 import { getOptions } from '@/game/options'
 import { Color } from './colors'
 
-export interface ShapeConfig {
-    color: Color
-    type: ShapeType
-    generator: RandomGenerator
-    volume: number
-}
-
-export interface ThreeJsConfig {
-    height: number
-    width: number
-}
-
-export interface ThreeJsObjects {
-    renderer: THREE.WebGLRenderer
-    scene: THREE.Scene
-    camera: THREE.Camera
-}
-
-export function setUpRenderer(threeJsConfig: ThreeJsConfig) {
+export function setUpRenderer(options: { width: number; height: number }) {
     const renderer = new THREE.WebGLRenderer({
         antialias: getOptions().antialiasing,
     })
-    renderer.setSize(threeJsConfig.width, threeJsConfig.height)
+    renderer.setSize(options.width, options.height)
     return renderer
 }
 
-export function setUpCamera(threeJsConfig: ThreeJsConfig) {
+export function setUpCamera(options: { width: number; height: number }) {
     const camera = new THREE.PerspectiveCamera(
         75,
-        threeJsConfig.width / threeJsConfig.height,
+        options.width / options.height,
         0.1,
         100000,
     )
@@ -46,17 +28,22 @@ export function setUpCamera(threeJsConfig: ThreeJsConfig) {
     return camera
 }
 
-export function setUpSceneObject(sceneConfig: ShapeConfig) {
+export function setUpSceneObject(options: {
+    color: Color
+    type: ShapeType
+    generator: RandomGenerator
+    volume: number
+}) {
     const scene = new THREE.Scene()
     for (const light of getLights()) {
         scene.add(light)
     }
-    const geometry = getShape(sceneConfig)
-    const buffer = applyMaterial(
+    const geometry = getShape(options)
+    const buffer = applyMaterial({
         geometry,
-        getOptions().materialType,
-        sceneConfig.color,
-    )
+        type: getOptions().materialType,
+        color: options.color,
+    })
     scene.add(buffer)
     if (getOptions().plane) {
         scene.add(getPlane())
@@ -64,35 +51,37 @@ export function setUpSceneObject(sceneConfig: ShapeConfig) {
     return scene
 }
 
-export function getThreeJsObjects(
-    sceneConfig: ShapeConfig,
-    threeJsConfig: ThreeJsConfig,
-): ThreeJsObjects {
-    const renderer = setUpRenderer(threeJsConfig)
-    const camera = setUpCamera(threeJsConfig)
-    const scene = setUpSceneObject(sceneConfig)
-    const objects = { renderer, scene, camera }
-    return objects
-}
-
-export function getAnimateFunction(
-    objects: ThreeJsObjects,
-    controls: TrackballControls,
-) {
+export function getAnimateFunction(options: {
+    scene: THREE.Scene
+    camera: THREE.Camera
+    controls: TrackballControls
+    renderer: THREE.WebGLRenderer
+}) {
     return function animate() {
-        controls.update()
-        objects.renderer.render(objects.scene, objects.camera)
+        options.controls.update()
+        options.renderer.render(options.scene, options.camera)
     }
 }
 
-export function appendSceneToNode(
-    sceneConfig: ShapeConfig,
-    threeJsConfig: ThreeJsConfig,
-    node: Element,
-) {
-    const objects = getThreeJsObjects(sceneConfig, threeJsConfig)
-    node.appendChild(objects.renderer.domElement)
-    const controls = getControls(objects)
-    const animateFunction = getAnimateFunction(objects, controls)
-    objects.renderer.setAnimationLoop(animateFunction)
+export function appendSceneToNode(options: {
+    node: Element
+    width: number
+    height: number
+    volume: number
+    color: Color
+    type: ShapeType
+    generator: RandomGenerator
+}) {
+    const renderer = setUpRenderer(options)
+    const camera = setUpCamera(options)
+    options.node.appendChild(renderer.domElement)
+    const controls = getControls({ camera, renderer })
+    const scene = setUpSceneObject(options)
+    const animateFunction = getAnimateFunction({
+        scene,
+        camera,
+        controls,
+        renderer,
+    })
+    renderer.setAnimationLoop(animateFunction)
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useReducer, useRef, useState } from 'react'
+import { useEffect, useReducer, useRef, useState } from 'react'
 import styles from './TwoShapes.module.css'
 import Shape from '@/graphics/Shape'
 import classnames from 'classnames'
@@ -11,7 +11,6 @@ import {
     newQuestionAction,
 } from '@/game/reducer'
 import Result from './Result'
-import { ShapeConfig } from '@/graphics/scene'
 import { makeSeededGenerator, RandomGenerator } from '@/game/random'
 import { getOptions } from '@/game/options'
 
@@ -20,7 +19,9 @@ export default function TwoShapes({
 }: {
     generator?: RandomGenerator
 }) {
-    const gen = useRef(generator || makeSeededGenerator(Math.random())).current
+    const gen = useRef(
+        generator || makeSeededGenerator({ seed: Math.random() }),
+    ).current
 
     const [mounted, setHasMounted] = useState(false)
 
@@ -29,32 +30,23 @@ export default function TwoShapes({
         generator: gen,
     })
     const [state, dispatch] = useReducer(gameReducer, initialState)
-    const pickLeft = () => dispatch(answerAction('left'))
-    const pickRight = () => dispatch(answerAction('right'))
+    const pickLeft = () => dispatch(answerAction({ side: 'left' }))
+    const pickRight = () => dispatch(answerAction({ side: 'right' }))
     const newQuestion = () => dispatch(newQuestionAction())
 
     const overlayClass = classnames(styles.resultOverlay, {
         [styles.hiddenOverlay]: state.result === null,
     })
-    const leftShapeConfig: ShapeConfig = useMemo(
-        () => ({
-            type: state.leftShape,
-            volume: state.leftVolume,
-            color: state.leftColor,
-            generator: gen,
-        }),
-        [state.leftShape, state.leftVolume, state.leftColor, gen],
-    )
-    const rightShapeConfig: ShapeConfig = useMemo(
-        () => ({
-            type: state.rightShape,
-            volume: state.rightVolume,
-            color: state.rightColor,
-            generator: gen,
-        }),
-        [state.rightShape, state.rightVolume, state.rightColor, gen],
-    )
-
+    const leftData = {
+        type: state.leftShape,
+        volume: state.leftVolume,
+        color: state.leftColor,
+    }
+    const rightData = {
+        type: state.rightShape,
+        volume: state.rightVolume,
+        color: state.rightColor,
+    }
     useEffect(() => {
         setHasMounted(true)
     }, [])
@@ -67,12 +59,14 @@ export default function TwoShapes({
                 {mounted && (
                     <>
                         <Shape
-                            sceneConfig={leftShapeConfig}
+                            {...leftData}
+                            generator={gen}
                             onPick={pickLeft}
                             showVolume={state.result !== null}
                         />
                         <Shape
-                            sceneConfig={rightShapeConfig}
+                            {...rightData}
+                            generator={gen}
                             onPick={pickRight}
                             showVolume={state.result !== null}
                         />

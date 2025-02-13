@@ -53,10 +53,10 @@ export interface AnswerAction {
     side: AnswerSide
 }
 
-export function answerAction(side: AnswerSide): AnswerAction {
+export function answerAction(options: { side: AnswerSide }): AnswerAction {
     return {
         type: 'ANSWER',
-        side,
+        side: options.side,
     }
 }
 
@@ -65,10 +65,14 @@ export interface NewQuestionAction {
     seed: number
 }
 
-export function newQuestionAction(seed?: number): NewQuestionAction {
+export function newQuestionAction(
+    options: {
+        seed?: number
+    } = {},
+): NewQuestionAction {
     return {
         type: 'NEW_QUESTION',
-        seed: seed || Math.random(),
+        seed: options.seed || Math.random(),
     }
 }
 
@@ -85,7 +89,7 @@ export function gameReducer(state: GameState, action: ActionType): GameState {
                 result: correct,
             }
         case 'NEW_QUESTION':
-            const generator = makeSeededGenerator(action.seed)
+            const generator = makeSeededGenerator(action)
             const options = {
                 ...getOptions(),
                 generator,

@@ -1,10 +1,13 @@
+import * as THREE from 'three'
 import { TrackballControls } from 'three/addons/controls/TrackballControls.js'
-import { ThreeJsObjects } from './scene'
 
-export function getControls(threeJsObjects: ThreeJsObjects) {
+export function getControls(options: {
+    camera: THREE.Camera
+    renderer: THREE.WebGLRenderer
+}) {
     const controls = new TrackballControls(
-        threeJsObjects.camera,
-        threeJsObjects.renderer.domElement,
+        options.camera,
+        options.renderer.domElement,
     )
     controls.rotateSpeed = 6
     controls.zoomSpeed = 1.2

@@ -4,19 +4,16 @@ import { Random } from 'random'
 import { allShapes, ShapeType } from '@/graphics/geometry'
 import { Color, sphereColors } from '@/graphics/colors'
 
-export enum SeedOffset {
-    LEFT = 0,
-    RIGHT = 1,
-}
-
 export interface RandomGenerator {
     choice<T>(array: T[]): T
     int(min: number, max: number): number
     float(min: number, max: number): number
 }
 
-export function makeSeededGenerator(seed: number): RandomGenerator {
-    const random = new Random(seed)
+export function makeSeededGenerator(options: {
+    seed: number
+}): RandomGenerator {
+    const random = new Random(options.seed)
     return {
         choice<T>(array: T[]) {
             if (!array.length) {

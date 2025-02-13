@@ -2,14 +2,20 @@
 
 import { useEffect, useRef } from 'react'
 import styles from './Shape.module.css'
-import { appendSceneToNode, ShapeConfig, ThreeJsConfig } from './scene'
+import { appendSceneToNode } from './scene'
+import { Color } from './colors'
+import { ShapeType } from './geometry'
+import { RandomGenerator } from '@/game/random'
 
 export default function Shape(props: {
-    sceneConfig: ShapeConfig
+    color: Color
+    type: ShapeType
+    volume: number
+    generator: RandomGenerator
     onPick: () => void
     showVolume: boolean
 }) {
-    const { sceneConfig, onPick, showVolume } = props
+    const { onPick, showVolume, color, type, generator, volume } = props
     const ref = useRef<HTMLDivElement>(null)
     const clickHandler = (e: React.MouseEvent) => {
         e.preventDefault()
@@ -20,13 +26,19 @@ export default function Shape(props: {
             while (ref.current.firstChild) {
                 ref.current.removeChild(ref.current.firstChild)
             }
-            const threeJsConfig: ThreeJsConfig = {
-                width: ref.current.clientWidth,
-                height: ref.current.clientHeight,
-            }
-            appendSceneToNode(sceneConfig, threeJsConfig, ref.current)
+            const width = ref.current.clientWidth
+            const height = ref.current.clientHeight
+            appendSceneToNode({
+                generator,
+                volume,
+                color,
+                type,
+                width,
+                height,
+                node: ref.current,
+            })
         }
-    }, [sceneConfig])
+    }, [generator, color, type, volume])
 
     return (
         <div className={styles.shapeContainer}>
@@ -34,10 +46,11 @@ export default function Shape(props: {
                 <div className={styles.shapeThreeJsContainer} ref={ref} />
                 <div className={styles.overlay}>
                     <div className={styles.upperOverlay}>
-                        Shape: {sceneConfig.type.toString()}
+                        <div>Shape: {type.toString()}</div>
+                        <div>Color: {color.name}</div>
                     </div>
                     <div className={styles.lowerOverlay}>
-                        {showVolume && <div>Volume: {sceneConfig.volume}</div>}
+                        {showVolume && <div>Volume: {volume}</div>}
                     </div>
                 </div>
             </div>

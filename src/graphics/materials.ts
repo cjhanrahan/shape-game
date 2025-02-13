@@ -10,41 +10,47 @@ export enum MaterialType {
     WIREFRAME,
 }
 
-export function applyMaterial(
-    geometry: THREE.BufferGeometry,
-    type: MaterialType,
-    color: Color,
-): THREE.Mesh | THREE.LineSegments {
-    switch (type) {
+export function applyMaterial(options: {
+    geometry: THREE.BufferGeometry
+    type: MaterialType
+    color: Color
+}): THREE.Mesh | THREE.LineSegments {
+    switch (options.type) {
         case MaterialType.SOLID:
-            return getSolidMaterial(geometry, color)
+            return getSolidMaterial(options)
         case MaterialType.WIREFRAME:
-            return getWireframeMaterial(geometry, color)
+            return getWireframeMaterial(options)
         case MaterialType.GRADIENT:
-            return getGradientMaterial(geometry, color)
+            return getGradientMaterial(options)
     }
 }
 
-export function getSolidMaterial(geometry: THREE.BufferGeometry, color: Color) {
-    const material = new THREE.MeshBasicMaterial({ color: color.hex })
-    return new THREE.Mesh(geometry, material)
+export function getSolidMaterial(options: {
+    geometry: THREE.BufferGeometry
+    color: Color
+}) {
+    const material = new THREE.MeshBasicMaterial({ color: options.color.hex })
+    return new THREE.Mesh(options.geometry, material)
 }
 
-export function getGradientMaterial(
-    geometry: THREE.BufferGeometry,
-    color: Color,
-) {
-    const material = new THREE.MeshPhongMaterial({ color: color.hex })
-    return new THREE.Mesh(geometry, material)
+export function getGradientMaterial(options: {
+    geometry: THREE.BufferGeometry
+    color: Color
+}) {
+    const material = new THREE.MeshPhongMaterial({ color: options.color.hex })
+    return new THREE.Mesh(options.geometry, material)
 }
 
-export function getWireframeMaterial(
-    geometry: THREE.BufferGeometry,
-    color: Color,
-) {
-    const wireframe = new THREE.WireframeGeometry(geometry)
+export function getWireframeMaterial(options: {
+    geometry: THREE.BufferGeometry
+    color: Color
+}) {
+    const wireframe = new THREE.WireframeGeometry(options.geometry)
     const segments = new LineSegmentsGeometry()
     const lineSegmentsGeometry = segments.fromWireframeGeometry(wireframe)
-    const material = new LineMaterial({ color: color.hex, linewidth: 300 })
+    const material = new LineMaterial({
+        color: options.color.hex,
+        linewidth: 300,
+    })
     return new LineSegments2(lineSegmentsGeometry, material)
 }

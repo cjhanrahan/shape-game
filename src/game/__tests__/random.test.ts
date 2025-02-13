@@ -16,7 +16,7 @@ describe('random', () => {
         // This random should match the behavior of the generator's
         // random since they have the same seed
         const random = new Random(TEST_SEED)
-        const generator = makeSeededGenerator(TEST_SEED)
+        const generator = makeSeededGenerator({ seed: TEST_SEED })
         // choice
         const sampleArrayForChoice = [1, 2, 3]
         const ourRandomChoice = random.choice(sampleArrayForChoice)
