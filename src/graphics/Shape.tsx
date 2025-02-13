@@ -26,17 +26,14 @@ export default function Shape(props: {
             while (ref.current.firstChild) {
                 ref.current.removeChild(ref.current.firstChild)
             }
-            const width = ref.current.clientWidth
-            const height = ref.current.clientHeight
-            appendSceneToNode({
+            const cleanUpFunction = appendSceneToNode({
                 generator,
                 volume,
                 color,
                 type,
-                width,
-                height,
                 node: ref.current,
             })
+            return cleanUpFunction
         }
     }, [generator, color, type, volume])
 
