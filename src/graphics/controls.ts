@@ -12,5 +12,6 @@ export function getControls(options: {
     controls.rotateSpeed = 6
     controls.zoomSpeed = 1.2
     controls.panSpeed = 0.8
+    controls.noZoom = true
     return controls
 }
