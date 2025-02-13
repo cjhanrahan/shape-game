@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useReducer, useRef, useState } from 'react'
+import { useCallback, useEffect, useReducer, useRef, useState } from 'react'
 import styles from './TwoShapes.module.css'
 import Shape from '@/graphics/Shape'
 import classnames from 'classnames'
@@ -30,9 +30,15 @@ export default function TwoShapes({
         generator: gen,
     })
     const [state, dispatch] = useReducer(gameReducer, initialState)
-    const pickLeft = () => dispatch(answerAction({ side: 'left' }))
-    const pickRight = () => dispatch(answerAction({ side: 'right' }))
-    const newQuestion = () => dispatch(newQuestionAction())
+    const pickLeft = useCallback(
+        () => dispatch(answerAction({ side: 'left' })),
+        [],
+    )
+    const pickRight = useCallback(
+        () => dispatch(answerAction({ side: 'right' })),
+        [],
+    )
+    const newQuestion = useCallback(() => dispatch(newQuestionAction()), [])
 
     const overlayClass = classnames(styles.resultOverlay, {
         [styles.hiddenOverlay]: state.result === null,
@@ -41,11 +47,13 @@ export default function TwoShapes({
         type: state.leftShape,
         volume: state.leftVolume,
         color: state.leftColor,
+        onPick: pickLeft,
     }
     const rightData = {
         type: state.rightShape,
         volume: state.rightVolume,
         color: state.rightColor,
+        onPick: pickRight,
     }
     useEffect(() => {
         setHasMounted(true)
@@ -61,13 +69,11 @@ export default function TwoShapes({
                         <Shape
                             {...leftData}
                             generator={gen}
-                            onPick={pickLeft}
                             showVolume={state.result !== null}
                         />
                         <Shape
                             {...rightData}
                             generator={gen}
-                            onPick={pickRight}
                             showVolume={state.result !== null}
                         />
                     </>

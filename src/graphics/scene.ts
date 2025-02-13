@@ -9,18 +9,19 @@ import { RandomGenerator } from '@/game/random'
 import { getOptions } from '@/game/options'
 import { Color } from './colors'
 
-export function setUpRenderer(options: { width: number; height: number }) {
+export function setUpRenderer(options: { node: Element }) {
     const renderer = new THREE.WebGLRenderer({
         antialias: getOptions().antialiasing,
     })
-    renderer.setSize(options.width, options.height)
+    renderer.setSize(options.node.clientWidth, options.node.clientHeight)
     return renderer
 }
 
-export function setUpCamera(options: { width: number; height: number }) {
+export function setUpCamera(options: { node: Element }) {
+    const { node } = options
     const camera = new THREE.PerspectiveCamera(
         75,
-        options.width / options.height,
+        node.clientWidth / node.clientHeight,
         0.1,
         100000,
     )
@@ -63,15 +64,37 @@ export function getAnimateFunction(options: {
     }
 }
 
+export function getWindowResizeFunction(options: {
+    camera: THREE.PerspectiveCamera
+    renderer: THREE.WebGLRenderer
+    node: Element
+}) {
+    return function onWindowResize() {
+        // remove canvas element from the flow so that it doesn't affect
+        // the size of the parent element
+        const canvasElement = options.renderer.domElement
+        canvasElement.style.position = 'absolute'
+
+        // get new size of the parent element after resize
+        const { clientWidth, clientHeight } = options.node
+
+        // update threejs camera and renderer
+        options.camera.aspect = clientWidth / clientHeight
+        options.camera.updateProjectionMatrix()
+        options.renderer.setSize(clientWidth, clientHeight)
+
+        // add canvas element back to the flow
+        canvasElement.style.position = ''
+    }
+}
+
 export function appendSceneToNode(options: {
     node: Element
-    width: number
-    height: number
     volume: number
     color: Color
     type: ShapeType
     generator: RandomGenerator
-}) {
+}): () => void {
     const renderer = setUpRenderer(options)
     const camera = setUpCamera(options)
     options.node.appendChild(renderer.domElement)
@@ -83,5 +106,15 @@ export function appendSceneToNode(options: {
         controls,
         renderer,
     })
+    const onWindowResize = getWindowResizeFunction({
+        ...options,
+        camera,
+        renderer,
+    })
     renderer.setAnimationLoop(animateFunction)
+
+    window.addEventListener('resize', onWindowResize, false)
+    return () => {
+        window.removeEventListener('resize', onWindowResize)
+    }
 }
