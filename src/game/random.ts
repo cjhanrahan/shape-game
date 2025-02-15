@@ -2,7 +2,7 @@
 
 import { Random } from 'random'
 import { allShapes, ShapeType } from '@/graphics/geometry'
-import { Color, sphereColors } from '@/graphics/colors'
+import { ColorObject, sphereColors } from '@/graphics/colors'
 
 export interface RandomGenerator {
     choice<T>(array: T[]): T
@@ -35,7 +35,7 @@ export function getRandomShape(options: { generator: RandomGenerator }) {
 }
 
 export function getRandomColor(options: { generator: RandomGenerator }) {
-    const color = options.generator.choice(sphereColors) as Color
+    const color = options.generator.choice(sphereColors) as ColorObject
     return color
 }
 

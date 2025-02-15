@@ -5,8 +5,8 @@ import { getShape, ShapeType } from './geometry'
 import { applyMaterial } from './materials'
 import { RandomGenerator } from '@/game/random'
 import { getOptions } from '@/game/options'
-import { Color } from './colors'
 import { ObjectControls } from './controls'
+import { ColorObject } from './colors'
 
 export function setUpRenderer(options: { node: Element }) {
     const renderer = new THREE.WebGLRenderer({
@@ -29,7 +29,7 @@ export function setUpCamera(options: { node: Element }) {
 }
 
 export function setUpSceneObject(options: {
-    color: Color
+    color: ColorObject
     type: ShapeType
     generator: RandomGenerator
     volume: number
@@ -84,7 +84,7 @@ export function getWindowResizeFunction(options: {
 export function appendSceneToNode(options: {
     node: Element
     volume: number
-    color: Color
+    color: ColorObject
     type: ShapeType
     generator: RandomGenerator
 }): () => void {

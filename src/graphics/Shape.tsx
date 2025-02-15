@@ -3,12 +3,12 @@
 import { useEffect, useRef } from 'react'
 import styles from './Shape.module.css'
 import { appendSceneToNode } from './scene'
-import { Color } from './colors'
 import { ShapeType } from './geometry'
 import { RandomGenerator } from '@/game/random'
+import { ColorObject } from './colors'
 
 export default function Shape(props: {
-    color: Color
+    color: ColorObject
     type: ShapeType
     volume: number
     generator: RandomGenerator
