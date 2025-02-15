@@ -7,7 +7,6 @@ import { ColorObject } from './colors'
 export enum MaterialType {
     GRADIENT,
     SOLID,
-    // WIREFRAME,
 }
 
 
@@ -19,8 +18,6 @@ export function applyMaterial(options: {
     switch (options.type) {
         case MaterialType.SOLID:
             return getSolidMaterial(options)
-        // case MaterialType.WIREFRAME:
-        //     return getWireframeMaterial(options)
         case MaterialType.GRADIENT:
             return getGradientMaterial(options)
     }
@@ -41,10 +38,7 @@ export function getGradientMaterial(options: {
     const material = new THREE.MeshPhysicalMaterial({
         color: options.color.hex,
     })
-    material.metalness = 0.3
-    material.roughness = 0.9
-    material.sheen = 0.5
-    // material.clearcoatRoughness
+    material.metalness = 0.5
     return new THREE.Mesh(options.geometry, material)
 }
 

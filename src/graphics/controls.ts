@@ -44,6 +44,7 @@ export class ObjectControls {
             const deltaY = event.offsetY - this.previousMouseY
             const xAxis = new THREE.Vector3(1, 0, 0)
             const yAxis = new THREE.Vector3(0, 1, 0)
+            
             this.mesh.rotateOnWorldAxis(xAxis, Math.sign(deltaY) * ROTATION_SPEED)
             this.mesh.rotateOnWorldAxis(yAxis,  Math.sign(deltaX) * ROTATION_SPEED)
 
