@@ -98,7 +98,7 @@ export function appendSceneToNode(options: {
         type: getOptions().materialType,
         color: options.color,
     })
-    const controls = new ObjectControls({ mesh })
+    const controls = new ObjectControls({ mesh, element: renderer.domElement })
     const scene = setUpSceneObject({...options, mesh })
     const animateFunction = getAnimateFunction({
         scene,
