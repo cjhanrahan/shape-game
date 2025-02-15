@@ -3,13 +3,13 @@
     align-items: stretch;
     flex: 1 1 0;
     position: relative;
-    margin: 0 var(--spacing-m) var(--spacing-m) var(--spacing-m);
+    margin: 0 var(--spacing-l) var(--spacing-l) var(--spacing-l);
 }
 .twoShapes {
     display: flex;
     align-items: stretch;
     flex: 1 1 0;
-    gap: var(--spacing-s);
+    gap: var(--spacing-m);
 }
 
 .resultOverlay {

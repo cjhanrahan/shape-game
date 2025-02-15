@@ -21,8 +21,9 @@ p {
     --correct-color: forestgreen;
     --wrong-color: tomato;
 
-    --spacing-s: 20px;
-    --spacing-m: 40px;
+    --spacing-m: 5px;
+    --spacing-m: 20px;
+    --spacing-l: 40px;
    
     --font: 'Verdana', sans-serif;
     --font-size-s: 10px;

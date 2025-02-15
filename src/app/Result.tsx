@@ -9,7 +9,6 @@ export default function Result({ state }: { state: GameState }) {
     const resultModalClass = classnames(styles.resultModal, {
         [styles.correct]: state.result === true,
     })
-    console.log('state', state)
     return (
         <>
             {state.result !== null && (

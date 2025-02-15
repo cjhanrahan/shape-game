@@ -11,11 +11,6 @@
     justify-content: space-between;
 }
 
-.streak {
-    font-size: var(--font-size-m);
-    color: var(--text-color);
-}
-
 .resultTitle {
     font-size: var(--font-size-l);
 }
@@ -23,8 +18,13 @@
     color: var(--correct-color);
 }
 
+.streak {
+    font-size: var(--font-size-m);
+    color: var(--text-color);
+    margin-top: var(--spacing-m);
+}
 .continue {
-    font-size: var(--font-size-l);
-    padding-top: var(--spacing-s);
+    margin-top: var(--spacing-s);
+    font-size: var(--font-size-m);
     color: var(--text-color);
 }

@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import { LineSegments2 } from 'three/addons/lines/LineSegments2.js'
 import { LineSegmentsGeometry } from 'three/addons/lines/LineSegmentsGeometry.js'
 import { LineMaterial } from 'three/examples/jsm/Addons.js'
-import { Color } from './colors'
+import { ColorObject } from './colors'
 
 export enum MaterialType {
     GRADIENT,
@@ -13,7 +13,7 @@ export enum MaterialType {
 export function applyMaterial(options: {
     geometry: THREE.BufferGeometry
     type: MaterialType
-    color: Color
+    color: ColorObject
 }): THREE.Mesh | THREE.LineSegments {
     switch (options.type) {
         case MaterialType.SOLID:
@@ -27,7 +27,7 @@ export function applyMaterial(options: {
 
 export function getSolidMaterial(options: {
     geometry: THREE.BufferGeometry
-    color: Color
+    color: ColorObject
 }) {
     const material = new THREE.MeshBasicMaterial({ color: options.color.hex })
     return new THREE.Mesh(options.geometry, material)
@@ -35,15 +35,21 @@ export function getSolidMaterial(options: {
 
 export function getGradientMaterial(options: {
     geometry: THREE.BufferGeometry
-    color: Color
+    color: ColorObject
 }) {
-    const material = new THREE.MeshPhongMaterial({ color: options.color.hex })
+    const material = new THREE.MeshPhysicalMaterial({
+        color: options.color.hex,
+    })
+    material.metalness = 0.3
+    material.roughness = 0.9
+    material.sheen = 0.5
+    // material.clearcoatRoughness
     return new THREE.Mesh(options.geometry, material)
 }
 
 export function getWireframeMaterial(options: {
     geometry: THREE.BufferGeometry
-    color: Color
+    color: ColorObject
 }) {
     const wireframe = new THREE.WireframeGeometry(options.geometry)
     const segments = new LineSegmentsGeometry()

@@ -1,4 +1,4 @@
-export interface Color {
+export interface ColorObject {
     hex: number
     name: string
     usedForSphere: boolean
