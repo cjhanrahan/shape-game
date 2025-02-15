@@ -21,6 +21,7 @@ export interface GameState {
     rightShape: ShapeType
     guess: AnswerSide | null
     result: boolean | null
+    streak: number
 }
 
 export function getInitialState(options: {
@@ -43,6 +44,7 @@ export function getInitialState(options: {
         rightShape: getRandomShape(options),
         guess: null,
         result: null,
+        streak: 0,
     }
 }
 
@@ -83,10 +85,12 @@ export function gameReducer(state: GameState, action: ActionType): GameState {
         case 'ANSWER':
             const leftWins = state.leftVolume > state.rightVolume
             const correct = action.side === 'left' ? leftWins : !leftWins
+            const streak = correct ? state.streak + 1 : 0
             return {
                 ...state,
                 guess: action.side,
                 result: correct,
+                streak,
             }
         case 'NEW_QUESTION':
             const generator = makeSeededGenerator(action)
@@ -94,7 +98,7 @@ export function gameReducer(state: GameState, action: ActionType): GameState {
                 ...getOptions(),
                 generator,
             }
-            return getInitialState(options)
+            return { ...getInitialState(options), streak: state.streak }
         default:
             return state
     }
