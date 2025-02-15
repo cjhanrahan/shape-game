@@ -7,19 +7,20 @@ import { ColorObject } from './colors'
 export enum MaterialType {
     GRADIENT,
     SOLID,
-    WIREFRAME,
+    // WIREFRAME,
 }
+
 
 export function applyMaterial(options: {
     geometry: THREE.BufferGeometry
     type: MaterialType
     color: ColorObject
-}): THREE.Mesh | THREE.LineSegments {
+}): THREE.Mesh {
     switch (options.type) {
         case MaterialType.SOLID:
             return getSolidMaterial(options)
-        case MaterialType.WIREFRAME:
-            return getWireframeMaterial(options)
+        // case MaterialType.WIREFRAME:
+        //     return getWireframeMaterial(options)
         case MaterialType.GRADIENT:
             return getGradientMaterial(options)
     }

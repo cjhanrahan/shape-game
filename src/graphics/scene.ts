@@ -1,13 +1,12 @@
 import * as THREE from 'three'
-import { TrackballControls } from 'three/addons/controls/TrackballControls.js'
 import { getPlane } from './plane'
 import { getLights } from './lights'
-import { getControls } from './controls'
 import { getShape, ShapeType } from './geometry'
 import { applyMaterial } from './materials'
 import { RandomGenerator } from '@/game/random'
 import { getOptions } from '@/game/options'
 import { Color } from './colors'
+import { ObjectControls } from './controls'
 
 export function setUpRenderer(options: { node: Element }) {
     const renderer = new THREE.WebGLRenderer({
@@ -34,18 +33,14 @@ export function setUpSceneObject(options: {
     type: ShapeType
     generator: RandomGenerator
     volume: number
+    mesh: THREE.Mesh
 }) {
     const scene = new THREE.Scene()
     for (const light of getLights()) {
         scene.add(light)
     }
-    const geometry = getShape(options)
-    const buffer = applyMaterial({
-        geometry,
-        type: getOptions().materialType,
-        color: options.color,
-    })
-    scene.add(buffer)
+
+    scene.add(options.mesh)
     if (getOptions().plane) {
         scene.add(getPlane())
     }
@@ -55,11 +50,9 @@ export function setUpSceneObject(options: {
 export function getAnimateFunction(options: {
     scene: THREE.Scene
     camera: THREE.Camera
-    controls: TrackballControls
     renderer: THREE.WebGLRenderer
 }) {
     return function animate() {
-        options.controls.update()
         options.renderer.render(options.scene, options.camera)
     }
 }
@@ -98,12 +91,18 @@ export function appendSceneToNode(options: {
     const renderer = setUpRenderer(options)
     const camera = setUpCamera(options)
     options.node.appendChild(renderer.domElement)
-    const controls = getControls({ camera, renderer })
-    const scene = setUpSceneObject(options)
+    // const controls = getControls({ camera, renderer })
+    const geometry = getShape(options)
+    const mesh = applyMaterial({
+        geometry,
+        type: getOptions().materialType,
+        color: options.color,
+    })
+    const controls = new ObjectControls({ mesh })
+    const scene = setUpSceneObject({...options, mesh })
     const animateFunction = getAnimateFunction({
         scene,
         camera,
-        controls,
         renderer,
     })
     const onWindowResize = getWindowResizeFunction({
@@ -116,5 +115,6 @@ export function appendSceneToNode(options: {
     window.addEventListener('resize', onWindowResize, false)
     return () => {
         window.removeEventListener('resize', onWindowResize)
+        controls.removeEventListeners()
     }
 }

@@ -9,7 +9,6 @@ export function getPlane() {
     const plane = new THREE.Mesh(planeGeometry, planeMaterial)
     plane.castShadow = true
     plane.receiveShadow = true
-    // plane.dou
     plane.receiveShadow = true
     plane.rotation.x = -Math.PI / 2
     plane.position.y = -5
