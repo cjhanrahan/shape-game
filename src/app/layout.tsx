@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import { AppContext } from './AppContext'
 
 export const metadata: Metadata = {
     title: 'Shape Game',
@@ -13,7 +14,9 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body>{children}</body>
+            <body>
+                <AppContext>{children}</AppContext>
+            </body>
         </html>
     )
 }

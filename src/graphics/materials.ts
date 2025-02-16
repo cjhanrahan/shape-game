@@ -9,7 +9,6 @@ export enum MaterialType {
     SOLID,
 }
 
-
 export function applyMaterial(options: {
     geometry: THREE.BufferGeometry
     type: MaterialType

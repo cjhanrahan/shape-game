@@ -2,20 +2,24 @@
 
 import classnames from 'classnames'
 import styles from './Result.module.css'
-import { GameState } from '@/game/reducer'
+import { useContext } from 'react'
+import { StateContext } from './AppContext'
 
-export default function Result({ state }: { state: GameState }) {
-    const resultString = state.result === true ? 'CORRECT' : 'WRONG'
+export default function Result() {
+    const state = useContext(StateContext)
+    const resultString = state.game.result === true ? 'CORRECT' : 'WRONG'
     const resultModalClass = classnames(styles.resultModal, {
-        [styles.correct]: state.result === true,
+        [styles.correct]: state.game.result === true,
     })
     return (
         <>
-            {state.result !== null && (
+            {state.game.result !== null && (
                 <div className={resultModalClass}>
                     <h1 className={styles.resultTitle}>{resultString}</h1>
                     <p className={styles.streak}>
-                        {state.streak ? `Streak: ${state.streak}` : null}
+                        {state.game.streak
+                            ? `Streak: ${state.game.streak}`
+                            : null}
                     </p>
                     <p className={styles.continue}>Click to continue</p>
                 </div>

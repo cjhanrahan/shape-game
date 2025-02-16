@@ -1,21 +1,23 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useContext, useEffect, useRef } from 'react'
 import styles from './Shape.module.css'
 import { appendSceneToNode } from './scene'
 import { ShapeType } from './geometry'
-import { RandomGenerator } from '@/game/random'
 import { ColorObject } from './colors'
+import { GeneratorContext } from '@/app/AppContext'
+import { MaterialType } from './materials'
 
 export default function Shape(props: {
     color: ColorObject
     type: ShapeType
     volume: number
-    generator: RandomGenerator
+    materialType: MaterialType
     onPick: () => void
     showVolume: boolean
 }) {
-    const { onPick, showVolume, color, type, generator, volume } = props
+    const generator = useContext(GeneratorContext)
+    const { onPick, showVolume, color, type, volume, materialType } = props
     const ref = useRef<HTMLDivElement>(null)
     const clickHandler = (e: React.MouseEvent) => {
         e.preventDefault()
@@ -29,13 +31,14 @@ export default function Shape(props: {
             const cleanUpFunction = appendSceneToNode({
                 generator,
                 volume,
+                materialType,
                 color,
                 type,
                 node: ref.current,
             })
             return cleanUpFunction
         }
-    }, [generator, color, type, volume])
+    }, [generator, color, type, volume, materialType])
 
     return (
         <div className={styles.shapeContainer}>

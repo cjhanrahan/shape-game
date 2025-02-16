@@ -1,54 +1,12 @@
 'use client'
 
-import { ShapeType } from '@/graphics/geometry'
+import { RandomGenerator } from './random'
 import {
-    getRandomShape,
-    getRandomLeftVolume,
-    getRandomRightVolume,
-    getRandomColor,
-    makeSeededGenerator,
-    RandomGenerator,
-} from './random'
-import { getOptions } from './options'
-import { ColorObject } from '@/graphics/colors'
-
-export interface GameState {
-    leftColor: ColorObject
-    leftShape: ShapeType
-    leftVolume: number
-    rightColor: ColorObject
-    rightVolume: number
-    rightShape: ShapeType
-    guess: AnswerSide | null
-    result: boolean | null
-    streak: number
-}
-
-export function getInitialState(options: {
-    generator: RandomGenerator
-    minVolume: number
-    maxVolume: number
-    minAnswerDelta: number
-    maxAnswerDelta: number
-}): GameState {
-    const leftVolume = getRandomLeftVolume(options)
-    return {
-        leftColor: getRandomColor(options),
-        leftVolume: leftVolume,
-        leftShape: getRandomShape(options),
-        rightColor: getRandomColor(options),
-        rightVolume: getRandomRightVolume({
-            ...options,
-            leftVolume,
-        }),
-        rightShape: getRandomShape(options),
-        guess: null,
-        result: null,
-        streak: 0,
-    }
-}
-
-export type AnswerSide = 'left' | 'right'
+    AnswerSide,
+    getNewShapes,
+    loadStateFromLocalStorageIfPresent,
+    State,
+} from './state'
 
 export interface AnswerAction {
     type: 'ANSWER'
@@ -64,41 +22,65 @@ export function answerAction(options: { side: AnswerSide }): AnswerAction {
 
 export interface NewQuestionAction {
     type: 'NEW_QUESTION'
-    seed: number
+    generator: RandomGenerator
 }
 
-export function newQuestionAction(
-    options: {
-        seed?: number
-    } = {},
-): NewQuestionAction {
+export function newQuestionAction(options: {
+    generator: RandomGenerator
+}): NewQuestionAction {
     return {
         type: 'NEW_QUESTION',
-        seed: options.seed || Math.random(),
+        generator: options.generator,
     }
 }
 
-export type ActionType = AnswerAction | NewQuestionAction
+export interface InitializeStateAction {
+    type: 'INITIALIZE_STATE'
+    state: State
+}
 
-export function gameReducer(state: GameState, action: ActionType): GameState {
+export function initializeStateAction(options: {
+    generator: RandomGenerator
+}): InitializeStateAction {
+    const state = loadStateFromLocalStorageIfPresent(options)
+    return {
+        type: 'INITIALIZE_STATE',
+        state,
+    }
+}
+
+export type ActionType =
+    | AnswerAction
+    | NewQuestionAction
+    | InitializeStateAction
+
+export function gameReducer(state: State, action: ActionType): State {
     switch (action.type) {
         case 'ANSWER':
-            const leftWins = state.leftVolume > state.rightVolume
+            const leftWins = state.game.left.volume > state.game.right.volume
             const correct = action.side === 'left' ? leftWins : !leftWins
-            const streak = correct ? state.streak + 1 : 0
+            const streak = correct ? state.game.streak + 1 : 0
             return {
                 ...state,
-                guess: action.side,
-                result: correct,
-                streak,
+                game: {
+                    ...state.game,
+                    guess: action.side,
+                    result: correct,
+                    streak,
+                },
             }
         case 'NEW_QUESTION':
-            const generator = makeSeededGenerator(action)
-            const options = {
-                ...getOptions(),
-                generator,
+            return {
+                ...state,
+                game: {
+                    ...state.game,
+                    ...getNewShapes({
+                        generator: action.generator,
+                        ...state.settings,
+                    }),
+                    result: null,
+                },
             }
-            return { ...getInitialState(options), streak: state.streak }
         default:
             return state
     }

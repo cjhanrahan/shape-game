@@ -1,16 +1,14 @@
 import * as THREE from 'three'
-import { getPlane } from './plane'
 import { getLights } from './lights'
 import { getShape, ShapeType } from './geometry'
-import { applyMaterial } from './materials'
+import { applyMaterial, MaterialType } from './materials'
 import { RandomGenerator } from '@/game/random'
-import { getOptions } from '@/game/options'
 import { ObjectControls } from './controls'
 import { ColorObject } from './colors'
 
 export function setUpRenderer(options: { node: Element }) {
     const renderer = new THREE.WebGLRenderer({
-        antialias: getOptions().antialiasing,
+        antialias: true,
     })
     renderer.setSize(options.node.clientWidth, options.node.clientHeight)
     return renderer
@@ -41,9 +39,6 @@ export function setUpSceneObject(options: {
     }
 
     scene.add(options.mesh)
-    if (getOptions().plane) {
-        scene.add(getPlane())
-    }
     return scene
 }
 
@@ -87,6 +82,7 @@ export function appendSceneToNode(options: {
     color: ColorObject
     type: ShapeType
     generator: RandomGenerator
+    materialType: MaterialType
 }): () => void {
     const renderer = setUpRenderer(options)
     const camera = setUpCamera(options)
@@ -95,11 +91,11 @@ export function appendSceneToNode(options: {
     const geometry = getShape(options)
     const mesh = applyMaterial({
         geometry,
-        type: getOptions().materialType,
+        type: options.materialType,
         color: options.color,
     })
     const controls = new ObjectControls({ mesh, element: renderer.domElement })
-    const scene = setUpSceneObject({...options, mesh })
+    const scene = setUpSceneObject({ ...options, mesh })
     const animateFunction = getAnimateFunction({
         scene,
         camera,

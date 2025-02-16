@@ -13,7 +13,6 @@ const eslintConfig = [
     ...compat.extends('next/core-web-vitals', 'next/typescript'),
     {
         rules: {
-            indent: ['error', 4, { SwitchCase: 1 }],
             'max-len': ['error', { code: 90, tabWidth: 4 }],
             'no-multi-spaces': ['error'],
             quotes: ['error', 'single'],

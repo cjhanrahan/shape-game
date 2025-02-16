@@ -2,19 +2,12 @@ import * as THREE from 'three'
 import { describe, it, expect } from 'vitest'
 import { getRandomSideLength, getShape, ShapeType } from '../geometry'
 import { makeRandomMock } from '@/test-utils/randomMock'
-import { ShapeConfig } from '../scene'
 
 describe('geometry', () => {
-    const config: ShapeConfig = {
-        color: 0x000000,
-        type: ShapeType.CUBE,
-        generator: makeRandomMock(),
-        volume: 8,
-    }
     it('should generate random side lengths', () => {
         const randomMock = makeRandomMock()
         randomMock.floatMock.mockReturnValue(2)
-        const sideLength = getRandomSideLength(randomMock)
+        const sideLength = getRandomSideLength({ generator: randomMock })
         expect(randomMock.floatMock).toHaveBeenCalledWith(1, 5)
         expect(sideLength).toBe(2)
     })
@@ -23,7 +16,7 @@ describe('geometry', () => {
         const sideLength = 2
         const volume = Math.pow(sideLength, 3)
         const geometry = getShape({
-            ...config,
+            generator: makeRandomMock(),
             type: ShapeType.CUBE,
             volume,
         }) as THREE.BoxGeometry
@@ -43,7 +36,6 @@ describe('geometry', () => {
             .mockReturnValueOnce(depth)
         const volume = depth * width * height
         const geometry = getShape({
-            ...config,
             generator: randomMock,
             type: ShapeType.RECTANGULAR_PRISM,
             volume,
@@ -57,7 +49,7 @@ describe('geometry', () => {
         const radius = 1
         const volume = (4 / 3) * Math.PI * Math.pow(radius, 3)
         const geometry = getShape({
-            ...config,
+            generator: makeRandomMock(),
             type: ShapeType.SPHERE,
             volume,
         }) as THREE.SphereGeometry
@@ -74,7 +66,6 @@ describe('geometry', () => {
         const volume =
             2 * Math.PI * Math.PI * majorRadius * minorRadius * minorRadius
         const geometry = getShape({
-            ...config,
             generator: randomMock,
             type: ShapeType.TORUS,
             volume,
