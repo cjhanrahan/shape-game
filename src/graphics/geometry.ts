@@ -95,7 +95,7 @@ export function makeTorus(options: {
     volume: number
 }) {
     const majorRadius = getRandomSideLength(options)
-    const minorRadius = options.generator.float(0.25, 1)
+    const minorRadius = options.generator.float(0.4, 1)
     const denominator =
         2 * Math.PI * Math.PI * majorRadius * minorRadius * minorRadius
     const multiplier = Math.cbrt(options.volume / denominator)
