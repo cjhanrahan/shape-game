@@ -1,13 +1,15 @@
 import * as THREE from 'three'
-import debounce from 'debounce'
+const MOUSE_ROTATION_SPEED = 0.06
+const TOUCH_ROTATION_SPEED = 0.07
 
-const ROTATION_SPEED = 0.06
+export const X_AXIS = new THREE.Vector3(1, 0, 0)
+export const Y_AXIS = new THREE.Vector3(0, 1, 0)
 
 export class ObjectControls {
     element: Node
     isDragging: boolean
-    previousMouseX: number
-    previousMouseY: number
+    previousX: number
+    previousY: number
     mesh: THREE.Mesh
 
     constructor(options: { mesh: THREE.Mesh; element: Node }) {
@@ -15,8 +17,8 @@ export class ObjectControls {
         this.mesh = options.mesh
 
         this.isDragging = false
-        this.previousMouseX = 0
-        this.previousMouseY = 0
+        this.previousX = 0
+        this.previousY = 0
 
         this.setUpEventListeners()
     }
@@ -25,55 +27,94 @@ export class ObjectControls {
         this.isDragging = true
     }
 
-    onMouseUp = () => {
+    // works for touch and mouse events
+    onDragEnd = () => {
         this.isDragging = false
     }
 
-    debug = debounce(() => {
-        console.log({
-            x: this.mesh.rotation.x,
-            y: this.mesh.rotation.y,
-            z: this.mesh.rotation.z,
-        })
-    }, 100)
-
     onMouseMove = (event: MouseEvent) => {
         if (this.isDragging) {
-            const deltaX = event.offsetX - this.previousMouseX
-            const deltaY = event.offsetY - this.previousMouseY
-            const xAxis = new THREE.Vector3(1, 0, 0)
-            const yAxis = new THREE.Vector3(0, 1, 0)
+            const deltaX = event.offsetX - this.previousX
+            const deltaY = event.offsetY - this.previousY
 
             this.mesh.rotateOnWorldAxis(
-                xAxis,
-                Math.sign(deltaY) * ROTATION_SPEED,
+                X_AXIS,
+                Math.sign(deltaY) * MOUSE_ROTATION_SPEED,
             )
             this.mesh.rotateOnWorldAxis(
-                yAxis,
-                Math.sign(deltaX) * ROTATION_SPEED,
+                Y_AXIS,
+                Math.sign(deltaX) * MOUSE_ROTATION_SPEED,
             )
 
-            this.previousMouseX = event.offsetX
-            this.previousMouseY = event.offsetY
-            this.debug()
+            this.previousX = event.offsetX
+            this.previousY = event.offsetY
+        }
+    }
+
+    onTouchStart = (event: TouchEvent) => {
+        if (event.touches.length === 1) {
+            this.isDragging = true
+            this.previousX = event.touches[0].clientX
+            this.previousY = event.touches[0].clientY
+            event.preventDefault()
+        }
+    }
+
+    onTouchMove = (event: TouchEvent) => {
+        if (this.isDragging && event.touches.length === 1) {
+            const deltaX = event.touches[0].clientX - this.previousX
+            const deltaY = event.touches[0].clientY - this.previousY
+
+            this.mesh.rotateOnWorldAxis(
+                X_AXIS,
+                Math.sign(deltaY) * TOUCH_ROTATION_SPEED,
+            )
+            this.mesh.rotateOnWorldAxis(
+                Y_AXIS,
+                Math.sign(deltaX) * TOUCH_ROTATION_SPEED,
+            )
+
+            this.previousX = event.touches[0].clientX
+            this.previousY = event.touches[0].clientY
+            event.preventDefault()
         }
     }
 
     setUpEventListeners() {
         this.element.addEventListener('mousedown', this.onMouseDown)
-        this.element.addEventListener('mouseup', this.onMouseUp)
+        this.element.addEventListener('mouseup', this.onDragEnd)
         this.element.addEventListener(
             'mousemove',
             this.onMouseMove as EventListener,
+        )
+        this.element.addEventListener(
+            'touchstart',
+            this.onTouchStart as EventListener,
+            { passive: false },
+        )
+        this.element.addEventListener('touchend', this.onDragEnd)
+        this.element.addEventListener(
+            'touchmove',
+            this.onTouchMove as EventListener,
+            { passive: false },
         )
     }
 
     removeEventListeners() {
         this.element.removeEventListener('mousedown', this.onMouseDown)
-        this.element.removeEventListener('mouseup', this.onMouseUp)
+        this.element.removeEventListener('mouseup', this.onDragEnd)
         this.element.removeEventListener(
             'mousemove',
             this.onMouseMove as EventListener,
+        )
+        this.element.removeEventListener(
+            'touchstart',
+            this.onTouchStart as EventListener,
+        )
+        this.element.removeEventListener('touchend', this.onDragEnd)
+        this.element.removeEventListener(
+            'touchmove',
+            this.onTouchMove as EventListener,
         )
     }
 }
