@@ -1,5 +1,5 @@
 .shapeContainer {
-    flex: 1 1 0;
+    flex: 1 1 200px;
     outline: var(--border);
     border-radius: var(--border-radius);
     display: flex;
@@ -23,6 +23,11 @@
 .shapeThreeJsContainer {
     flex: 1 1 0;
     border-radius: var(--border-radius);
+    display: flex;
+    align-items: stretch;
+}
+.shapeThreeJsContainer canvas {
+    position: absolute;
 }
 
 .controls {

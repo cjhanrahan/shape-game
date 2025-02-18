@@ -7,6 +7,7 @@
 }
 .twoShapes {
     display: flex;
+    flex-wrap: wrap;
     align-items: stretch;
     flex: 1 1 0;
     gap: var(--spacing-m);
