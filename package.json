@@ -3,11 +3,13 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "dev": "next dev --turbopack",
+        "beforePush": "npm run lint && npm run test",
         "build": "next build",
+        "dev": "next dev --turbopack",
         "start": "next start",
         "lint": "next lint",
-        "test": "vitest"
+        "test": "vitest run",
+        "testWatch": "vitest"
     },
     "dependencies": {
         "classnames": "^2.5.1",
