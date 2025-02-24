@@ -1,5 +1,5 @@
 .shapeContainer {
-    flex: 1 1 200px;
+    flex: 1 1 0;
     outline: var(--border);
     border-radius: var(--border-radius);
     display: flex;
@@ -26,9 +26,6 @@
     display: flex;
     align-items: stretch;
 }
-.shapeThreeJsContainer canvas {
-    position: absolute;
-}
 
 .controls {
     display: flex;
@@ -39,7 +36,7 @@
 .button {
     width: 100%;
     text-align: center;
-    font-size: var(--font-size-m);
+    font-size: var(--font-size-l);
     cursor: pointer;
     padding: var(--spacing-m);
 }
@@ -62,4 +59,11 @@
 
 .shapeThreeJsContainer canvas {
     border-radius: var(--border-radius);
+    position: absolute;
+}
+
+@media (max-width: 700px) {
+    .button {
+        font-size: var(--font-size-m);
+    }
 }

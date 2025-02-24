@@ -11,6 +11,13 @@
 }
 
 .title {
+    font-size: var(--font-size-xl);
     text-align: center;
-    margin: var(--spacing-l) 0;
+    margin: var(--spacing-l);
+}
+
+@media (max-width: 700px) {
+    .title {
+        font-size: var(--font-size-l);
+    }
 }

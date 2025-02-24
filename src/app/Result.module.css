@@ -28,3 +28,12 @@
     font-size: var(--font-size-m);
     color: var(--text-color);
 }
+
+@media (max-width: 700px) {
+    .resultModal {
+        padding: var(--spacing-m);
+    }
+    .resultTitle {
+        font-size: var(--font-size-m);
+    }
+}

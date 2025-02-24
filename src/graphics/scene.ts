@@ -109,19 +109,6 @@ export function appendSceneToNode(options: {
     renderer.setAnimationLoop(animateFunction)
 
     window.addEventListener('resize', onWindowResize, false)
-    const debugObj = {
-        camera,
-        renderer,
-        scene,
-        mesh,
-        controls,
-        options,
-    }
-    if (!window.left) {
-        window.left = debugObj
-    } else {
-        window.right = debugObj
-    }
     return () => {
         window.removeEventListener('resize', onWindowResize)
         controls.removeEventListeners()

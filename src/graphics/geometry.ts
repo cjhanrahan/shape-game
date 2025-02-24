@@ -11,10 +11,10 @@ export enum ShapeType {
 
 export const allShapes = [
     ShapeType.CUBE,
-    // ShapeType.RECTANGULAR_PRISM,
-    // ShapeType.REGULAR_PRISM,
-    // ShapeType.SPHERE,
-    // ShapeType.TORUS,
+    ShapeType.RECTANGULAR_PRISM,
+    ShapeType.REGULAR_PRISM,
+    ShapeType.SPHERE,
+    ShapeType.TORUS,
 ]
 
 export function getRandomSideLength(options: { generator: RandomGenerator }) {

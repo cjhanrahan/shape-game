@@ -7,7 +7,7 @@ import { StateContext } from './AppContext'
 
 export default function Result() {
     const state = useContext(StateContext)
-    const resultString = state.game.result === true ? 'CORRECT' : 'WRONG'
+    const resultString = state.game.result === true ? 'Correct' : 'Wrong'
     const resultModalClass = classnames(styles.resultModal, {
         [styles.correct]: state.game.result === true,
     })

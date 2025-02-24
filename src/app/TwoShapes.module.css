@@ -27,3 +27,9 @@
 .hiddenOverlay {
     pointer-events: none;
 }
+
+@media (max-width: 700px) {
+    .twoShapes {
+        flex-direction: column;
+    }
+}
