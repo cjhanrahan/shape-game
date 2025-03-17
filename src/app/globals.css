@@ -28,7 +28,7 @@ p {
     --font: 'Verdana', sans-serif;
     --font-size-s: 10px;
     --font-size-m: 15px;
-    --font-size-l: 25px;
+    --font-size-l: 20px;
     --font-size-xl: 40px;
 
     --border: 2.5px solid var(--text-color);
