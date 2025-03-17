@@ -1,6 +1,6 @@
 import * as THREE from 'three'
-const MOUSE_ROTATION_SPEED = 0.06
-const TOUCH_ROTATION_SPEED = 0.07
+export const MOUSE_ROTATION_SPEED = 0.06
+export const TOUCH_ROTATION_SPEED = 0.07
 
 export const X_AXIS = new THREE.Vector3(1, 0, 0)
 export const Y_AXIS = new THREE.Vector3(0, 1, 0)
@@ -23,7 +23,9 @@ export class ObjectControls {
         this.setUpEventListeners()
     }
 
-    onMouseDown = () => {
+    onMouseDown = (event: MouseEvent) => {
+        this.previousX = event.clientX
+        this.previousY = event.clientY
         this.isDragging = true
     }
 
@@ -34,20 +36,35 @@ export class ObjectControls {
 
     onMouseMove = (event: MouseEvent) => {
         if (this.isDragging) {
-            const deltaX = event.offsetX - this.previousX
-            const deltaY = event.offsetY - this.previousY
+            const deltaX = event.clientX - this.previousX
+            const deltaY = event.clientY - this.previousY
 
+            // console.log({
+            //     deltaX,
+            //     deltaY,
+            //     clientX: event.clientX,
+            //     clientY: event.clientY,
+            //     previousX: this.previousX,
+            //     previousY: this.previousY,
+            //     MOUSE_ROTATION_SPEED,
+            // })
+            // console.log('rotation before x', getWorldRotation(this.mesh))
             this.mesh.rotateOnWorldAxis(
                 X_AXIS,
                 Math.sign(deltaY) * MOUSE_ROTATION_SPEED,
             )
+            // console.log(
+            //     'rotation after x, before y',
+            //     getWorldRotation(this.mesh),
+            // )
             this.mesh.rotateOnWorldAxis(
                 Y_AXIS,
                 Math.sign(deltaX) * MOUSE_ROTATION_SPEED,
             )
 
-            this.previousX = event.offsetX
-            this.previousY = event.offsetY
+            // console.log('after y', getWorldRotation(this.mesh))
+            this.previousX = event.clientX
+            this.previousY = event.clientY
         }
     }
 
@@ -81,7 +98,10 @@ export class ObjectControls {
     }
 
     setUpEventListeners() {
-        this.element.addEventListener('mousedown', this.onMouseDown)
+        this.element.addEventListener(
+            'mousedown',
+            this.onMouseDown as EventListener,
+        )
         this.element.addEventListener('mouseup', this.onDragEnd)
         this.element.addEventListener(
             'mousemove',
@@ -101,7 +121,10 @@ export class ObjectControls {
     }
 
     removeEventListeners() {
-        this.element.removeEventListener('mousedown', this.onMouseDown)
+        this.element.removeEventListener(
+            'mousedown',
+            this.onMouseDown as EventListener,
+        )
         this.element.removeEventListener('mouseup', this.onDragEnd)
         this.element.removeEventListener(
             'mousemove',

@@ -1,3 +1,5 @@
+'use client'
+
 import * as THREE from 'three'
 import { getLights } from './lights'
 import { getShape, ShapeType } from './geometry'
@@ -46,10 +48,12 @@ export function getAnimateFunction(options: {
     scene: THREE.Scene
     camera: THREE.Camera
     renderer: THREE.WebGLRenderer
+    mesh: THREE.Mesh
 }) {
-    return function animate() {
+    function animate() {
         options.renderer.render(options.scene, options.camera)
     }
+    return animate
 }
 
 export function getWindowResizeFunction(options: {
@@ -100,6 +104,7 @@ export function appendSceneToNode(options: {
         scene,
         camera,
         renderer,
+        mesh,
     })
     const onWindowResize = getWindowResizeFunction({
         ...options,
@@ -107,7 +112,6 @@ export function appendSceneToNode(options: {
         renderer,
     })
     renderer.setAnimationLoop(animateFunction)
-
     window.addEventListener('resize', onWindowResize, false)
     return () => {
         window.removeEventListener('resize', onWindowResize)

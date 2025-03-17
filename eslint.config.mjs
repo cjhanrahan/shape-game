@@ -14,6 +14,7 @@ const eslintConfig = [
     {
         rules: {
             'max-len': ['error', { code: 90, tabWidth: 4 }],
+            'no-console': ['error'],
             'no-multi-spaces': ['error'],
             quotes: ['error', 'single'],
             semi: ['error', 'never'],
