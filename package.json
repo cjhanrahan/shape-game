@@ -13,12 +13,12 @@
     },
     "dependencies": {
         "classnames": "^2.5.1",
-        "debounce": "^2.2.0",
         "next": "15.1.6",
         "random": "^5.1.1",
         "react": "^19.0.0",
         "react-dom": "^19.0.0",
-        "three": "^0.173.0"
+        "three": "^0.173.0",
+        "throttle-debounce": "^5.0.2"
     },
     "devDependencies": {
         "@eslint/eslintrc": "^3",
@@ -28,6 +28,7 @@
         "@types/react": "^19",
         "@types/react-dom": "^19",
         "@types/three": "^0.173.0",
+        "@types/throttle-debounce": "^5.0.2",
         "@vitejs/plugin-react": "^4.3.4",
         "eslint": "^9",
         "eslint-config-next": "15.1.6",

@@ -8,11 +8,13 @@ import {
     getRandomShape,
     RandomGenerator,
 } from './random'
+import { DebugData } from '@/graphics/SceneManager'
 
 export interface ShapeState {
     color: ColorObject
     type: ShapeType
     volume: number
+    debug: DebugData | null
 }
 
 export function getDefaultShapeState(options: {
@@ -35,6 +37,7 @@ export function getDefaultShapeState(options: {
                   maxVolume,
               })
             : getRandomLeftVolume(options),
+        debug: null,
     }
 }
 

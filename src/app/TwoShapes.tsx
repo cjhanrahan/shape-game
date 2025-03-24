@@ -4,7 +4,7 @@ import { useCallback, useContext } from 'react'
 import styles from './TwoShapes.module.css'
 import Shape from '@/graphics/Shape'
 import classnames from 'classnames'
-import { answerAction, newQuestionAction } from '@/game/reducer'
+import { answerAction, newQuestionAction } from '@/game/actions'
 import Result from './Result'
 import { DispatchContext, GeneratorContext, StateContext } from './AppContext'
 import { MaterialType } from '@/graphics/materials'
@@ -37,12 +37,14 @@ export default function TwoShapes() {
             <div className={styles.twoShapes}>
                 <Shape
                     {...state.game.left}
+                    side="left"
                     onPick={pickLeft}
                     showVolume={state.game.result !== null}
                     materialType={MaterialType.GRADIENT}
                 />
                 <Shape
                     {...state.game.right}
+                    side="right"
                     onPick={pickRight}
                     showVolume={state.game.result !== null}
                     materialType={MaterialType.GRADIENT}

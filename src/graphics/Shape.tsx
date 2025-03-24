@@ -1,14 +1,19 @@
 'use client'
 
-import { useContext, useEffect, useRef } from 'react'
+import { useCallback, useContext, useEffect, useRef } from 'react'
 import styles from './Shape.module.css'
-import { appendSceneToNode } from './scene'
 import { ShapeType } from './geometry'
 import { ColorObject } from './colors'
-import { GeneratorContext } from '@/app/AppContext'
+import { DispatchContext, GeneratorContext } from '@/app/AppContext'
 import { MaterialType } from './materials'
+import { DebugData, SceneManager } from './SceneManager'
+import { AnswerSide } from '@/game/state'
+import { setDebugDataAction } from '@/game/actions'
+import { DebugDisplay } from './DebugDisplay'
+import { saveInGlobalArray } from '@/util/debug'
 
 export default function Shape(props: {
+    side: AnswerSide
     color: ColorObject
     type: ShapeType
     volume: number
@@ -17,28 +22,48 @@ export default function Shape(props: {
     showVolume: boolean
 }) {
     const generator = useContext(GeneratorContext)
-    const { onPick, showVolume, color, type, volume, materialType } = props
+    const dispatch = useContext(DispatchContext)
+    const { onPick, showVolume, color, type, volume, materialType, side } =
+        props
     const ref = useRef<HTMLDivElement>(null)
     const clickHandler = (e: React.MouseEvent) => {
         e.preventDefault()
         onPick()
     }
+    const debugFunction = useCallback(
+        (debug: DebugData) => {
+            dispatch(setDebugDataAction({ side, debug }))
+        },
+        [dispatch, side],
+    )
     useEffect(() => {
         if (ref.current) {
             while (ref.current.firstChild) {
                 ref.current.removeChild(ref.current.firstChild)
             }
-            const cleanUpFunction = appendSceneToNode({
-                generator,
+            const sceneManager = new SceneManager({
+                side,
+                node: ref.current,
                 volume,
-                materialType,
                 color,
                 type,
-                node: ref.current,
+                generator,
+                materialType,
+                debugFunction,
             })
-            return cleanUpFunction
+            saveInGlobalArray('sceneManagers_' + side, {
+                sceneManager,
+                generator,
+                side,
+                color,
+                type,
+                volume,
+                materialType,
+                debugFunction,
+            })
+            return sceneManager.cleanUpScene
         }
-    }, [generator, color, type, volume, materialType])
+    }, [generator, side, color, type, volume, materialType, debugFunction])
 
     return (
         <div className={styles.shapeContainer}>
@@ -48,6 +73,7 @@ export default function Shape(props: {
                     <div className={styles.upperOverlay}>
                         <div>Shape: {type.toString()}</div>
                         <div>Color: {color.name}</div>
+                        <DebugDisplay side={side} />
                     </div>
                     <div className={styles.lowerOverlay}>
                         {showVolume && <div>Volume: {volume}</div>}

@@ -1,58 +1,7 @@
 'use client'
 
-import { RandomGenerator } from './random'
-import {
-    AnswerSide,
-    getNewShapes,
-    loadStateFromLocalStorageIfPresent,
-    State,
-} from './state'
-
-export interface AnswerAction {
-    type: 'ANSWER'
-    side: AnswerSide
-}
-
-export function answerAction(options: { side: AnswerSide }): AnswerAction {
-    return {
-        type: 'ANSWER',
-        side: options.side,
-    }
-}
-
-export interface NewQuestionAction {
-    type: 'NEW_QUESTION'
-    generator: RandomGenerator
-}
-
-export function newQuestionAction(options: {
-    generator: RandomGenerator
-}): NewQuestionAction {
-    return {
-        type: 'NEW_QUESTION',
-        generator: options.generator,
-    }
-}
-
-export interface InitializeStateAction {
-    type: 'INITIALIZE_STATE'
-    state: State
-}
-
-export function initializeStateAction(options: {
-    generator: RandomGenerator
-}): InitializeStateAction {
-    const state = loadStateFromLocalStorageIfPresent(options)
-    return {
-        type: 'INITIALIZE_STATE',
-        state,
-    }
-}
-
-export type ActionType =
-    | AnswerAction
-    | NewQuestionAction
-    | InitializeStateAction
+import { ActionType } from './actions'
+import { getNewShapes, State } from './state'
 
 export function gameReducer(state: State, action: ActionType): State {
     switch (action.type) {
@@ -79,6 +28,25 @@ export function gameReducer(state: State, action: ActionType): State {
                         ...state.settings,
                     }),
                     result: null,
+                },
+            }
+        case 'SET_DEBUG_DATA':
+            return {
+                ...state,
+                game: {
+                    ...state.game,
+                    [action.side]: {
+                        ...state.game[action.side],
+                        debug: action.debug,
+                    },
+                },
+            }
+        case 'SET_DEBUG_MODE':
+            return {
+                ...state,
+                settings: {
+                    ...state.settings,
+                    debug: action.debugMode,
                 },
             }
         default:

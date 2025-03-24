@@ -7,6 +7,7 @@ export interface Settings {
     maxAnswerDelta: number
     maxVolume: number
     plane: boolean
+    debug: boolean
 }
 
 export const defaultSettings: Settings = {
@@ -16,4 +17,5 @@ export const defaultSettings: Settings = {
     maxAnswerDelta: 0.5,
     maxVolume: 100,
     plane: false,
+    debug: false,
 }

@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import debounce from 'debounce'
+import { throttle } from 'throttle-debounce'
 import { RandomGenerator } from '@/game/random'
 import { ColorObject } from './colors'
 import { getShape, ShapeType } from './geometry'
@@ -7,6 +7,7 @@ import { applyMaterial, MaterialType } from './materials'
 import { AnswerSide } from '@/game/state'
 import { ObjectControls } from './controls'
 import { getLights } from './lights'
+import { saveGlobal } from '@/util/debug'
 
 export interface DebugData {
     rotationX: number
@@ -32,7 +33,7 @@ export class SceneManager {
     mesh: THREE.Mesh
     controls: ObjectControls
     scene: THREE.Scene
-    debouncedDebug: (debug: DebugData) => void
+    throttledDebug: (debug: DebugData) => void
 
     constructor(options: {
         node: Element
@@ -53,6 +54,7 @@ export class SceneManager {
         this.materialType = options.materialType
         this.debugFunction = options.debugFunction
 
+        saveGlobal(this.side, this)
         this.renderer = this.getRenderer()
         this.camera = this.setUpCamera()
         this.geometry = getShape({
@@ -70,7 +72,8 @@ export class SceneManager {
             element: this.renderer.domElement,
         })
         this.scene = this.getSceneObject()
-        this.debouncedDebug = debounce(this.debugFunction, 100)
+        this.throttledDebug = throttle(250, this.debugFunction)
+        this.setUpScene()
     }
 
     getRenderer() {
@@ -110,12 +113,13 @@ export class SceneManager {
 
     cleanUpScene = () => {
         window.removeEventListener('resize', this.onWindowResize)
+        this.renderer.dispose()
         this.controls.removeEventListeners()
     }
 
     animateFunction = () => {
         this.renderer.render(this.scene, this.camera)
-        this.debouncedDebug(this.getDebugInfo())
+        this.throttledDebug(this.getDebugInfo())
     }
 
     onWindowResize = () => {
